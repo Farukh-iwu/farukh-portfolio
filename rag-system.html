@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAG System Implementation - Anil Ghimire</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --food: #e67e22;
+            --compliance: #27ae60;
+            --rd: #9b59b6;
+            --light: #ecf0f1;
+            --dark: #34495e;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 40px 0;
+        }
+        
+        .back-btn {
+            color: white;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .artifact-header {
+            text-align: center;
+            padding: 40px 0;
+            background: white;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .intro-section {
+            background: linear-gradient(135deg, var(--food), #d35400);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+        
+        .content-section {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            margin: 40px 0;
+        }
+        
+        h1 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 2.5em;
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light);
+        }
+        
+        h3 {
+            color: var(--secondary);
+            margin: 30px 0 15px;
+        }
+        
+        .milestone-card {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin: 25px 0;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border-left: 5px solid var(--secondary);
+        }
+        
+        .milestone-number {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .use-case-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .use-case-card {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 8px;
+            border-top: 4px solid;
+        }
+        
+        .compliance-card { border-top-color: var(--compliance); }
+        .development-card { border-top-color: var(--rd); }
+        .quality-card { border-top-color: var(--accent); }
+        .supply-card { border-top-color: #f39c12; }
+        .support-card { border-top-color: #3498db; }
+        
+        .stakeholder-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .stakeholder-item {
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        
+        .architecture-diagram {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 8px;
+            margin: 30px 0;
+            border: 2px solid #e9ecef;
+            text-align: center;
+        }
+        
+        .workflow-steps {
+            counter-reset: step-counter;
+            margin: 20px 0;
+        }
+        
+        .workflow-step {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary);
+            position: relative;
+            padding-left: 60px;
+        }
+        
+        .workflow-step::before {
+            counter-increment: step-counter;
+            content: counter(step-counter);
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--secondary);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .improvement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .improvement-card {
+            background: #e8f4fd;
+            padding: 20px;
+            border-radius: 5px;
+            border: 1px solid #b3e0ff;
+        }
+        
+        .reflection-box {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 40px;
+            border-radius: 10px;
+            margin: 40px 0;
+        }
+
+          footer {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 60px;
+        }
+        
+        .challenge-solution {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .content-section {
+                padding: 30px 20px;
+            }
+            
+            .challenge-solution {
+                grid-template-columns: 1fr;
+            }
+            
+            .use-case-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .tag {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-right: 5px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="index.html" class="back-btn">← Back to Portfolio</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Artifact Header -->
+        <div class="artifact-header">
+            <h1>Implementing a Retrieval-Augmented Generation (RAG) System</h1>
+            <p>Case Study: Food & Beverage Industry Knowledge Management</p>
+        </div>
+
+        <!-- Introduction -->
+        <div class="intro-section">
+            <h2>Introduction</h2>
+            <p>The food and beverage industry faces overwhelming challenges with rapid changes and strict regulations. With recipes stored across files, supplier information accumulating, quality reports documenting successes and failures, regulations requiring constant checks, and continuous customer feedback, this volume of data makes it perfect for Retrieval-Augmented Generation (RAG). This system enables retrieving information from existing sources rather than rebuilding everything from scratch—transforming how industry knowledge is managed and utilized.</p>
+        </div>
+
+        <!-- Milestone 1: Use Cases -->
+        <div class="content-section">
+            <div class="milestone-card">
+                <div class="milestone-number">MILESTONE 1</div>
+                <h2>Use Cases & Stakeholders</h2>
+                
+                <div class="use-case-grid">
+                    <div class="use-case-card compliance-card">
+                        <h3>Regulatory Compliance Assistance</h3>
+                        <p>Retrieve relevant food safety regulations (FDA, USDA, HACCP) and generate concise compliance guidance for quality managers and auditors.</p>
+                    </div>
+                    
+                    <div class="use-case-card development-card">
+                        <h3>Product Development Support</h3>
+                        <p>Query historical recipes, ingredient substitutions, and formulation notes to generate suggestions aligned with nutritional targets and allergen constraints.</p>
+                    </div>
+                    
+                    <div class="use-case-card quality-card">
+                        <h3>Quality & Incident Analysis</h3>
+                        <p>Retrieve past quality incidents, root cause analyses, and corrective actions to generate summaries supporting faster decision-making during recalls or audits.</p>
+                    </div>
+                    
+                    <div class="use-case-card supply-card">
+                        <h3>Supply Chain Insights</h3>
+                        <p>Query supplier contracts, specifications, and delivery performance data to generate insights on alternative suppliers or risk mitigation strategies.</p>
+                    </div>
+                    
+                    <div class="use-case-card support-card">
+                        <h3>Customer Support Enablement</h3>
+                        <p>Retrieve product specifications, FAQs, and marketing claims to generate accurate, consistent responses for sales or customer service teams.</p>
+                    </div>
+                </div>
+                
+                <h3>Key Stakeholders</h3>
+                <div class="stakeholder-grid">
+                    <div class="stakeholder-item">Quality Assurance Managers</div>
+                    <div class="stakeholder-item">Regulatory & Compliance Officers</div>
+                    <div class="stakeholder-item">R&D Teams</div>
+                    <div class="stakeholder-item">Supply Chain Managers</div>
+                    <div class="stakeholder-item">Customer Support Teams</div>
+                    <div class="stakeholder-item">IT / Data Teams</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Milestone 2: Architecture -->
+        <div class="content-section">
+            <div class="milestone-card">
+                <div class="milestone-number">MILESTONE 2</div>
+                <h2>Architecture Design</h2>
+                
+                <div class="architecture-diagram">
+                    <h3>RAG System Architecture</h3>
+                    <div style="background: white; padding: 20px; border-radius: 5px; margin: 20px 0;">
+                        <div style="text-align: left; padding: 20px; border: 1px solid #ddd; margin: 10px 0;">
+                            <strong>Data Sources Layer</strong><br>
+                            Regulations, Recipes, Quality Reports, Supplier Data, Customer Feedback
+                        </div>
+                        <div style="text-align: left; padding: 20px; border: 1px solid #ddd; margin: 10px 0;">
+                            <strong>Processing Layer</strong><br>
+                            Document Chunking → Embedding Generation → Vector Database Storage
+                        </div>
+                        <div style="text-align: left; padding: 20px; border: 1px solid #ddd; margin: 10px 0;">
+                            <strong>Retrieval Layer</strong><br>
+                            Query Embedding → Similarity Search → Context Retrieval
+                        </div>
+                        <div style="text-align: left; padding: 20px; border: 1px solid #ddd; margin: 10px 0;">
+                            <strong>Generation Layer</strong><br>
+                            LLM Integration → Context Augmentation → Response Generation
+                        </div>
+                        <div style="text-align: left; padding: 20px; border: 1px solid #ddd; margin: 10px 0;">
+                            <strong>Interface Layer</strong><br>
+                            Web/Mobile UI → API Endpoints → Response Delivery
+                        </div>
+                    </div>
+                    <p>Modular architecture enabling scalable knowledge retrieval and generation</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Milestone 3: Workflow -->
+        <div class="content-section">
+            <div class="milestone-card">
+                <div class="milestone-number">MILESTONE 3</div>
+                <h2>Workflow Simulation</h2>
+                
+                <div style="background: #fff8e1; padding: 20px; border-radius: 5px; margin: 20px 0;">
+                    <h3>Sample Query:</h3>
+                    <p style="font-style: italic; font-size: 1.1em;">"What allergen risks should we consider when reformulating Product X for the US market?"</p>
+                </div>
+                
+                <h3>Process Steps</h3>
+                <div class="workflow-steps">
+                    <div class="workflow-step">
+                        <strong>Query Input</strong><br>
+                        User submits query through user interface
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Query Processing</strong><br>
+                        System identifies key terms: "allergen risk", "Product X", "US market"
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Document Retrieval</strong><br>
+                        Searches databases for US allergen regulations, Product X components, and allergen-related incident reports
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Context Assembly</strong><br>
+                        Relevant information selected and ranked by relevance to query
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Generative Response</strong><br>
+                        LLM generates structured response based on retrieved documents
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Response Delivery</strong><br>
+                        User receives comprehensive response with supporting citations
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Milestone 4: Evaluation -->
+        <div class="content-section">
+            <div class="milestone-card">
+                <div class="milestone-number">MILESTONE 4</div>
+                <h2>Evaluation & Improvement</h2>
+                
+                <h3>Identified Improvement Areas</h3>
+                <div class="improvement-grid">
+                    <div class="improvement-card">
+                        <h4>Data Quality</h4>
+                        <p>Regular updates of regulatory documents. Implement data validation and version control systems.</p>
+                    </div>
+                    <div class="improvement-card">
+                        <h4>Security & Access</h4>
+                        <p>Role-based access for sensitive formulations. Encryption for data at rest and in transit.</p>
+                    </div>
+                    <div class="improvement-card">
+                        <h4>Explainability & Trust</h4>
+                        <p>Provide document citations with every response. Enable feedback loops to flag incorrect outputs.</p>
+                    </div>
+                    <div class="improvement-card">
+                        <h4>Scalability</h4>
+                        <p>Modular architecture to add new data sources. Efficient embedding refresh strategies.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Milestone 5: Reflection -->
+        <div class="reflection-box">
+            <div class="milestone-number" style="background: white; color: var(--primary);">MILESTONE 5</div>
+            <h2>Reflection & Insights</h2>
+            
+            <p>This RAG system demonstrates how the food and beverage industry can leverage generative AI while maintaining accuracy, compliance, and trust. By grounding responses in verified internal and regulatory documents, the system reduces hallucinations and improves operational efficiency.</p>
+            
+            <div class="challenge-solution">
+                <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 5px;">
+                    <h3>Challenges</h3>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Ensuring up-to-date regulatory data</li>
+                        <li>Managing sensitive intellectual property</li>
+                        <li>Driving user trust and adoption</li>
+                    </ul>
+                </div>
+                
+                <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 5px;">
+                    <h3>Proposed Solutions</h3>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Strong data governance and lifecycle management</li>
+                        <li>Robust security and role-based access control</li>
+                        <li>Continuous monitoring and evaluation</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div style="margin-top: 30px; background: rgba(255,255,255,0.1); padding: 20px; border-radius: 5px;">
+                <h3>Technical Insight</h3>
+                <p>This implementation demonstrates my understanding of how to bridge generative AI capabilities with domain-specific constraints. The system balances the power of large language models with the precision of industry-specific data, creating a practical solution that addresses real business challenges while maintaining necessary controls for regulated environments.</p>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="container">
+            <p>@ 2026 Anil Ghimire| All rights reserved</p>
+            <p>How RAG System Work: A case study for Food and Beverage Industry</p>
+        </div>
+    </footer>
+</body>
+</html>

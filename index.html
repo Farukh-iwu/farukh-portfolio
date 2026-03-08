@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farukh - Academic Portfolio</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #34495e;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+        
+        .hero h2 {
+            font-size: 1.5em;
+            font-weight: 300;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+        
+        .hero p {
+            max-width: 600px;
+            margin: 0 auto 30px;
+            font-size: 1.1em;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--secondary);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--secondary);
+            color: var(--secondary);
+            margin-left: 10px;
+        }
+        
+        .btn-outline:hover {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        section {
+            background: white;
+            margin: 40px 0;
+            padding: 60px 0;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .section-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin-bottom: 40px;
+            font-size: 2.2em;
+            text-align: center;
+        }
+        
+        h3 {
+            color: var(--secondary);
+            margin: 30px 0 15px;
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .skill-category {
+            background: var(--light);
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .skill-category h4 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .skill-tag {
+            background: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            border: 1px solid #ddd;
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .project-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border: 1px solid #eee;
+            transition: all 0.3s ease;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .project-image {
+            width: 100%;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+        
+        .project-content {
+            padding: 25px;
+        }
+        
+        .project-meta {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .tech-stack {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .project-links {
+            display: flex;
+            gap: 10px;
+        }
+        
+        footer {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 60px;
+        }
+        
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .contact-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .contact-links a:hover {
+            color: var(--light);
+        }
+        
+        .journey-timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 40px auto;
+        }
+        
+        .journey-item {
+            background: white;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .journey-date {
+            font-weight: 600;
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2em;
+            }
+            
+            .hero h2 {
+                font-size: 1.2em;
+            }
+            
+            section {
+                padding: 40px 0;
+                margin: 20px 0;
+            }
+            
+            .btn-outline {
+                margin-left: 0;
+                margin-top: 10px;
+                display: block;
+            }
+            
+            .project-links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <header>
+        <div class="container">
+            <div class="hero">
+                <h1>Farukh</h1>
+                <h2>Academic Portfolio | Technical Projects & Research</h2>
+                <p>Passionate about technology and innovation. Dedicated to creating meaningful projects that demonstrate technical expertise, problem-solving abilities, and continuous learning in academic and professional domains.</p>
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn">View Artifacts</a>
+                    <a href="#about" class="btn btn-outline">Professional Achievements</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- About Section -->
+        <section id="about">
+            <div class="section-content">
+                <h2>Professional Achievements</h2>
+                <div class="journey-timeline">
+                    <div class="journey-item">
+                        <div class="journey-date">BS Mechanical Engineering</div>
+                        <h3>Foundation in Systems Thinking</h3>
+                        <p>My mechanical engineering background taught me to think in terms of systems, physics, and constraints. I developed a deep understanding of how physical systems behave, which gives me unique insight into building AI solutions for real-world applications and industrial systems.</p>
+                    </div>
+                    
+                    <div class="journey-item">
+                        <div class="journey-date">4 Years as Software Engineer</div>
+                        <h3>Production-Ready Code & Scalability</h3>
+                        <p>My experience as a software engineer gave me a deep appreciation for clean, scalable, and maintainable code in production environments. I've built and deployed systems handling millions of requests, focusing on reliability, monitoring, and DevOps best practices.</p>
+                    </div>
+                    
+                    <div class="journey-item">
+                        <div class="journey-date">MS Data Science + AI Graduate Studies</div>
+                        <h3>Bridging Theory and Practice</h3>
+                        <p>Now, I'm merging these disciplines to build the next generation of intelligent systems that interact with the physical world. My focus is on creating AI solutions that are not just theoretically sound but production-ready, scalable, and ethically responsible.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills">
+            <div class="section-content">
+                <h2>Technical Expertise</h2>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h4>AI/ML & Data Science</h4>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">PyTorch</span>
+                            <span class="skill-tag">TensorFlow</span>
+                            <span class="skill-tag">Scikit-learn</span>
+                            <span class="skill-tag">Deep Learning</span>
+                            <span class="skill-tag">Computer Vision</span>
+                            <span class="skill-tag">NLP</span>
+                            <span class="skill-tag">Reinforcement Learning</span>
+                            <span class="skill-tag">Statistical Analysis</span>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h4>Software Engineering</h4>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Docker</span>
+                            <span class="skill-tag">Kubernetes</span>
+                            <span class="skill-tag">AWS/GCP</span>
+                            <span class="skill-tag">CI/CD</span>
+                            <span class="skill-tag">REST APIs</span>
+                            <span class="skill-tag">System Design</span>
+                            <span class="skill-tag">Microservices</span>
+                            <span class="skill-tag">Git</span>
+                            <span class="skill-tag">SQL/NoSQL</span>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h4>MLOps & Data Engineering</h4>
+                        <div class="skill-tags">
+                            <span class="skill-tag">MLflow</span>
+                            <span class="skill-tag">Kubeflow</span>
+                            <span class="skill-tag">Apache Airflow</span>
+                            <span class="skill-tag">Data Pipelines</span>
+                            <span class="skill-tag">Model Deployment</span>
+                            <span class="skill-tag">Monitoring</span>
+                            <span class="skill-tag">Feature Stores</span>
+                            <span class="skill-tag">Experiment Tracking</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects">
+            <div class="section-content">
+                <h2>Featured Artifacts</h2>
+                <div class="projects-grid">
+                    <!-- AI Ethics Timeline Project -->
+                    <div class="project-card">
+                        <div class="project-image" style="background: linear-gradient(45deg, #3498db, #2980b9);">
+                            AI Ethics Timeline
+                        </div>
+                        <div class="project-content">
+                            <h3>AI Evolution & Ethics Timeline</h3>
+                            <p>Comprehensive analysis of AI milestones with focus on the growing importance of ethical frameworks. This research demonstrates my commitment to responsible AI development and understanding of the historical context of AI advancement.</p>
+                            <div class="project-meta">
+                                <div class="tech-stack">Research • Ethics Analysis • Technical Evaluation • Data Visualization</div>
+                                <div class="project-links">
+                                    <a href="ai-timeline.html" class="btn">View Ethical Analysis</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- ML vs DL Analysis Project -->
+                    <div class="project-card">
+                        <div class="project-image" style="background: linear-gradient(45deg, #27ae60, #2ecc71);">
+                            ML vs DL Analysis
+                        </div>
+                        <div class="project-content">
+                            <h3>Machine Learning vs Deep Learning</h3>
+                            <p>Comparative analysis of classical ML and deep learning approaches through real-world case studies. Examines when to use each methodology based on data characteristics, problem requirements, and practical constraints.</p>
+                            <div class="project-meta">
+                                <div class="tech-stack">Comparative Analysis • Case Studies • Methodology Selection • Technical Writing</div>
+                                <div class="project-links">
+                                    <a href="mlVsDl.html" class="btn">Read Analysis</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 3 -->
+                    <div class="project-card">
+                        <div class="project-image" style="background: linear-gradient(45deg, #9b59b6, #8e44ad);">
+                            Neural Networks Decoded
+                        </div>
+                        <div class="project-content">
+                            <h3>Neural Networks Explained: How Machines Learn Patterns Like Humans</h3>
+                            <p>Comprehensive explanation of neural networks using intuitive analogies and visual diagrams. Demystifies AI's core technology through the analogy of a child learning to recognize patterns.</p>
+                            <div class="project-meta">
+                                <div class="tech-stack">Technical Writing • AI Education • Concept Visualization • Deep Learning</div>
+                                <div class="project-links">
+                                    <a href="neuralNetwork.html" class="btn">Read Paper</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                     <!-- Project 4 -->
+                    <div class="project-card">
+                        <div class="project-image" style="background: linear-gradient(45deg, #ff6b00, #ff8c00);">
+                            AI Tools Evaluation
+                        </div>
+                        <div class="project-content">
+                            <h3>Research Tools Comparative Analysis</h3>
+                            <p>Systematic evaluation of ChatGPT, Gemini, DeepSeek, and Perplexity across 11 performance categories. Provides data-driven insights for selecting optimal AI research assistants based on specific project requirements.</p>
+                            <div class="project-meta">
+                                <div class="tech-stack">Comparative Analysis • Performance Metrics • Tool Evaluation • Research Methodology</div>
+                                <div class="project-links">
+                                    <a href="research-evaluation.html" class="btn">View Analysis</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                     <!-- Project 5-->
+                    <div class="project-card">
+                        <div class="project-image" style="background: linear-gradient(45deg, #2c3e50, #34495e);">
+                            AI Industry Analysis
+                        </div>
+                        <div class="project-content">
+                            <h3>The Agentic Shift: AI Industry Newsletter</h3>
+                            <p>December 2025 analysis of how AI is transitioning from chatbots to autonomous agents across healthcare, finance, and technology sectors. Examines the commercial impact of agentic AI workflows and future enterprise applications.</p>
+                            <div class="project-meta">
+                                <div class="tech-stack">Industry Analysis • Trend Forecasting • Business Strategy • AI Applications</div>
+                                <div class="project-links">
+                                    <a href="ai-newsletter.html" class="btn">Read Analysis</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                     <!-- artifact 6 -->
+                    <div class="project-card">
+                        <div class="project-image" style="background: linear-gradient(45deg, #27ae60, #2ecc71);">
+                            RAG System Design
+                        </div>
+                        <div class="project-content">
+                            <h3>Implementing RAG for Food & Beverage</h3>
+                            <p>Design and implementation of a Retrieval-Augmented Generation system for knowledge management in the food and beverage industry. Case study covering use cases, architecture, workflow simulation, and implementation challenges.</p>
+                            <div class="project-meta">
+                                <div class="tech-stack">RAG Systems • Vector Databases • AI Implementation • Industry Solutions</div>
+                                <div class="project-links">
+                                    <a href="rag-system.html" class="btn">View Case Study</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <h3>Let's Connect</h3>
+            <p>Open to opportunities in AI Engineering, ML Infrastructure, and Research roles where I can apply my interdisciplinary background to build innovative and responsible AI systems.</p>
+            <div class="contact-links">
+                <a href="mailto:farukh43@gmail.com">Email</a>
+                <a href="https://github.com/farukh43">GitHub</a>
+                <a href="mailto:farukh43@outlook.com">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll animation for project cards
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe project cards
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>

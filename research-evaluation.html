@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Research Tools Evaluation - Anil Ghimire</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #34495e;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 40px 0;
+        }
+        
+        .back-btn {
+            color: white;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .artifact-header {
+            text-align: center;
+            padding: 40px 0;
+            background: white;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .overview-section {
+            background: linear-gradient(135deg, var(--secondary), #2980b9);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+        
+        .evaluation-table {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            margin: 40px 0;
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        th {
+            background: var(--primary);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            border: 1px solid #ddd;
+        }
+        
+        td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            vertical-align: top;
+        }
+        
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .category-header {
+            background: var(--secondary);
+            color: white;
+            font-weight: bold;
+        }
+        
+        .winner-cell {
+            background: #d4edda;
+            font-weight: bold;
+            color: #155724;
+        }
+        
+        .tool-header {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .key-findings {
+            background: var(--light);
+            padding: 30px;
+            border-radius: 8px;
+            margin: 30px 0;
+            border-left: 4px solid var(--accent);
+        }
+        
+        .conclusion-box {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 40px;
+            border-radius: 10px;
+            margin: 40px 0;
+        }
+        
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .insight-card {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border-top: 4px solid var(--secondary);
+        }
+        
+        footer {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 60px;
+        }
+        
+        @media (max-width: 768px) {
+            .evaluation-table {
+                padding: 20px;
+            }
+            
+            table {
+                font-size: 0.9em;
+            }
+            
+            th, td {
+                padding: 8px 10px;
+            }
+        }
+        
+        .tool-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin: 2px;
+        }
+        
+        .chatgpt { background: #10a37f; color: white; }
+        .gemini { background: #8e24aa; color: white; }
+        .deepseek { background: #ff6b00; color: white; }
+        .perplexity { background: #0366d6; color: white; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="index.html" class="back-btn">← Back to Portfolio</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Artifact Header -->
+        <div class="artifact-header">
+            <h1>AI Research Tools Evaluation</h1>
+            <p>Comparative Analysis of ChatGPT, Gemini, DeepSeek, and Perplexity</p>
+        </div>
+
+        <!-- Overview Section -->
+        <div class="overview-section">
+            <h2>Research Overview</h2>
+            <p>This comprehensive evaluation analyzes four leading AI research assistants across 11 critical performance categories. The systematic assessment provides valuable insights for selecting appropriate tools based on specific research requirements and workflow preferences.</p>
+        </div>
+
+        <!-- Evaluation Table -->
+        <div class="evaluation-table">
+            <h2>Comparative Analysis Table</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th width="8%">Category</th>
+                        <th width="15%">Criteria</th>
+                        <th width="18%">ChatGPT</th>
+                        <th width="18%">Gemini</th>
+                        <th width="18%">DeepSeek</th>
+                        <th width="18%">Perplexity</th>
+                        <th width="15%">Winner</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="category-header">
+                        <td colspan="7">Performance Metrics</td>
+                    </tr>
+                    <tr>
+                        <td>1.0</td>
+                        <td>Speed</td>
+                        <td>Slow (12 minutes for deep research)</td>
+                        <td>Fast (2.5 mins)</td>
+                        <td>Relative Fast (2.5 mins)</td>
+                        <td>Took around 3 minutes</td>
+                        <td class="winner-cell">DeepSeek, Gemini</td>
+                    </tr>
+                    <tr>
+                        <td>2.0</td>
+                        <td>User Interface</td>
+                        <td>Simple and Efficient</td>
+                        <td>Efficient, User Friendly</td>
+                        <td>Simple as it's only has one chatbox</td>
+                        <td>Good user interface with navigation</td>
+                        <td class="winner-cell">Gemini</td>
+                    </tr>
+                    <tr>
+                        <td>3.0</td>
+                        <td>Creativity</td>
+                        <td>Does not make effort for presentability</td>
+                        <td>Multiple output format options</td>
+                        <td>Split screen for real-time updates</td>
+                        <td>Limited format options (PDF, DOCX, Markdown)</td>
+                        <td class="winner-cell">Gemini, DeepSeek</td>
+                    </tr>
+                    
+                    <tr class="category-header">
+                        <td colspan="7">Output Quality</td>
+                    </tr>
+                    <tr>
+                        <td>4.0</td>
+                        <td>Desired Output</td>
+                        <td>Accurate with references</td>
+                        <td>Accurate with references</td>
+                        <td>Precise based on expected results</td>
+                        <td>Consistent with inline references</td>
+                        <td class="winner-cell">DeepSeek, Gemini</td>
+                    </tr>
+                    <tr>
+                        <td>5.0</td>
+                        <td>Presentability</td>
+                        <td>Needs further prompting for presentation</td>
+                        <td>Easier to understand and build upon</td>
+                        <td>User could easily understand</td>
+                        <td>Easier to understand and follow</td>
+                        <td class="winner-cell">Gemini, DeepSeek</td>
+                    </tr>
+                    <tr>
+                        <td>6.0</td>
+                        <td>Consistency</td>
+                        <td>Highly consistent with iterative design</td>
+                        <td>Changed layout as we go</td>
+                        <td>Very consistent across prompts</td>
+                        <td>Layout consistent throughout</td>
+                        <td class="winner-cell">DeepSeek, Gemini</td>
+                    </tr>
+                    
+                    <tr class="category-header">
+                        <td colspan="7">User Experience</td>
+                    </tr>
+                    <tr>
+                        <td>7.0</td>
+                        <td>Prompting</td>
+                        <td>Struggles with format conversion prompts</td>
+                        <td>Excellent research, multiple format prompts needed</td>
+                        <td>Clear process visibility step-by-step</td>
+                        <td>Generally OK, needed secondary prompts</td>
+                        <td class="winner-cell">Research: Gemini, DeepSeek<br>Format: DeepSeek, Gemini</td>
+                    </tr>
+                    <tr>
+                        <td>8.0</td>
+                        <td>Research Depth</td>
+                        <td>18 sources used and cited</td>
+                        <td>Extensive data using internal sources</td>
+                        <td>Added relevant integrated research</td>
+                        <td>106 references with inline citations</td>
+                        <td class="winner-cell">Perplexity, Gemini, DeepSeek, ChatGPT</td>
+                    </tr>
+                    <tr>
+                        <td>9.0</td>
+                        <td>Live Visualization</td>
+                        <td>Shows code but no live visualization</td>
+                        <td>Live view of webpage coding</td>
+                        <td>Real-time response generation</td>
+                        <td>Live code view, visualization after completion</td>
+                        <td class="winner-cell">Gemini, DeepSeek</td>
+                    </tr>
+                    <tr>
+                        <td>10.0</td>
+                        <td>Output Relevancy</td>
+                        <td>Relevant to prompt</td>
+                        <td>Excellent output with multiple reasoning</td>
+                        <td>9/10 close to user expectations</td>
+                        <td>Close to prompt except CSV download</td>
+                        <td class="winner-cell">DeepSeek, Gemini, Perplexity, ChatGPT</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Key Findings -->
+        <div class="key-findings">
+            <h2>Key Findings & Insights</h2>
+            
+            <div class="insights-grid">
+                <div class="insight-card">
+                    <h3>🏆 Performance Leaders</h3>
+                    <p><span class="tool-tag deepseek">DeepSeek</span> and <span class="tool-tag gemini">Gemini</span> dominated speed and efficiency categories, completing tasks in 2.5 minutes compared to ChatGPT's 12 minutes.</p>
+                </div>
+                
+                <div class="insight-card">
+                    <h3>🎯 Output Quality</h3>
+                    <p><span class="tool-tag deepseek">DeepSeek</span> excelled in precision and consistency, while <span class="tool-tag gemini">Gemini</span> provided the most user-friendly and presentable outputs.</p>
+                </div>
+                
+                <div class="insight-card">
+                    <h3>🔍 Research Depth</h3>
+                    <p><span class="tool-tag perplexity">Perplexity</span> demonstrated superior research capabilities with 106 references, far exceeding other tools in citation depth and academic rigor.</p>
+                </div>
+                
+                <div class="insight-card">
+                    <h3>💡 User Experience</h3>
+                    <p><span class="tool-tag gemini">Gemini</span> offered the best interface design, while <span class="tool-tag deepseek">DeepSeek</span> provided unique real-time process visibility during task execution.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conclusion -->
+        <div class="conclusion-box">
+            <h2>Professional Significance</h2>
+            <p>This systematic evaluation demonstrates my analytical approach to technology assessment and tool selection—a critical skill in AI engineering. The research reveals that no single tool dominates across all categories, highlighting the importance of selecting AI assistants based on specific project requirements.</p>
+            
+            <p><strong>Key Takeaway:</strong> Successful AI implementation requires understanding the nuanced strengths of different tools and strategically selecting the right combination based on factors like research depth requirements, presentation needs, and time constraints.</p>
+            
+            <p>This methodology ensures optimal workflow efficiency and output quality in professional AI research and development environments.</p>
+        </div>
+
+        <!-- Links Section -->
+        <div class="key-findings">
+            <h2>Research Links</h2>
+            <div class="insights-grid">
+                <div class="insight-card">
+                    <h3><span class="tool-tag chatgpt">ChatGPT</span></h3>
+                    <p><a href="https://chatgpt.com/share/68fcf90a-8150-8013-ab98-61cd96dea04f" target="_blank">View Research Session</a></p>
+                </div>
+                <div class="insight-card">
+                    <h3><span class="tool-tag gemini">Gemini</span></h3>
+                    <p><a href="https://gemini.google.com/share/92a8bcdcc20c" target="_blank">View Research Session</a></p>
+                </div>
+                <div class="insight-card">
+                    <h3><span class="tool-tag deepseek">DeepSeek</span></h3>
+                    <p><a href="https://chat.deepseek.com/share/u71svk2h7vi8meb890" target="_blank">View Research Session</a></p>
+                </div>
+                <div class="insight-card">
+                    <h3><span class="tool-tag perplexity">Perplexity</span></h3>
+                    <p><a href="https://www.perplexity.ai/search/what-is-the-impact-of-ai-on-to-GB1ytL4kQzadnt8VYoX0bw?5=d&preview=1#8" target="_blank">View Research Session</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>@ 2025 Anil Ghimire| All rights reserved</p>
+            <p>Strategic Technology Evaluation & Research Methodology</p>
+        </div>
+    </footer>
+</body>
+</html>

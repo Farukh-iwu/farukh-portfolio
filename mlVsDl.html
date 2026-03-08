@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML vs DL Comparative Analysis - Anil Ghimire</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --ml-color: #27ae60;
+            --dl-color: #9b59b6;
+            --light: #ecf0f1;
+            --dark: #34495e;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 40px 0;
+        }
+        
+        .back-btn {
+            color: white;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .article-header {
+            text-align: center;
+            padding: 40px 0;
+            background: white;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .executive-summary {
+            background: linear-gradient(135deg, var(--secondary), #2980b9);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+        
+        .content-section {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            margin: 40px 0;
+        }
+        
+        h1 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 2.5em;
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light);
+        }
+        
+        h3 {
+            color: var(--secondary);
+            margin: 30px 0 15px;
+        }
+        
+        h4 {
+            color: var(--primary);
+            margin: 20px 0 10px;
+        }
+        
+        .case-study {
+            border-radius: 8px;
+            padding: 25px;
+            margin: 25px 0;
+            border-left: 5px solid;
+        }
+        
+        .ml-case {
+            border-left-color: var(--ml-color);
+            background: #f0f9f0;
+        }
+        
+        .dl-case {
+            border-left-color: var(--dl-color);
+            background: #f8f0ff;
+        }
+        
+        .case-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .case-badge {
+            padding: 5px 15px;
+            border-radius: 20px;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+        
+        .ml-badge {
+            background: var(--ml-color);
+        }
+        
+        .dl-badge {
+            background: var(--dl-color);
+        }
+        
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .suitability-card {
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        
+        .suitable {
+            border-left: 4px solid var(--ml-color);
+            background: #f8fff8;
+        }
+        
+        .unsuitable {
+            border-left: 4px solid var(--accent);
+            background: #fff8f8;
+        }
+        
+        .suitability-card h4 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .suitability-icon {
+            font-size: 1.2em;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .comparison-table th {
+            background: var(--primary);
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+        
+        .comparison-table td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .key-points {
+            background: var(--light);
+            padding: 25px;
+            border-radius: 8px;
+            margin: 25px 0;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .key-points ul {
+            margin-left: 20px;
+        }
+        
+        .key-points li {
+            margin: 10px 0;
+        }
+        
+        .conclusion-box {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 40px 0;
+            text-align: center;
+        }
+        
+        footer {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 60px;
+        }
+        
+        @media (max-width: 768px) {
+            .analysis-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .comparison-table {
+                font-size: 0.9em;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+        }
+        
+        .tech-tag {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin: 0 5px 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="index.html" class="back-btn">← Back to Portfolio</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Article Header -->
+        <div class="article-header">
+            <h1>A Comparative Analysis of Machine Learning and Deep Learning</h1>
+            <p>Understanding when to use classical approaches vs. deep neural networks through real-world case studies</p>
+        </div>
+
+        <!-- Executive Summary -->
+        <div class="executive-summary">
+            <h2>Executive Summary</h2>
+            <p>This report examines the distinction between classic Machine Learning (ML) and Deep Learning (DL) based on two case studies. The main objective is to demonstrate the suitable approach for each case dataset depending on the nature, complexity and the requirement for feature engineering. Our analysis compares classic ML applications (house price prediction) with deep learning applications (image recognition) to show the core differences in methodology selection based on problem characteristics.</p>
+        </div>
+
+        <!-- Case Study 1 -->
+        <div class="content-section">
+            <div class="case-study ml-case">
+                <div class="case-header">
+                    <span class="case-badge ml-badge">CASE STUDY 1</span>
+                    <h2>Machine Learning - Housing Price Prediction</h2>
+                </div>
+                
+                <div class="tech-tags">
+                    <span class="tech-tag">Linear Regression</span>
+                    <span class="tech-tag">Structured Data</span>
+                    <span class="tech-tag">Feature Engineering</span>
+                </div>
+                
+                <h3>Real-World Application: Zillow's Estimate</h3>
+                <p>Zillow's home value estimation model predicts property market values using linear regression by analyzing known variables like address, location, bedrooms, square footage, and other features to determine the unknown variable - price.</p>
+                
+                <div class="analysis-grid">
+                    <div class="suitability-card suitable">
+                        <h4>
+                            <span class="suitability-icon">✅</span>
+                            Analysis of Machine Learning Suitability
+                        </h4>
+                        <p>Estimating house prices based on other variables is highly suitable for classical ML because:</p>
+                        <ul>
+                            <li><strong>Structured Data:</strong> Input data is structured, typically in spreadsheet format where each row represents a property and each column represents a specific feature</li>
+                            <li><strong>Human-Engineered Features:</strong> Model success relies on logical, human-defined features that directly influence price (square footage, zip code, bedrooms, etc.)</li>
+                            <li><strong>Interpretability:</strong> Linear regression provides clear feature weight interpretation, explaining why a home is valued at a specific price</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="suitability-card unsuitable">
+                        <h4>
+                            <span class="suitability-icon">❌</span>
+                            Analysis of Deep Learning Unsuitability
+                        </h4>
+                        <p>Applying deep learning would be inefficient because:</p>
+                        <ul>
+                            <li><strong>Unnecessary Complexity:</strong> DL is designed for complex problems with hidden patterns in unstructured data</li>
+                            <li><strong>Black Box Problem:</strong> Neural networks lack transparency, making it difficult to explain valuation decisions</li>
+                            <li><strong>Computational Overhead:</strong> Significant computational resources required without proportional accuracy gains</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Case Study 2 -->
+        <div class="content-section">
+            <div class="case-study dl-case">
+                <div class="case-header">
+                    <span class="case-badge dl-badge">CASE STUDY 2</span>
+                    <h2>Deep Learning - Image Recognition</h2>
+                </div>
+                
+                <div class="tech-tags">
+                    <span class="tech-tag">Convolutional Neural Networks</span>
+                    <span class="tech-tag">Computer Vision</span>
+                    <span class="tech-tag">Automatic Feature Learning</span>
+                </div>
+                
+                <h3>Real-World Application: Smartphone Face ID</h3>
+                <p>Facial recognition technology enables phone unlocking by scanning and verifying user facial structure. This represents a key application of image recognition where deep learning algorithms (Convolutional Neural Networks) drive the entire system.</p>
+                
+                <div class="analysis-grid">
+                    <div class="suitability-card suitable">
+                        <h4>
+                            <span class="suitability-icon">✅</span>
+                            Analysis of Deep Learning Suitability
+                        </h4>
+                        <p>Facial recognition is ideal for deep learning because:</p>
+                        <ul>
+                            <li><strong>Unstructured Data:</strong> Input consists of raw pixel grids from camera images without predefined features</li>
+                            <li><strong>Automatic Feature Learning:</strong> CNNs automatically learn hierarchical features (edges → shapes → facial components)</li>
+                            <li><strong>Robustness & Generalization:</strong> Models learn to identify users despite variations in lighting, expressions, angles, and obstructions</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="suitability-card unsuitable">
+                        <h4>
+                            <span class="suitability-icon">❌</span>
+                            Analysis of Classical ML Unsuitability
+                        </h4>
+                        <p>Classical ML models are ineffective because:</p>
+                        <ul>
+                            <li><strong>Inability to Process Raw Data:</strong> Requires pre-defined features and cannot handle raw pixel data</li>
+                            <li><strong>Brittle Feature Problem:</strong> Manually engineered features (eye distance, etc.) fail with variations in pose, expression, or lighting</li>
+                            <li><strong>Limited Complexity Handling:</strong> Cannot capture the intricate patterns required for reliable facial recognition</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comparative Analysis -->
+        <div class="content-section">
+            <h2>Comparative Analysis</h2>
+            
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Factor</th>
+                        <th>Machine Learning</th>
+                        <th>Deep Learning</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Data Type</strong></td>
+                        <td>Structured, tabular data</td>
+                        <td>Unstructured data (images, audio, text)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Feature Engineering</strong></td>
+                        <td>Manual, human-defined features</td>
+                        <td>Automatic feature learning</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Interpretability</strong></td>
+                        <td>High - clear feature importance</td>
+                        <td>Low - "black box" nature</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Computational Requirements</strong></td>
+                        <td>Moderate</td>
+                        <td>High (GPU-intensive)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Data Requirements</strong></td>
+                        <td>Works well with smaller datasets</td>
+                        <td>Requires large amounts of data</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Problem Complexity</strong></td>
+                        <td>Moderately complex problems</td>
+                        <td>Highly complex patterns</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="key-points">
+                <h3>Key Decision Factors</h3>
+                <ul>
+                    <li><strong>Choose Classical ML when:</strong> You have structured data, need interpretability, have limited computational resources, or work with smaller datasets</li>
+                    <li><strong>Choose Deep Learning when:</strong> You have unstructured data, deal with complex patterns, have large datasets, and can handle computational complexity</li>
+                    <li><strong>Feature Engineering:</strong> Manual feature engineering works for well-understood domains; automatic feature learning excels in complex, pattern-rich domains</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Conclusion -->
+        <div class="conclusion-box">
+            <h2>Conclusion</h2>
+            <p>The analysis of these real-world applications clearly distinguishes between classic machine learning and deep learning. Classical machine learning excels with structured data, human-understandable features, and when interpretability is required. Deep learning dominates in complex domains with unstructured data where features are too complex for manual engineering and must be learned automatically.</p>
+            <p><strong>The choice is not about which approach is better, but which is appropriate for the specific problem characteristics and constraints.</strong></p>
+        </div>
+
+        <!-- Professional Insights -->
+        <div class="content-section">
+            <h2>Professional Insights</h2>
+            <p>This comparative analysis demonstrates the importance of methodological selection in AI projects. As an engineer with background in both mechanical systems and software development, I appreciate the need to match solution complexity to problem requirements.</p>
+            
+            <p>The housing price prediction case shows how classical approaches provide efficient, interpretable solutions for well-structured problems - similar to how mechanical engineering uses established formulas for predictable systems. The facial recognition case demonstrates how deep learning handles complexity and variability - analogous to how sophisticated control systems manage dynamic environments.</p>
+            
+            <p>In practice, successful AI implementation requires understanding these trade-offs and selecting approaches that balance performance, interpretability, and computational efficiency based on specific application requirements and constraints.</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>@ 2025 Anil Ghimire| All rights reserved</p>
+            <p>Strategic Approach to Machine Learning Solutions</p>
+        </div>
+    </footer>
+</body>
+</html>
