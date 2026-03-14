@@ -272,7 +272,7 @@
         <!-- Executive Summary -->
         <div class="executive-summary">
             <h2>Executive Summary</h2>
-            <p>This report examines the distinction between classic Machine Learning (ML) and Deep Learning (DL) based on two case studies. The main objective is to demonstrate the suitable approach for each case dataset depending on the nature, complexity and the requirement for feature engineering. Our analysis compares classic ML applications (house price prediction) with deep learning applications (image recognition) to show the core differences in methodology selection based on problem characteristics.</p>
+            <p>This analysis examines the strategic application of Machine Learning (ML) and Deep Learning (DL) in software quality assurance and data engineering environments. We demonstrate through real case studies how classical ML excels with structured QA metrics (test failure prediction) while deep learning excels with unstructured data (automated visual regression detection). Understanding these distinctions is critical for choosing appropriate techniques that balance accuracy, interpretability, and computational efficiency in enterprise systems.</p>
         </div>
 
         <!-- Case Study 1 -->
@@ -280,17 +280,17 @@
             <div class="case-study ml-case">
                 <div class="case-header">
                     <span class="case-badge ml-badge">CASE STUDY 1</span>
-                    <h2>Machine Learning - Housing Price Prediction</h2>
+                    <h2>Machine Learning - Predicting Test Failures from Code Changes</h2>
                 </div>
                 
                 <div class="tech-tags">
-                    <span class="tech-tag">Linear Regression</span>
-                    <span class="tech-tag">Structured Data</span>
+                    <span class="tech-tag">Random Forest Classification</span>
+                    <span class="tech-tag">Structured Test Metrics</span>
                     <span class="tech-tag">Feature Engineering</span>
                 </div>
                 
-                <h3>Real-World Application: Zillow's Estimate</h3>
-                <p>Zillow's home value estimation model predicts property market values using linear regression by analyzing known variables like address, location, bedrooms, square footage, and other features to determine the unknown variable - price.</p>
+                <h3>Real-World Application: Smart Test Selection & Prioritization</h3>
+                <p>In enterprise QA environments with 10,000+ test cases, running full regression after every code change is expensive. Classical ML predicts which tests will fail based on code metrics—lines changed, files modified, code complexity (cyclomatic complexity), test coverage of modified code, and historical failure patterns—enabling teams to prioritize high-risk tests before full regression runs.</p>
                 
                 <div class="analysis-grid">
                     <div class="suitability-card suitable">
@@ -298,11 +298,11 @@
                             <span class="suitability-icon">✅</span>
                             Analysis of Machine Learning Suitability
                         </h4>
-                        <p>Estimating house prices based on other variables is highly suitable for classical ML because:</p>
+                        <p>Test failure prediction is highly suitable for classical ML because:</p>
                         <ul>
-                            <li><strong>Structured Data:</strong> Input data is structured, typically in spreadsheet format where each row represents a property and each column represents a specific feature</li>
-                            <li><strong>Human-Engineered Features:</strong> Model success relies on logical, human-defined features that directly influence price (square footage, zip code, bedrooms, etc.)</li>
-                            <li><strong>Interpretability:</strong> Linear regression provides clear feature weight interpretation, explaining why a home is valued at a specific price</li>
+                            <li><strong>Structured Data:</strong> Input metrics are well-defined and measurable—code delta, complexity scores, test count, historical failure rates in tabular format</li>
+                            <li><strong>Human-Engineered Features:</strong> QA teams understand which code changes impact which tests based on domain knowledge, making feature engineering straightforward</li>
+                            <li><strong>Interpretability:</strong> Feature importance reveals which metrics most strongly predict failures, enabling continuous process improvement</li>
                         </ul>
                     </div>
                     
@@ -313,9 +313,9 @@
                         </h4>
                         <p>Applying deep learning would be inefficient because:</p>
                         <ul>
-                            <li><strong>Unnecessary Complexity:</strong> DL is designed for complex problems with hidden patterns in unstructured data</li>
-                            <li><strong>Black Box Problem:</strong> Neural networks lack transparency, making it difficult to explain valuation decisions</li>
-                            <li><strong>Computational Overhead:</strong> Significant computational resources required without proportional accuracy gains</li>
+                            <li><strong>Unnecessary Complexity:</strong> DL is designed for discovering hidden patterns in unstructured data; test metrics already expose all relevant signals</li>
+                            <li><strong>Black Box Problem:</strong> Neural networks provide predictions but cannot explain WHY specific tests will fail—critical for QA decision-making</li>
+                            <li><strong>Computational Overhead:</strong> Significant GPU resources required without accuracy gains over simpler ensemble methods</li>
                         </ul>
                     </div>
                 </div>
@@ -327,17 +327,17 @@
             <div class="case-study dl-case">
                 <div class="case-header">
                     <span class="case-badge dl-badge">CASE STUDY 2</span>
-                    <h2>Deep Learning - Image Recognition</h2>
+                    <h2>Deep Learning - Automated Visual Regression Detection in UI Testing</h2>
                 </div>
                 
                 <div class="tech-tags">
                     <span class="tech-tag">Convolutional Neural Networks</span>
-                    <span class="tech-tag">Computer Vision</span>
-                    <span class="tech-tag">Automatic Feature Learning</span>
+                    <span class="tech-tag">Visual Regression Detection</span>
+                    <span class="tech-tag">Perceptual Hashing</span>
                 </div>
                 
-                <h3>Real-World Application: Smartphone Face ID</h3>
-                <p>Facial recognition technology enables phone unlocking by scanning and verifying user facial structure. This represents a key application of image recognition where deep learning algorithms (Convolutional Neural Networks) drive the entire system.</p>
+                <h3>Real-World Application: Quest Analytics Platform UI Verification</h3>
+                <p>Modern QA requires detecting unintended visual changes across complex web applications spanning thousands of pages. Deep learning compares baseline screenshots with test run screenshots through CNN models that learn pixel-level patterns, detecting subtle layout shifts, color changes, font variations, and alignment issues that pixel-perfect comparison would miss while being robust to acceptable variations (lighting, browser rendering differences).</p>
                 
                 <div class="analysis-grid">
                     <div class="suitability-card suitable">
@@ -345,11 +345,11 @@
                             <span class="suitability-icon">✅</span>
                             Analysis of Deep Learning Suitability
                         </h4>
-                        <p>Facial recognition is ideal for deep learning because:</p>
+                        <p>Visual regression detection is ideal for deep learning because:</p>
                         <ul>
-                            <li><strong>Unstructured Data:</strong> Input consists of raw pixel grids from camera images without predefined features</li>
-                            <li><strong>Automatic Feature Learning:</strong> CNNs automatically learn hierarchical features (edges → shapes → facial components)</li>
-                            <li><strong>Robustness & Generalization:</strong> Models learn to identify users despite variations in lighting, expressions, angles, and obstructions</li>
+                            <li><strong>Unstructured Data:</strong> Raw pixel data from screenshots lacks predefined features or structure for manual analysis</li>
+                            <li><strong>Automatic Feature Learning:</strong> CNNs automatically learn hierarchical features (edges → textures → components → pages) without manual specification</li>
+                            <li><strong>Robustness & Context:</strong> Models learn to ignore acceptable rendering variations while detecting true visual regressions across browsers, resolutions, and themes</li>
                         </ul>
                     </div>
                     
@@ -360,9 +360,9 @@
                         </h4>
                         <p>Classical ML models are ineffective because:</p>
                         <ul>
-                            <li><strong>Inability to Process Raw Data:</strong> Requires pre-defined features and cannot handle raw pixel data</li>
-                            <li><strong>Brittle Feature Problem:</strong> Manually engineered features (eye distance, etc.) fail with variations in pose, expression, or lighting</li>
-                            <li><strong>Limited Complexity Handling:</strong> Cannot capture the intricate patterns required for reliable facial recognition</li>
+                            <li><strong>Inability to Process Raw Images:</strong> Requires manual feature extraction (edge detection, color histograms) that captures only 10-20% of perceptually relevant information</li>
+                            <li><strong>Brittle Feature Problem:</strong> Hand-engineered features fail with browser differences, font rendering changes, or anti-aliasing variations without retraining</li>
+                            <li><strong>Limited Pattern Recognition:</strong> Cannot capture the complex spatial relationships defining visual correctness across interface elements</li>
                         </ul>
                     </div>
                 </div>
@@ -384,43 +384,43 @@
                 <tbody>
                     <tr>
                         <td><strong>Data Type</strong></td>
-                        <td>Structured, tabular data</td>
-                        <td>Unstructured data (images, audio, text)</td>
+                        <td>Structured metrics (code changes, test counts, complexity scores)</td>
+                        <td>Unstructured data (images, video frames, raw signals)</td>
                     </tr>
                     <tr>
                         <td><strong>Feature Engineering</strong></td>
-                        <td>Manual, human-defined features</td>
-                        <td>Automatic feature learning</td>
+                        <td>Manual - QA teams define metrics based on domain knowledge</td>
+                        <td>Automatic - Networks learn features from raw data</td>
                     </tr>
                     <tr>
                         <td><strong>Interpretability</strong></td>
-                        <td>High - clear feature importance</td>
-                        <td>Low - "black box" nature</td>
+                        <td>High - feature importance shows which metrics drive predictions</td>
+                        <td>Low - "black box" - difficult to explain individual predictions</td>
                     </tr>
                     <tr>
                         <td><strong>Computational Requirements</strong></td>
-                        <td>Moderate</td>
-                        <td>High (GPU-intensive)</td>
+                        <td>Moderate (CPU-sufficient)</td>
+                        <td>High (GPU-intensive for training)</td>
                     </tr>
                     <tr>
                         <td><strong>Data Requirements</strong></td>
-                        <td>Works well with smaller datasets</td>
-                        <td>Requires large amounts of data</td>
+                        <td>Works with 100s to 1000s of samples</td>
+                        <td>Requires 10000s to 100000s of samples</td>
                     </tr>
                     <tr>
-                        <td><strong>Problem Complexity</strong></td>
-                        <td>Moderately complex problems</td>
-                        <td>Highly complex patterns</td>
+                        <td><strong>QA Applications</strong></td>
+                        <td>Test prioritization, defect prediction, risk analysis</td>
+                        <td>Visual testing, anomaly detection, image recognition</td>
                     </tr>
                 </tbody>
             </table>
             
             <div class="key-points">
-                <h3>Key Decision Factors</h3>
+                <h3>Key Decision Factors for QA & Data Engineering</h3>
                 <ul>
-                    <li><strong>Choose Classical ML when:</strong> You have structured data, need interpretability, have limited computational resources, or work with smaller datasets</li>
-                    <li><strong>Choose Deep Learning when:</strong> You have unstructured data, deal with complex patterns, have large datasets, and can handle computational complexity</li>
-                    <li><strong>Feature Engineering:</strong> Manual feature engineering works for well-understood domains; automatic feature learning excels in complex, pattern-rich domains</li>
+                    <li><strong>Choose Classical ML when:</strong> Working with measurable QA metrics (test execution times, coverage %, failure rates), need explainable predictions for stakeholder decisions, have limited historical data, or require fast inference on CPU-only infrastructure</li>
+                    <li><strong>Choose Deep Learning when:</strong> Processing visual data (UI screenshots, log patterns), handling complex unstructured data, have large labeled datasets available, and can justify GPU infrastructure investment for accuracy gains</li>
+                    <li><strong>Hybrid Approach:</strong> Combine both - use ML to prioritize which tests to run visually, then use DL-based visual verification on prioritized tests</li>
                 </ul>
             </div>
         </div>
@@ -428,18 +428,18 @@
         <!-- Conclusion -->
         <div class="conclusion-box">
             <h2>Conclusion</h2>
-            <p>The analysis of these real-world applications clearly distinguishes between classic machine learning and deep learning. Classical machine learning excels with structured data, human-understandable features, and when interpretability is required. Deep learning dominates in complex domains with unstructured data where features are too complex for manual engineering and must be learned automatically.</p>
-            <p><strong>The choice is not about which approach is better, but which is appropriate for the specific problem characteristics and constraints.</strong></p>
+            <p>This comparative analysis demonstrates how classical ML and deep learning serve complementary roles in modern QA and data engineering. Test failure prediction using ML excels with structured metrics, providing interpretable risk assessments. Visual regression detection using DL handles unstructured image data, learning complex visual patterns beyond human capability.</p>
+            <p><strong>The strategic approach is not choosing one over the other, but selecting appropriate techniques based on data characteristics, business requirements, interpretability needs, and available resources. Enterprise QA systems benefit most from intelligent combinations of both approaches.</strong></p>
         </div>
 
         <!-- Professional Insights -->
         <div class="content-section">
             <h2>Professional Insights</h2>
-            <p>This comparative analysis demonstrates the importance of methodological selection in AI projects. As an engineer with background in both mechanical systems and software development, I appreciate the need to match solution complexity to problem requirements.</p>
+            <p>This comparative analysis reflects practical experience building enterprise QA and data engineering systems. With 7.5+ years in software testing and 4+ years specializing in test automation, I've repeatedly encountered situations requiring strategic methodology selection—not between "better" or "worse" approaches, but between tools appropriate for specific challenges.</p>
             
-            <p>The housing price prediction case shows how classical approaches provide efficient, interpretable solutions for well-structured problems - similar to how mechanical engineering uses established formulas for predictable systems. The facial recognition case demonstrates how deep learning handles complexity and variability - analogous to how sophisticated control systems manage dynamic environments.</p>
+            <p>In test failure prediction, classical ML (Random Forest, Gradient Boosting) provides the interpretability QA managers need. Leadership asks "Why are these tests prioritized?" and explaining feature importance (code changes, test coverage, historical failures) drives process improvements. Conversely, visual regression testing with deep learning handles complexity that logical analysis cannot—the CNN learns what "correct" looks like across thousands of pixel combinations.</p>
             
-            <p>In practice, successful AI implementation requires understanding these trade-offs and selecting approaches that balance performance, interpretability, and computational efficiency based on specific application requirements and constraints.</p>
+            <p>The intersection of data engineering and QA reveals broader principles: data quality validation uses ML for structured metrics (duplicate rates, null percentages), while anomaly detection in ETL pipelines benefits from DL for pattern recognition in complex data flows. Success requires understanding each approach's strengths—interpretability vs. capability, scalability vs. simplicity. Smart engineering matches solution complexity to problem requirements.</p>
         </div>
     </div>
 
