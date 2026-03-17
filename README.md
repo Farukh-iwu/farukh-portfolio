@@ -17,6 +17,7 @@ This is my portfolio website featuring various technical projects, articles, and
 - **Email:** farukh43@gmail.com
 - **GitHub:** [github.com/farukh43](https://github.com/farukh43)
 - **Portfolio:** This repository serves as my academic portfolio
+- **Portfolio Link:** (https://farukh-iwu.github.io/farukh-portfolio/index.html)
 
 ## Technologies Used
 - HTML5, CSS3
