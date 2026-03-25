@@ -42,15 +42,19 @@
             align-items: center;
             gap: 8px;
             margin-bottom: 20px;
+            padding: 8px 14px;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.08);
         }
 
         .artifact-header {
             text-align: center;
-            padding: 40px 0;
+            padding: 46px 24px;
             background: white;
-            margin: 20px 0;
-            border-radius: 10px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            margin: 24px 0;
+            border-radius: 16px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
         }
 
         .container {
@@ -60,12 +64,14 @@
         }
 
         .analysis-section {
-            width: 80%;
-            margin: 40px auto;
-            padding: 30px;
+            width: 88%;
+            max-width: 1060px;
+            margin: 28px auto;
+            padding: 34px;
             background: white;
-            border-radius: 10px;
-            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
+            border: 1px solid #dfefe6;
+            box-shadow: 0 10px 26px rgba(0, 0, 0, 0.08);
         }
 
         .analysis-section h2 {
@@ -78,28 +84,58 @@
 
         .analysis-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 18px;
+            margin-top: 22px;
         }
 
         .analysis-card {
             padding: 20px;
-            background: #f8f9fa;
-            border-left: 4px solid #27ae60;
-            border-radius: 5px;
+            background: #ffffff;
+            border-left: 5px solid #27ae60;
+            border-radius: 12px;
+            border: 1px solid #d4ebde;
+            box-shadow: 0 4px 12px rgba(39, 174, 96, 0.08);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .analysis-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 22px rgba(39, 174, 96, 0.14);
         }
 
         .analysis-card h3 {
             margin-top: 0;
             color: #2c3e50;
-            font-size: 1.1em;
+            font-size: 1.16em;
         }
 
         .analysis-card p {
             margin: 10px 0;
             color: #555;
             line-height: 1.6;
+        }
+
+        .analysis-grid .analysis-card:nth-child(1),
+        .analysis-grid .analysis-card:nth-child(6) {
+            background: linear-gradient(135deg, #f2fcf6, #ffffff);
+            border-left-color: #27ae60;
+        }
+
+        .analysis-grid .analysis-card:nth-child(2),
+        .analysis-grid .analysis-card:nth-child(5) {
+            background: linear-gradient(135deg, #f3f9ff, #ffffff);
+            border-left-color: #3498db;
+        }
+
+        .analysis-grid .analysis-card:nth-child(3) {
+            background: linear-gradient(135deg, #f3fcff, #ffffff);
+            border-left-color: #16a085;
+        }
+
+        .analysis-grid .analysis-card:nth-child(4) {
+            background: linear-gradient(135deg, #fff9f2, #ffffff);
+            border-left-color: #f39c12;
         }
 
         .placeholder {
@@ -113,10 +149,26 @@
 
         .project-item {
             margin: 30px 0;
-            padding: 20px;
-            background: #f8f9fa;
+            padding: 22px;
+            background: #fbfcfe;
             border-left: 4px solid #27ae60;
-            border-radius: 5px;
+            border-radius: 10px;
+            border: 1px solid #e2ebf0;
+        }
+
+        .analysis-section .project-item:nth-of-type(1) {
+            background: linear-gradient(135deg, #f2fcf6, #ffffff);
+            border-left-color: #27ae60;
+        }
+
+        .analysis-section .project-item:nth-of-type(2) {
+            background: linear-gradient(135deg, #f2f8ff, #ffffff);
+            border-left-color: #3498db;
+        }
+
+        .analysis-section .project-item:nth-of-type(3) {
+            background: linear-gradient(135deg, #f3fcff, #ffffff);
+            border-left-color: #16a085;
         }
 
         .project-item h3 {
@@ -124,17 +176,42 @@
             color: #2c3e50;
         }
 
+        .evidence-media {
+            margin-top: 18px;
+            background: #ffffff;
+            border: 1px solid #d7ebde;
+            border-radius: 12px;
+            padding: 14px;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+        }
+
+        .evidence-media img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px;
+            border: 1px solid #e9e9e9;
+        }
+
+        .evidence-caption {
+            margin-top: 10px;
+            font-size: 0.98em;
+            color: #2f3d4a;
+        }
+
         .professional-reflection {
             background: linear-gradient(135deg, #f0fdf4, #f7fef5);
-            padding: 30px;
-            border-radius: 8px;
+            padding: 34px;
+            border-radius: 16px;
             line-height: 1.8;
             color: #333;
             font-style: italic;
             border-left: 5px solid #27ae60;
-            margin: 40px auto;
-            width: 80%;
-            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+            margin: 28px auto;
+            width: 88%;
+            max-width: 1060px;
+            box-shadow: 0 10px 26px rgba(0, 0, 0, 0.08);
+            border: 1px solid #dfefe6;
         }
 
         .professional-reflection h2 {
@@ -170,6 +247,7 @@
         @media (max-width: 768px) {
             .analysis-section {
                 width: 95%;
+                padding: 22px;
             }
 
             .analysis-grid {
@@ -197,33 +275,33 @@
             <h2>Project Overview</h2>
             <div class="analysis-grid">
                 <div class="analysis-card">
-                    <h3>📌 Objective</h3>
+                    <h3>Objective</h3>
                     <p>Led comprehensive AWS cloud migration project with enterprise-scale ETL pipeline design and validation. Demonstrates expertise in data architecture, data warehouse optimization, and ensuring 100% data integrity during complex data migrations while achieving significant cost savings.</p>
                 </div>
-                
+
                 <div class="analysis-card">
-                    <h3>🛠️ Process</h3>
+                    <h3>Process</h3>
                     <p><strong>Requirements Analysis:</strong> Collaborated with business teams to understand data requirements, source systems, and target architecture. <strong>Design Phase:</strong> Designed Snowflake data warehouse schema, identified ETL transformation logic. <strong>ETL Development:</strong> Built Matillion ETL pipelines to extract data from legacy systems, transform using complex SQL, load into AWS cloud infrastructure. <strong>Validation & Testing:</strong> Performed comprehensive data reconciliation, row-by-row comparisons, and complex SQL queries to validate data accuracy. <strong>Optimization:</strong> Fine-tuned ETL for performance, implemented error handling, and established Jenkins automation for repeatability.</p>
                 </div>
-                
+
                 <div class="analysis-card">
-                    <h3>⚙️ Tools & Technologies</h3>
+                    <h3>Tools & Technologies</h3>
                     <p><strong>Cloud Platforms:</strong> AWS (S3, EC2), Azure. <strong>Data Warehouse:</strong> Snowflake, IBM Netezza, MSSQL Server, Oracle, MySQL. <strong>ETL Tools:</strong> Matillion, IBM DataStage. <strong>Languages:</strong> SQL (advanced queries), scripting languages for automation. <strong>Version Control:</strong> Git, GitHub. <strong>CI/CD & Orchestration:</strong> Jenkins, Apache Airflow (optional). <strong>Testing & Validation:</strong> Advanced SQL for data reconciliation, Python/Groovy for data quality checks.</p>
                 </div>
-                
+
                 <div class="analysis-card">
-                    <h3>💡 Skills Demonstrated</h3>
+                    <h3>Skills Demonstrated</h3>
                     <p><strong>Technical:</strong> Data warehouse design, ETL pipeline architecture, advanced SQL (complex queries, optimization), cloud platforms (AWS), schema design, data transformation logic, version control, CI/CD orchestration. <strong>Professional:</strong> Data governance, data quality assurance, stakeholder collaboration, problem-solving for data integrity, requirement analysis, documentation.</p>
                 </div>
 
                 <div class="analysis-card">
-                    <h3>📊 Value Proposition</h3>
+                    <h3>Value Proposition</h3>
                     <p><strong>For Business:</strong> Achieved $50K annual cost savings through optimized AWS cloud migration and infrastructure consolidation. <strong>For Data Quality:</strong> Ensured 100% data integrity assurance with zero data loss during transition from on-premises to cloud. <strong>For Operations:</strong> Enabled scalable, enterprise-grade data warehouse supporting analytics and reporting needs.</p>
                 </div>
 
                 <div class="analysis-card">
-                    <h3>📚 Key Learning</h3>
-                    <p>Most valuable insight: <strong>Data migration success depends on rigorous validation—not speed of transfer.</strong> Invested heavily in data reconciliation queries and row-level comparisons to catch edge cases early. Key takeaway: Automate your validation scripts; manual spot-checks will miss issues at scale. Test ETL performance with production-like data volumes.</p>
+                    <h3>Key Learning</h3>
+                    <p>Most valuable insight: <strong>Data migration success depends on rigorous validation-not speed of transfer.</strong> Invested heavily in data reconciliation queries and row-level comparisons to catch edge cases early. Key takeaway: Automate your validation scripts; manual spot-checks will miss issues at scale. Test ETL performance with production-like data volumes.</p>
                 </div>
             </div>
         </div>
@@ -243,10 +321,10 @@
             <div class="project-item">
                 <h3>ETL Pipeline Components</h3>
                 <p><strong>Extraction:</strong> Matillion jobs configured to connect to legacy systems, extract full dataset + subsequent incremental updates.</p>
-                <p><strong>Transformation:</strong> Complex SQL queries implementing business logic—data type conversions, aggregations, dimensional table joins, slowly changing dimension (SCD) logic.</p>
+                <p><strong>Transformation:</strong> Complex SQL queries implementing business logic-data type conversions, aggregations, dimensional table joins, slowly changing dimension (SCD) logic.</p>
                 <p><strong>Data Quality Checks:</strong> Row count validation, null value checks, duplicate detection, referential integrity verification, business rule validations.</p>
                 <p><strong>Error Handling:</strong> Retry logic for failed extractions, error logs for debugging, archival of failed records for manual review.</p>
-                <p><strong>Loading:</strong> Incremental load strategy—only newly changed records transferred to reduce data transfer costs and improve performance.</p>
+                <p><strong>Loading:</strong> Incremental load strategy-only newly changed records transferred to reduce data transfer costs and improve performance.</p>
                 <p><strong>Orchestration:</strong> Jenkins jobs scheduled daily, with dependencies ensuring source systems are ready before extraction begins.</p>
             </div>
 
@@ -255,7 +333,7 @@
                 <p><strong>Row-Level Reconciliation:</strong> Advanced SQL queries comparing source vs. target data row-by-row for critical tables. Automated detection of mismatches with detailed error reports.</p>
                 <p><strong>Volume Checks:</strong> Automated validations ensuring source row counts match target after transformation (accounting for SCD and slowly changing records logic).</p>
                 <p><strong>Schema Validation:</strong> Column-level type and constraint checks, ensuring data types match between systems.</p>
-                <p><strong>Business Rule Validation:</strong> SQL queries validating business logic post-transformation—e.g., revenue calculations, status transitions, date logic.</p>
+                <p><strong>Business Rule Validation:</strong> SQL queries validating business logic post-transformation-e.g., revenue calculations, status transitions, date logic.</p>
                 <p><strong>Audit Trails:</strong> Complete logging of extraction timestamps, record counts, transformation rules applied, enabling traceability and compliance audits.</p>
                 <p><strong>Result:</strong> 100% data integrity assurance with zero data loss during migration from on-premises to cloud.</p>
             </div>
@@ -293,6 +371,18 @@
                         <p style="font-size: 1.5em; font-weight: bold; color: #2c3e50; margin: 10px 0;">35% Faster</p>
                         <p>Analytics queries on Snowflake</p>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="analysis-section">
+            <h2>Project Evidence and Upgrade Plan</h2>
+            <div class="project-item">
+                <h3>Data Intelligence Architecture from Implemented Project</h3>
+                <p>This data intelligence architecture image represents the data engineering project I have worked on, including the end-to-end flow and platform components.</p>
+                <div class="evidence-media">
+                    <img src="images/data_intelligence_end-to-end_architecture_with_azure_databricks.png" alt="Data intelligence end-to-end architecture from implemented project">
+                    <p class="evidence-caption"><strong>Status:</strong> Implemented in project work. <strong>Next Step:</strong> I am preparing to upgrade the architecture with stronger monitoring, optimization, and scalable automation for future needs.</p>
                 </div>
             </div>
         </div>
@@ -339,7 +429,7 @@
                 The cloud migration projects taught me that <span class="reflection-highlight">scalability and cost-optimization are not opposing forces but complementary objectives.</span> Migrating 2TB+ of legacy data to Snowflake while reducing annual infrastructure costs by $50K wasn't about choosing one or the other - it was about designing incremental load strategies that minimize data transfer, partitioning schemas for query performance, and leveraging cloud elasticity. The real skill lies in understanding the business trade-offs and making informed architectural choices.
             </p>
             <p>
-                Looking forward, I see data engineering evolving toward autonomous data pipelines with AI-driven quality monitoring and self-healing capabilities. Yet the core principles remain unchanged: <span class="reflection-highlight">design for reliability, validate obsessively, optimize continuously, and always maintain complete lineage and auditability.</span> These principles have guided my entire career, whether architecting data warehouses, implementing ETL frameworks, or designing analytics platforms. In a data-driven world, trust is currency - and I'm committed to earning it through meticulous engineering.
+                Looking forward, I see data engineering evolving toward autonomous data pipelines with AI-driven quality monitoring and self-healing capabilities. Yet the core principles remain unchanged: <span class="reflection-highlight">design for reliability, validate obsessively, optimize continuously, and maintain complete lineage and auditability at all times.</span> These principles have guided my entire career, whether architecting data warehouses, implementing ETL frameworks, or designing analytics platforms. In a data-driven world, trust is currency - and I'm committed to earning it through meticulous engineering.
             </p>
         </div>
     </div>

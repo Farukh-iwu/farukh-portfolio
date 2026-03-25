@@ -42,15 +42,19 @@
             align-items: center;
             gap: 8px;
             margin-bottom: 20px;
+            padding: 8px 14px;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.08);
         }
 
         .artifact-header {
             text-align: center;
-            padding: 40px 0;
+            padding: 46px 24px;
             background: white;
-            margin: 20px 0;
-            border-radius: 10px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            margin: 24px 0;
+            border-radius: 16px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
         }
 
         .container {
@@ -60,12 +64,14 @@
         }
 
         .analysis-section {
-            width: 80%;
-            margin: 40px auto;
-            padding: 30px;
+            width: 88%;
+            max-width: 1060px;
+            margin: 28px auto;
+            padding: 34px;
             background: white;
-            border-radius: 10px;
-            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
+            border: 1px solid #f0e5e3;
+            box-shadow: 0 10px 26px rgba(0, 0, 0, 0.08);
         }
 
         .analysis-section h2 {
@@ -78,28 +84,58 @@
 
         .analysis-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 18px;
+            margin-top: 22px;
         }
 
         .analysis-card {
             padding: 20px;
-            background: #f8f9fa;
-            border-left: 4px solid #e74c3c;
-            border-radius: 5px;
+            background: #ffffff;
+            border-left: 5px solid #e74c3c;
+            border-radius: 12px;
+            border: 1px solid #f4d7d3;
+            box-shadow: 0 4px 12px rgba(231, 76, 60, 0.08);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .analysis-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 22px rgba(231, 76, 60, 0.14);
         }
 
         .analysis-card h3 {
             margin-top: 0;
             color: #2c3e50;
-            font-size: 1.1em;
+            font-size: 1.16em;
         }
 
         .analysis-card p {
             margin: 10px 0;
             color: #555;
             line-height: 1.6;
+        }
+
+        .analysis-grid .analysis-card:nth-child(1),
+        .analysis-grid .analysis-card:nth-child(6) {
+            background: linear-gradient(135deg, #fff5f4, #ffffff);
+            border-left-color: #e74c3c;
+        }
+
+        .analysis-grid .analysis-card:nth-child(2),
+        .analysis-grid .analysis-card:nth-child(5) {
+            background: linear-gradient(135deg, #f3f8ff, #ffffff);
+            border-left-color: #3498db;
+        }
+
+        .analysis-grid .analysis-card:nth-child(3) {
+            background: linear-gradient(135deg, #f4fbf6, #ffffff);
+            border-left-color: #27ae60;
+        }
+
+        .analysis-grid .analysis-card:nth-child(4) {
+            background: linear-gradient(135deg, #fff9f2, #ffffff);
+            border-left-color: #f39c12;
         }
 
         .placeholder {
@@ -113,10 +149,26 @@
 
         .project-item {
             margin: 30px 0;
-            padding: 20px;
-            background: #f8f9fa;
+            padding: 22px;
+            background: #fbfcfe;
             border-left: 4px solid #e74c3c;
-            border-radius: 5px;
+            border-radius: 10px;
+            border: 1px solid #ebeef2;
+        }
+
+        .analysis-section .project-item:nth-of-type(1) {
+            background: linear-gradient(135deg, #fef4f3, #ffffff);
+            border-left-color: #e74c3c;
+        }
+
+        .analysis-section .project-item:nth-of-type(2) {
+            background: linear-gradient(135deg, #f2f8ff, #ffffff);
+            border-left-color: #3498db;
+        }
+
+        .analysis-section .project-item:nth-of-type(3) {
+            background: linear-gradient(135deg, #f2fcf6, #ffffff);
+            border-left-color: #27ae60;
         }
 
         .project-item h3 {
@@ -124,17 +176,42 @@
             color: #2c3e50;
         }
 
+        .evidence-media {
+            margin-top: 18px;
+            background: #ffffff;
+            border: 1px solid #f0d7d2;
+            border-radius: 12px;
+            padding: 14px;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+        }
+
+        .evidence-media img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px;
+            border: 1px solid #e9e9e9;
+        }
+
+        .evidence-caption {
+            margin-top: 10px;
+            font-size: 0.98em;
+            color: #2f3d4a;
+        }
+
         .professional-reflection {
             background: linear-gradient(135deg, #fef5f0, #fef9f7);
-            padding: 30px;
-            border-radius: 8px;
+            padding: 34px;
+            border-radius: 16px;
             line-height: 1.8;
             color: #333;
             font-style: italic;
             border-left: 5px solid #e74c3c;
-            margin: 40px auto;
-            width: 80%;
-            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+            margin: 28px auto;
+            width: 88%;
+            max-width: 1060px;
+            box-shadow: 0 10px 26px rgba(0, 0, 0, 0.08);
+            border: 1px solid #f0e5e3;
         }
 
         .professional-reflection h2 {
@@ -170,6 +247,7 @@
         @media (max-width: 768px) {
             .analysis-section {
                 width: 95%;
+                padding: 22px;
             }
 
             .analysis-grid {
@@ -197,33 +275,33 @@
             <h2>Project Overview</h2>
             <div class="analysis-grid">
                 <div class="analysis-card">
-                    <h3>📌 Objective</h3>
+                    <h3>Objective</h3>
                     <p>Developed and deployed enterprise-scale test automation frameworks to reduce regression testing cycles, improve test coverage, and save significant operational costs. Showcases expertise in modern automation technologies (Playwright, Selenium), CI/CD integration, and AI-enhanced testing practices.</p>
                 </div>
-                
+
                 <div class="analysis-card">
-                    <h3>🛠️ Process</h3>
+                    <h3>Process</h3>
                     <p><strong>Framework Design:</strong> Architected scalable test automation frameworks using Playwright and Selenium with industry-standard patterns (Page Object Model, BDD). <strong>Strategy:</strong> Implemented data-driven testing, parallel execution, and cross-environment validation. <strong>CI/CD Integration:</strong> Built Jenkins and Bamboo pipelines for scheduled nightly runs, automated deployment verification. <strong>Optimization:</strong> Continuously refined scripts using AI tools (GitHub Copilot, ChatGPT) for faster development while maintaining quality standards.</p>
                 </div>
-                
+
                 <div class="analysis-card">
-                    <h3>⚙️ Tools & Technologies</h3>
+                    <h3>Tools & Technologies</h3>
                     <p><strong>Frameworks:</strong> Playwright, Selenium WebDriver, Cucumber (BDD), TestNG, JUnit. <strong>Languages:</strong> TypeScript, Java, Groovy, JavaScript. <strong>CI/CD:</strong> Jenkins, Bamboo, Maven, GitHub Actions. <strong>API Testing:</strong> Postman, RestAssured, Groovy Scripts. <strong>Data-Driven:</strong> Excel-based testing, SQL. <strong>Version Control:</strong> Git, GitHub, Bitbucket. <strong>AI Tools:</strong> GitHub Copilot, ChatGPT.</p>
                 </div>
-                
+
                 <div class="analysis-card">
-                    <h3>💡 Skills Demonstrated</h3>
+                    <h3>Skills Demonstrated</h3>
                     <p><strong>Technical:</strong> Test automation framework architecture, BDD/TDD, OOP principles, Page Object Model, API testing (REST/SOAP), data-driven testing, parallel execution, CI/CD pipeline configuration. <strong>Professional:</strong> Full SDLC/STLC knowledge, cross-functional collaboration (development, DevOps teams), requirement analysis, regression testing, defect management, performance optimization.</p>
                 </div>
 
                 <div class="analysis-card">
-                    <h3>📊 Value Proposition</h3>
+                    <h3>Value Proposition</h3>
                     <p><strong>For Teams:</strong> Reduced regression testing cycles by 40%, 60% reduction in manual testing effort, 25% faster feedback to developers. <strong>For Business:</strong> $5K+ savings per regression test cycle execution, $50K annual licensing cost savings through optimization. <strong>For Innovation:</strong> Accelerated test development by 30% with AI tool integration while maintaining code quality standards.</p>
                 </div>
 
                 <div class="analysis-card">
-                    <h3>📚 Key Learning</h3>
-                    <p>Most valuable insight: <strong>Modern test automation is not just about faster execution—it's about enabling continuous delivery.</strong> AI-assisted development (Copilot, ChatGPT) dramatically accelerates framework creation without sacrificing quality. Key takeaway: Invest in robust frameworks with CI/CD from day one; the ROI compounds quickly.</p>
+                    <h3>Key Learning</h3>
+                    <p>Most valuable insight: <strong>Modern test automation is not just about faster execution- it's about enabling continuous delivery.</strong> AI-assisted development (Copilot, ChatGPT) dramatically accelerates framework creation without sacrificing quality. Key takeaway: Invest in robust frameworks with CI/CD from day one; the ROI compounds quickly.</p>
                 </div>
             </div>
         </div>
@@ -283,6 +361,18 @@
                         <p style="font-size: 1.5em; font-weight: bold; color: #2c3e50; margin: 10px 0;">$5K–$50K Annual</p>
                         <p>Per-cycle savings + cloud optimization</p>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="analysis-section">
+            <h2>Project Evidence and Upgrade Plan</h2>
+            <div class="project-item">
+                <h3>QA Report from Implemented Project</h3>
+                <p>This QA report image represents the automation project I have worked on. It reflects my current framework execution outcomes and validation approach.</p>
+                <div class="evidence-media">
+                    <img src="images/QA_Report.png" alt="QA automation report from implemented project">
+                    <p class="evidence-caption"><strong>Status:</strong> Implemented in project work. <strong>Next Step:</strong> I am preparing to upgrade this framework with stronger reporting, additional coverage, and improved CI/CD reliability.</p>
                 </div>
             </div>
         </div>

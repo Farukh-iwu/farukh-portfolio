@@ -27,7 +27,7 @@
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 1320px;
             margin: 0 auto;
             padding: 20px;
         }
@@ -96,7 +96,7 @@
         }
         
         .section-content {
-            max-width: 1000px;
+            max-width: 1180px;
             margin: 0 auto;
             padding: 0 20px;
         }
@@ -148,9 +148,10 @@
         
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 24px;
             margin-top: 30px;
+            align-items: stretch;
         }
         
         .project-card {
@@ -160,6 +161,8 @@
             box-shadow: 0 3px 10px rgba(0,0,0,0.1);
             border: 1px solid #eee;
             transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
         }
         
         .project-card:hover {
@@ -169,23 +172,31 @@
         
         .project-image {
             width: 100%;
-            height: 200px;
+            height: 165px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 1.2em;
+            font-size: 1.35em;
             font-weight: 600;
         }
         
         .project-content {
-            padding: 25px;
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .project-content h3 {
+            font-size: 1.5em;
         }
         
         .project-meta {
             margin-top: 20px;
             padding-top: 20px;
             border-top: 1px solid #eee;
+            margin-top: auto;
         }
         
         .tech-stack {
@@ -226,7 +237,7 @@
         
         .journey-timeline {
             position: relative;
-            max-width: 800px;
+            max-width: 1120px;
             margin: 40px auto;
         }
         
@@ -268,6 +279,10 @@
             .project-links {
                 flex-direction: column;
             }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -294,9 +309,15 @@
                 <h2>Professional Achievements</h2>
                 <div class="journey-timeline">
                     <div class="journey-item">
+                        <div class="journey-date">Master's in Computer Information Systems – AI Specialization</div>
+                        <h3>Advancing Toward Intelligent and Responsible Systems</h3>
+                        <p>Currently pursuing a <strong>Master's in Computer Information Systems with an AI specialization at Indiana Wesleyan University</strong>, I am expanding my expertise into artificial intelligence and data-driven technologies. My focus is on bridging <strong>software quality engineering, data engineering, and AI systems</strong>, with the goal of building intelligent applications that are reliable, scalable, and ethically responsible.</p>
+                    </div>
+
+                    <div class="journey-item">
                         <div class="journey-date">B.Tech Electronics & Communication Engineering</div>
                         <h3>Foundation in Systems and Analytical Thinking</h3>
-                        <p>My engineering background built a strong foundation in analytical thinking, problem-solving, and understanding complex systems. Studying electronics and communication systems helped me develop a structured approach to analyzing system behavior, performance, and reliability—skills that later became essential in testing and validating large-scale software applications.</p>
+                        <p>My engineering background built a strong foundation in analytical thinking, problem-solving, and understanding complex systems. Studying electronics and communication systems helped me develop a structured approach to analyzing system behavior, performance, and reliability-skills that later became essential in testing and validating large-scale software applications.</p>
                     </div>
                     
                     <div class="journey-item">
@@ -309,12 +330,6 @@
                         <div class="journey-date">Data Quality, ETL & Cloud Testing</div>
                         <h3>Ensuring Data Integrity for Modern Systems</h3>
                         <p>Beyond application testing, I work extensively with <strong>data validation, ETL pipelines, and cloud migration projects</strong>. I have performed large-scale data migration and validation across platforms such as Snowflake, SQL Server, AWS, and Azure, ensuring data accuracy across complex enterprise systems. This experience strengthened my ability to validate not just applications, but the <strong>data pipelines that power analytics, decision-making, and intelligent systems</strong>.</p>
-                    </div>
-
-                    <div class="journey-item">
-                        <div class="journey-date">Master's in Computer Information Systems – AI Specialization</div>
-                        <h3>Advancing Toward Intelligent and Responsible Systems</h3>
-                        <p>Currently pursuing a <strong>Master's in Computer Information Systems with an AI specialization at Indiana Wesleyan University</strong>, I am expanding my expertise into artificial intelligence and data-driven technologies. My focus is on bridging <strong>software quality engineering, data engineering, and AI systems</strong>, with the goal of building intelligent applications that are reliable, scalable, and ethically responsible.</p>
                     </div>
                 </div>
             </div>
@@ -428,6 +443,23 @@
                         </div>
                     </div>
 
+                    <!-- ML vs DL Analysis -->
+                    <div class="project-card">
+                        <div class="project-image" style="background: linear-gradient(45deg, #9b59b6, #8e44ad);">
+                            ML vs DL Analysis
+                        </div>
+                        <div class="project-content">
+                            <h3>ML vs Deep Learning: Strategic Analysis</h3>
+                            <p>Comparative analysis of Machine Learning vs Deep Learning through real QA case studies. Demonstrates when classical ML excels (test failure prediction) versus when deep learning is appropriate (visual regression detection) in enterprise environments.</p>
+                            <div class="project-meta">
+                                <div class="tech-stack">ML Classification • Computer Vision • Analysis • QA Automation</div>
+                                <div class="project-links">
+                                    <a href="mlVsDl.html" class="btn">View Analysis</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- QA Automation Project -->
                     <div class="project-card">
                         <div class="project-image" style="background: linear-gradient(45deg, #e74c3c, #c0392b);">
@@ -457,23 +489,6 @@
                                 <div class="tech-stack">ETL • Data Architecture • SQL • Cloud Platforms</div>
                                 <div class="project-links">
                                     <a href="data-engineering.html" class="btn">View Project</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- ML vs DL Analysis -->
-                    <div class="project-card">
-                        <div class="project-image" style="background: linear-gradient(45deg, #9b59b6, #8e44ad);">
-                            ML vs DL Analysis
-                        </div>
-                        <div class="project-content">
-                            <h3>ML vs Deep Learning: Strategic Analysis</h3>
-                            <p>Comparative analysis of Machine Learning vs Deep Learning through real QA case studies. Demonstrates when classical ML excels (test failure prediction) versus when deep learning is appropriate (visual regression detection) in enterprise environments.</p>
-                            <div class="project-meta">
-                                <div class="tech-stack">ML Classification • Computer Vision • Analysis • QA Automation</div>
-                                <div class="project-links">
-                                    <a href="mlVsDl.html" class="btn">View Analysis</a>
                                 </div>
                             </div>
                         </div>
