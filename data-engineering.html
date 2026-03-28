@@ -9,7 +9,10 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            background: #f4f6f9;
+            background:
+                radial-gradient(circle at 10% 10%, rgba(15, 118, 110, 0.14) 0%, rgba(15, 118, 110, 0) 35%),
+                radial-gradient(circle at 90% 8%, rgba(249, 115, 22, 0.15) 0%, rgba(249, 115, 22, 0) 34%),
+                linear-gradient(170deg, #f5fbff 0%, #eef4ff 50%, #f7fbff 100%);
         }
 
         body::before {
@@ -30,9 +33,10 @@
         }
 
         header {
-            background: linear-gradient(135deg, #2c3e50, #34495e);
+            background: linear-gradient(135deg, #1f3a5f, #12253f);
             color: white;
             padding: 40px 0;
+            box-shadow: 0 16px 34px rgba(24, 44, 72, 0.3);
         }
 
         .back-btn {
@@ -51,10 +55,11 @@
         .artifact-header {
             text-align: center;
             padding: 46px 24px;
-            background: white;
+            background: linear-gradient(160deg, #ffffff 0%, #f8fcff 100%);
             margin: 24px 0;
             border-radius: 16px;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+            border: 1px solid #dfe9f5;
+            box-shadow: 0 12px 30px rgba(25, 38, 56, 0.09);
         }
 
         .container {
@@ -68,10 +73,10 @@
             max-width: 1060px;
             margin: 28px auto;
             padding: 34px;
-            background: white;
+            background: linear-gradient(160deg, #ffffff 0%, #f9fcff 100%);
             border-radius: 16px;
-            border: 1px solid #dfefe6;
-            box-shadow: 0 10px 26px rgba(0, 0, 0, 0.08);
+            border: 1px solid #dfe9f5;
+            box-shadow: 0 14px 30px rgba(25, 38, 56, 0.09);
         }
 
         .analysis-section h2 {
@@ -91,11 +96,11 @@
 
         .analysis-card {
             padding: 20px;
-            background: #ffffff;
+            background: linear-gradient(145deg, #ffffff 0%, #f9fcff 100%);
             border-left: 5px solid #27ae60;
             border-radius: 12px;
-            border: 1px solid #d4ebde;
-            box-shadow: 0 4px 12px rgba(39, 174, 96, 0.08);
+            border: 1px solid #dce8f6;
+            box-shadow: 0 6px 16px rgba(32, 48, 69, 0.1);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
@@ -268,6 +273,61 @@
         <div class="artifact-header">
             <h1>Data Engineering & ETL Pipeline</h1>
             <p>Showcase of data architecture, pipeline design, and data integrity practices</p>
+        </div>
+
+        <div class="analysis-section">
+            <h2>Artifact Information</h2>
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <h3>Artifact Title</h3>
+                    <p>Data Engineering and ETL Pipeline Architecture</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Introduction</h3>
+                    <p>This artifact presents enterprise data migration and ETL implementation practices focused on reliability, governance, and high-confidence analytics delivery.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Description</h3>
+                    <p>It documents end-to-end data pipeline design, transformation logic, cloud migration execution, and validation controls used to ensure production-grade data quality.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Objective</h3>
+                    <p>Build and validate scalable ETL pipelines that ensure data integrity, reduce migration risk, and improve operational efficiency in cloud data platforms.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Process</h3>
+                    <p>Gathered requirements, designed warehouse and ETL flow, implemented transformations, executed validation checks, and optimized performance for repeatable production runs.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Tools and Tech Used</h3>
+                    <p>AWS services, Snowflake, Matillion, SQL, Jenkins, Git, and data quality validation scripts for reconciliation and governance checks.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Value Proposition of the Artifact</h3>
+                    <p>Demonstrates how strong data engineering practice creates trustworthy analytics foundations while improving cost efficiency and system scalability.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Unique Value</h3>
+                    <p>The artifact links architecture decisions to measurable outcomes such as data integrity assurance, cost optimization, and improved query performance.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Relevance</h3>
+                    <p>Relevant for data engineering leaders, analytics stakeholders, and hiring teams evaluating capability in scalable ETL, migration risk reduction, and trustworthy data operations.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>References</h3>
+                    <p>Snowflake and Matillion documentation, AWS migration practices, data warehouse modeling guidance, and internal validation/reconciliation runbooks.</p>
+                </div>
+            </div>
         </div>
 
         <!-- Artifact Information Section -->

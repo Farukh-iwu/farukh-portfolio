@@ -5,12 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Farukh - Academic Portfolio</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+
         :root {
-            --primary: #2c3e50;
-            --secondary: #3498db;
-            --accent: #e74c3c;
+            --primary: #1f3a5f;
+            --secondary: #0f766e;
+            --accent: #f97316;
             --light: #ecf0f1;
-            --dark: #34495e;
+            --dark: #12253f;
+            --surface: #ffffff;
+            --muted: #6b7a8c;
         }
         
         * {
@@ -20,14 +24,17 @@
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Manrope', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             color: #333;
-            background: #f8f9fa;
+            background:
+                radial-gradient(circle at 10% 10%, rgba(15, 118, 110, 0.14) 0%, rgba(15, 118, 110, 0) 35%),
+                radial-gradient(circle at 90% 8%, rgba(249, 115, 22, 0.15) 0%, rgba(249, 115, 22, 0) 34%),
+                linear-gradient(170deg, #f5fbff 0%, #eef4ff 50%, #f7fbff 100%);
         }
         
         .container {
-            max-width: 1320px;
+            max-width: 1380px;
             margin: 0 auto;
             padding: 20px;
         }
@@ -35,101 +42,219 @@
         header {
             background: linear-gradient(135deg, var(--primary), var(--dark));
             color: white;
-            padding: 80px 0;
+            padding: 20px 0 50px;
+            border-bottom-left-radius: 24px;
+            border-bottom-right-radius: 24px;
+            box-shadow: 0 16px 34px rgba(24, 44, 72, 0.35);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            width: 340px;
+            height: 340px;
+            right: -90px;
+            top: -120px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(34, 211, 238, 0.35) 0%, rgba(34, 211, 238, 0) 70%);
+            pointer-events: none;
+        }
+
+        header::after {
+            content: "";
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            left: -70px;
+            bottom: -140px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(249, 115, 22, 0.25) 0%, rgba(249, 115, 22, 0) 70%);
+            pointer-events: none;
+        }
+
+        .top-nav {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .brand-mark {
+            font-weight: 800;
+            font-size: 1.05em;
+            letter-spacing: 0.3px;
+            color: #e8f2ff;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: #dbeafe;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95em;
+            padding: 6px 10px;
+            border-radius: 999px;
+            transition: color 0.2s ease, background 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.14);
+        }
+
+        .hero {
             text-align: center;
         }
         
         .hero h1 {
             font-size: 3em;
-            margin-bottom: 10px;
+            margin-bottom: 6px;
+            line-height: 1.15;
+            letter-spacing: -0.7px;
         }
         
         .hero h2 {
-            font-size: 1.5em;
+            font-size: 1.35em;
             font-weight: 600;
-            margin-bottom: 20px;
+            margin-bottom: 12px;
             opacity: 1;
-            color: #3498db;
+            color: #8be0ff;
             letter-spacing: 0.5px;
         }
         
         .hero p {
-            max-width: 600px;
-            margin: 0 auto 30px;
-            font-size: 1.1em;
+            max-width: 760px;
+            margin: 0 auto 20px;
+            font-size: 1.08em;
+            color: #d8e4f4;
+        }
+
+        .stat-chips {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 0 auto 16px;
+            max-width: 900px;
+        }
+
+        .stat-chip {
+            background: linear-gradient(140deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.08));
+            border: 1px solid rgba(255, 255, 255, 0.32);
+            color: #f4f9ff;
+            font-weight: 600;
+            font-size: 0.86em;
+            border-radius: 999px;
+            padding: 7px 12px;
+            backdrop-filter: blur(2px);
         }
         
         .btn {
             display: inline-block;
-            padding: 12px 30px;
-            background: var(--secondary);
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #0ea5a6, #0284c7);
             color: white;
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 999px;
             font-weight: 600;
             transition: all 0.3s ease;
+            border: 1px solid transparent;
+            box-shadow: 0 8px 20px rgba(2, 132, 199, 0.28);
         }
         
         .btn:hover {
-            background: #2980b9;
+            background: linear-gradient(135deg, #0b8e8f, #0369a1);
             transform: translateY(-2px);
         }
         
         .btn-outline {
-            background: transparent;
-            border: 2px solid var(--secondary);
-            color: var(--secondary);
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.55);
+            color: #e8f2ff;
             margin-left: 10px;
+            box-shadow: none;
         }
         
         .btn-outline:hover {
-            background: var(--secondary);
-            color: white;
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
         }
         
         section {
-            background: white;
-            margin: 40px 0;
-            padding: 60px 0;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            background: var(--surface);
+            margin: 16px 0;
+            padding: 40px 0;
+            border-radius: 16px;
+            border: 1px solid #eaf0f7;
+            box-shadow: 0 12px 30px rgba(25, 38, 56, 0.07);
+            position: relative;
+            overflow: hidden;
+        }
+
+        section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #0ea5a6 0%, #0284c7 45%, #f97316 100%);
+            opacity: 0.9;
         }
         
         .section-content {
-            max-width: 1180px;
+            max-width: 1320px;
             margin: 0 auto;
             padding: 0 20px;
         }
         
         h2 {
             color: var(--primary);
-            margin-bottom: 40px;
-            font-size: 2.2em;
+            margin-bottom: 24px;
+            font-size: 2.05em;
             text-align: center;
+            letter-spacing: -0.5px;
         }
         
         h3 {
             color: var(--secondary);
-            margin: 30px 0 15px;
+            margin: 16px 0 8px;
         }
         
         .skills-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 30px;
+            gap: 24px;
+            margin-top: 20px;
         }
         
         .skill-category {
-            background: var(--light);
+            background: linear-gradient(145deg, #f8fbff, #ffffff);
             padding: 25px;
-            border-radius: 8px;
-            border-left: 4px solid var(--secondary);
+            border-radius: 12px;
+            border-left: 4px solid #0ea5a6;
+            border: 1px solid #e3edf9;
+            box-shadow: 0 6px 18px rgba(15, 44, 74, 0.08);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px rgba(15, 44, 74, 0.14);
         }
         
         .skill-category h4 {
             color: var(--primary);
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
         
         .skill-tags {
@@ -139,50 +264,70 @@
         }
         
         .skill-tag {
-            background: white;
+            background: linear-gradient(145deg, #ffffff, #f2f8ff);
             padding: 5px 12px;
             border-radius: 15px;
             font-size: 0.9em;
-            border: 1px solid #ddd;
+            border: 1px solid #d8e6f4;
+            color: #2f4c68;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+
+        .skill-tag:hover {
+            background: linear-gradient(145deg, #eaf6ff, #fdf6ec);
+            transform: translateY(-1px);
         }
         
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 24px;
-            margin-top: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
             align-items: stretch;
         }
         
         .project-card {
             background: white;
-            border-radius: 8px;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-            border: 1px solid #eee;
+            box-shadow: 0 10px 24px rgba(25, 38, 56, 0.1);
+            border: 1px solid #e8eef5;
             transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
+            position: relative;
         }
         
         .project-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            transform: translateY(-6px);
+            box-shadow: 0 16px 36px rgba(25, 38, 56, 0.2);
+        }
+
+        .project-card::after {
+            content: "";
+            position: absolute;
+            right: -35px;
+            bottom: -35px;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(2, 132, 199, 0.12) 0%, rgba(2, 132, 199, 0) 70%);
+            pointer-events: none;
         }
         
         .project-image {
             width: 100%;
-            height: 165px;
+            height: 150px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 1.35em;
+            font-size: 1.2em;
             font-weight: 600;
         }
         
         .project-content {
-            padding: 18px;
+            padding: 14px;
             display: flex;
             flex-direction: column;
             height: 100%;
@@ -193,16 +338,16 @@
         }
         
         .project-meta {
-            margin-top: 20px;
-            padding-top: 20px;
+            margin-top: 12px;
+            padding-top: 12px;
             border-top: 1px solid #eee;
             margin-top: auto;
         }
         
         .tech-stack {
             font-size: 0.9em;
-            color: #666;
-            margin-bottom: 15px;
+            color: #65788d;
+            margin-bottom: 10px;
         }
         
         .project-links {
@@ -214,15 +359,15 @@
             background: var(--primary);
             color: white;
             text-align: center;
-            padding: 40px 0;
-            margin-top: 60px;
+            padding: 30px 0;
+            margin-top: 40px;
         }
         
         .contact-links {
             display: flex;
             justify-content: center;
             gap: 20px;
-            margin-top: 20px;
+            margin-top: 12px;
         }
         
         .contact-links a {
@@ -237,23 +382,198 @@
         
         .journey-timeline {
             position: relative;
-            max-width: 1120px;
-            margin: 40px auto;
+            max-width: 100%;
+            margin: 24px auto;
         }
         
         .journey-item {
-            background: white;
-            padding: 25px;
-            margin: 20px 0;
-            border-radius: 8px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-            border-left: 4px solid var(--secondary);
+            background: linear-gradient(145deg, #ffffff, #f9fbff);
+            padding: 20px;
+            margin: 12px 0;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(32, 48, 69, 0.11);
+            border-left: 4px solid #0284c7;
+            border: 1px solid #e5edf8;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .journey-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 22px rgba(32, 48, 69, 0.16);
         }
         
         .journey-date {
             font-weight: 600;
             color: var(--secondary);
-            margin-bottom: 10px;
+            margin-bottom: 6px;
+        }
+
+        .experience-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 14px;
+            margin-top: 8px;
+        }
+
+        .experience-item {
+            background: linear-gradient(145deg, #ffffff, #f9fbff);
+            border: 1px solid #e5edf8;
+            border-left: 4px solid #0f766e;
+            border-radius: 12px;
+            padding: 18px;
+            box-shadow: 0 5px 16px rgba(32, 48, 69, 0.08);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .experience-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(32, 48, 69, 0.14);
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
+        }
+
+        .experience-title {
+            font-size: 1.12em;
+            font-weight: 700;
+            color: #28435f;
+        }
+
+        .experience-meta {
+            color: #60758c;
+            font-size: 0.92em;
+            font-weight: 600;
+        }
+
+        .experience-list {
+            margin: 6px 0 0;
+            padding-left: 20px;
+            color: #3f5369;
+        }
+
+        .experience-list li {
+            margin: 5px 0;
+        }
+
+        .recommendations-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-top: 8px;
+        }
+
+        .recommendation-card {
+            display: flex;
+            gap: 20px;
+            background: linear-gradient(145deg, #ffffff, #f8fbff);
+            border: 1px solid #e6eef8;
+            border-left: 4px solid #0ea5a6;
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 5px 16px rgba(32, 48, 69, 0.08);
+            align-items: flex-start;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .recommendation-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(32, 48, 69, 0.14);
+        }
+
+        .recommendation-card:nth-child(2) {
+            border-left-color: #f97316;
+        }
+
+        .recommendation-card:nth-child(3) {
+            border-left-color: #0284c7;
+        }
+
+        .recommendation-card:nth-child(4) {
+            border-left-color: #7c3aed;
+        }
+
+        .recommendation-card > div:first-child {
+            min-width: 180px;
+            max-width: 200px;
+            flex-shrink: 0;
+        }
+
+        .recommendation-card h4 {
+            margin: 0 0 5px;
+            color: #244a6d;
+            font-size: 1.03em;
+        }
+
+        .recommendation-role {
+            color: #60758c;
+            font-size: 0.8em;
+            margin-bottom: 6px;
+            font-weight: 600;
+            line-height: 1.35;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            white-space: normal;
+        }
+
+        .recommendation-card p {
+            margin: 0;
+            color: #3e536a;
+            font-style: italic;
+            line-height: 1.65;
+            flex: 1;
+        }
+
+        .recommendation-source {
+            margin: 6px 0 12px;
+            text-align: center;
+            color: #5d738b;
+            font-size: 0.95em;
+            font-weight: 600;
+        }
+
+        .recommendation-source a {
+            color: #1f6695;
+            text-decoration: none;
+        }
+
+        .recommendation-source a:hover {
+            text-decoration: underline;
+        }
+
+        .resume-link-container {
+            margin-top: 20px;
+            margin-bottom: 16px;
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .resume-btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #0ea5a6, #0284c7);
+            color: white;
+            text-decoration: none;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 1em;
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 18px rgba(2, 132, 199, 0.25);
+        }
+
+        .resume-btn:hover {
+            background: #27ae60;
+            transform: translateY(-2px);
+        }
+
+        .resume-btn:active {
+            transform: translateY(0);
         }
         
         @media (max-width: 768px) {
@@ -269,6 +589,16 @@
                 padding: 40px 0;
                 margin: 20px 0;
             }
+
+            .top-nav {
+                flex-direction: column;
+                align-items: flex-start;
+                margin-bottom: 24px;
+            }
+
+            .nav-links {
+                gap: 12px;
+            }
             
             .btn-outline {
                 margin-left: 0;
@@ -283,6 +613,20 @@
             .projects-grid {
                 grid-template-columns: 1fr;
             }
+
+            .stat-chips {
+                justify-content: flex-start;
+            }
+
+            .recommendation-card {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .recommendation-card > div:first-child {
+                min-width: 100%;
+            }
+
         }
     </style>
 </head>
@@ -290,10 +634,29 @@
     <!-- Hero Section -->
     <header>
         <div class="container">
+            <div class="top-nav">
+                <div class="nav-links">
+                    <a href="#about">Bio</a>
+                    <a href="#value-proposition">Value</a>
+                    <a href="#target-audience">Audience</a>
+                    <a href="#experience">Experience</a>
+                    <a href="#recommendations">Recommendations</a>
+                    <a href="#skills">Skills</a>
+                    <a href="#projects">Artifacts</a>
+                    <a href="resume/Farukh_Resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
+                    <a href="mailto:farukh43@outlook.com">Contact</a>
+                </div>
+            </div>
             <div class="hero">
                 <h1>Farukh Ahemad Gesukhan Pathan</h1>
                 <h2>QA Automation Engineer | Ensuring Software Quality and Transforming Data for Responsible AI</h2>
                 <p>Passionate about technology and innovation. Dedicated to creating meaningful projects that demonstrate technical expertise, problem-solving abilities, and continuous learning in academic and professional domains.</p>
+                <div class="stat-chips">
+                    <span class="stat-chip">8+ Years QA & Automation</span>
+                    <span class="stat-chip">CI/CD and API Testing Focus</span>
+                    <span class="stat-chip">Data Validation and ETL Quality</span>
+                    <span class="stat-chip">AI Specialization (CIS)</span>
+                </div>
                 <div class="hero-buttons">
                     <a href="#projects" class="btn">View Artifacts</a>
                     <a href="#about" class="btn btn-outline">Professional Achievements</a>
@@ -304,6 +667,7 @@
 
     <div class="container">
         <!-- About Section -->
+        <!-- Professional Achievements Section (Bio) -->
         <section id="about">
             <div class="section-content">
                 <h2>Professional Achievements</h2>
@@ -330,6 +694,151 @@
                         <div class="journey-date">Data Quality, ETL & Cloud Testing</div>
                         <h3>Ensuring Data Integrity for Modern Systems</h3>
                         <p>Beyond application testing, I work extensively with <strong>data validation, ETL pipelines, and cloud migration projects</strong>. I have performed large-scale data migration and validation across platforms such as Snowflake, SQL Server, AWS, and Azure, ensuring data accuracy across complex enterprise systems. This experience strengthened my ability to validate not just applications, but the <strong>data pipelines that power analytics, decision-making, and intelligent systems</strong>.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Personal Value Proposition Section -->
+        <section id="value-proposition">
+            <div class="section-content">
+                <h2>Personal Value Proposition</h2>
+                <div class="journey-timeline">
+                    <div class="journey-item">
+                        <h3>Where I Create Value</h3>
+                        <p>I combine quality engineering, test automation, and data pipeline validation to help teams release reliable software and trustworthy data products faster. My strength is bridging engineering execution with measurable outcomes: reduced regression time, lower operational risk, and stronger confidence in production systems.</p>
+                    </div>
+                    <div class="journey-item">
+                        <h3>What Makes My Approach Unique</h3>
+                        <p>I bring an end-to-end mindset that connects application quality, data integrity, and responsible AI readiness. This allows me to contribute not only to defect prevention and automation coverage, but also to system reliability, governance-aware validation, and long-term scalability.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Target Audience Section -->
+        <section id="target-audience">
+            <div class="section-content">
+                <h2>Target Audience</h2>
+                <div class="journey-timeline">
+                    <div class="journey-item">
+                        <h3>Primary Audience</h3>
+                        <p>This portfolio is designed for QA leaders, SDET managers, data engineering managers, and hiring teams seeking professionals who can improve software quality and data reliability in cloud-first environments.</p>
+                    </div>
+                    <div class="journey-item">
+                        <h3>Why This Portfolio Is Relevant</h3>
+                        <p>Each artifact demonstrates practical, outcome-based capabilities: automation framework design, AI/ML analysis for engineering decisions, and enterprise ETL/data validation practices. The portfolio helps reviewers quickly evaluate technical depth, business impact, and readiness for modern AI-enabled engineering roles.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience">
+            <div class="section-content">
+                <h2>Professional Experience</h2>
+                <div class="experience-grid">
+                    <div class="experience-item">
+                        <div class="experience-header">
+                            <div class="experience-title">Senior Test Engineer | HCL Technologies Ltd</div>
+                            <div class="experience-meta">Oct 2022 - Apr 2023</div>
+                        </div>
+                        <ul class="experience-list">
+                            <li>Led the development of a Playwright automation framework using TypeScript, reducing regression testing time by 40% through parallel execution and optimized test scripts.</li>
+                            <li>Integrated AI tools including GitHub Copilot and ChatGPT into the testing workflow, accelerating test script generation by 30% while maintaining code quality standards.</li>
+                            <li>Built comprehensive CI/CD pipelines in Jenkins that enabled end-to-end test automation, including scheduled nightly runs and deployment verification tests.</li>
+                            <li>Conducted extensive data migration testing for AWS cloud projects, ensuring data integrity during transition from on-premise to cloud infrastructure.</li>
+                            <li>Collaborated closely with DevOps teams to optimize test execution workflows, resulting in 25% faster feedback cycles for development teams.</li>
+                        </ul>
+                    </div>
+
+                    <div class="experience-item">
+                        <div class="experience-header">
+                            <div class="experience-title">Engineer IT Test II | Quest Diagnostics</div>
+                            <div class="experience-meta">Oct 2020 - Oct 2022</div>
+                        </div>
+                        <ul class="experience-list">
+                            <li>Automated 85% of UI test cases for Quest Analytics Website using Playwright with TypeScript, covering all critical user journeys across UAT, QA, and PROD environments.</li>
+                            <li>Achieved $50K in annual savings through comprehensive AWS cloud migration testing, validating data transfers between Snowflake, Matillion, and legacy systems.</li>
+                            <li>Developed robust Groovy scripts for API testing using an Excel-based data-driven approach, increasing test coverage by 35% for critical business workflows.</li>
+                            <li>Performed complex ETL testing using advanced SQL queries to validate data transformations and business rules across multiple data warehouse layers.</li>
+                            <li>Configured and maintained Jenkins jobs enabling automated test execution across multiple environments, reducing manual testing effort by 60%.</li>
+                        </ul>
+                    </div>
+
+                    <div class="experience-item">
+                        <div class="experience-header">
+                            <div class="experience-title">Test Analyst | Infosys Ltd</div>
+                            <div class="experience-meta">Jul 2017 - Oct 2020</div>
+                        </div>
+                        <ul class="experience-list">
+                            <li>Designed and implemented a BDD framework using Selenium WebDriver with Cucumber for the FileNet ECM project, enabling business-readable test cases.</li>
+                            <li>Automated regression test suites that saved $5K per execution cycle while improving test accuracy and reducing human errors in repetitive tests.</li>
+                            <li>Configured Maven POM files and established CI pipelines in Bamboo supporting continuous testing throughout the development lifecycle.</li>
+                            <li>Developed comprehensive SOAP/REST API tests using Groovy scripts that validated critical integration points between enterprise systems.</li>
+                            <li>Created detailed Extent Reports for test execution visualization, providing stakeholders with clear insights into test coverage and results.</li>
+                        </ul>
+                    </div>
+
+                    <div class="experience-item">
+                        <div class="experience-header">
+                            <div class="experience-title">Software Tester and Data Administrator | eNix Software Pvt Ltd</div>
+                            <div class="experience-meta">Early Career Role</div>
+                        </div>
+                        <ul class="experience-list">
+                            <li>Conducted manual testing for JotERP (Ship Management Portal), including functional, integration, and database testing.</li>
+                            <li>Created detailed test cases and test scenarios based on business requirements and functional specifications.</li>
+                            <li>Performed defect tracking and reporting using Bugzilla, ensuring timely resolution of critical issues.</li>
+                            <li>Participated in requirement analysis and test planning sessions with development teams.</li>
+                            <li>Executed regression testing for each release cycle to ensure system stability.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recommendations Section -->
+        <section id="recommendations">
+            <div class="section-content">
+                <h2>Recommendations</h2>
+                <p class="recommendation-source">
+                    Verified on <a href="https://www.linkedin.com/in/farukh-pathan/details/recommendations/?detailScreenTabIndex=0" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                </p>
+                <div class="recommendations-grid">
+                    <div class="recommendation-card">
+                        <div>
+                            <h4><a href="https://www.linkedin.com/in/joannie-mchugh-b041a09/" target="_blank" rel="noopener noreferrer">Joannie McHugh</a></h4>
+                            <div class="recommendation-role">Retired from Sr. Business Analyst at Quest Diagnostics</div>
+                            <div class="recommendation-role">March 5, 2023, Joannie was Farukh Ahemad G's client</div>
+                        </div>
+                        <p>"I have worked with Farukh for several years and he is a highly qualified tester, but he is so much more than that, he is an invaluable team member. His test cases are very thorough with clearly documented expected results, especially around the exception scenarios. He has the technical skills to perform his own detailed analysis before creating defects to understand if the issue is data or code related, and often helps the team determine the specific root cause. When reviewing features and user stories requirements, he will ask questions and provide his input to ensure the requirements are understood by the entire team and he isn't shy to offer alternate solutions. He demonstrates leadership skills by mentoring new QA members but also will step up to help ensure any new team member has the needed application, business, and process training to quickly become part of the team. He is that team member that helps the rest of us succeed."</p>
+                    </div>
+
+                    <div class="recommendation-card">
+                        <div>
+                            <h4><a href="https://www.linkedin.com/in/cara-langella/" target="_blank" rel="noopener noreferrer">Cara Langella</a></h4>
+                            <div class="recommendation-role">Project Manager | Business &amp; Systems Analyst | Agile &amp; Scrum Expert | Creative Thinker | Digital Transformation Leader | Requirements Gathering | Product Management | SDLC | Vendor Relationships | XL Analytical Skills</div>
+                            <div class="recommendation-role">May 25, 2021, Cara worked with Farukh Ahemad G on the same team</div>
+                        </div>
+                        <p>"Farukh is a methodical, thorough software tester who is pleasure to work with. He is an excellent team player with many great ideas of streamlining testing. I enjoyed working with Farukh and appreciated his dedication."</p>
+                    </div>
+
+                    <div class="recommendation-card">
+                        <div>
+                            <h4><a href="https://www.linkedin.com/in/naman-brahmbhatt-7585a627/" target="_blank" rel="noopener noreferrer">Naman Brahmbhatt</a></h4>
+                            <div class="recommendation-role">Tech enthusiast / Goal-oriented leader</div>
+                            <div class="recommendation-role">May 21, 2021, Naman managed Farukh Ahemad G directly</div>
+                        </div>
+                        <p>"It was a great pleasure to manage a team that Farukh was part of. One thing stands out for him was his sheer dedication. Adjusting to project needs and taking responsibilities of his work are some of the qualities I look for in my team and Farukh had demonstrated those at all times. I would recommend Farukh to any projects looking for a sincere and dedicated team member."</p>
+                    </div>
+
+                    <div class="recommendation-card">
+                        <div>
+                            <h4><a href="https://www.linkedin.com/in/ramakrishnaaraod/" target="_blank" rel="noopener noreferrer">Ramakrishnaa Rao Dandanayakula</a></h4>
+                            <div class="recommendation-role">VP Technology &amp; Product Leader | InsurTech &amp; FinTech | AI, OCR &amp; LLM Automation | Enterprise SaaS &amp; ERP Architecture | Agile &amp; DevOps Transformation | Cloud &amp; .NET Ecosystems @ OneInsure.com</div>
+                            <div class="recommendation-role">May 13, 2021, Ramakrishnaa Rao managed Farukh Ahemad G directly</div>
+                        </div>
+                        <p>"He worked with me for 2 years as junior resource...with in few months he has emerged as key resource... after that never looked back...."</p>
                     </div>
                 </div>
             </div>
@@ -493,6 +1002,23 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- API Testing Project -->
+                    <div class="project-card">
+                        <div class="project-image" style="background: linear-gradient(45deg, #1f6695, #144a6d);">
+                            API Testing
+                        </div>
+                        <div class="project-content">
+                            <h3>API Testing with Postman & RestAssured</h3>
+                            <p>End-to-end API testing artifact demonstrating Postman validation, RestAssured automation in Java, and CI/CD pipeline integration with evidence from real repositories and reports.</p>
+                            <div class="project-meta">
+                                <div class="tech-stack">Postman • RestAssured • Java • Maven • CI/CD</div>
+                                <div class="project-links">
+                                    <a href="api-testing.html" class="btn">View Project</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -507,6 +1033,11 @@
                 <a href="mailto:farukh43@outlook.com">Email</a>
                 <a href="https://github.com/farukh43">GitHub</a>
                 <a href="mailto:farukh43@outlook.com">Contact</a>
+            </div>
+            <div class="resume-link-container">
+                <a href="resume/Farukh_Resume.pdf" target="_blank" rel="noopener noreferrer" class="resume-btn">
+                    📄 View Resume
+                </a>
             </div>
         </div>
     </footer>
