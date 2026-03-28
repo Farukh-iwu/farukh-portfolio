@@ -22,6 +22,15 @@
             padding: 0;
             box-sizing: border-box;
         }
+
+        /* Hide extension-injected PDF link icons that can appear beside resume links */
+        img[src^="chrome-extension://"] {
+            display: none !important;
+        }
+
+        a[title="View this pdf file"][original-url] {
+            display: none !important;
+        }
         
         body {
             font-family: 'Manrope', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -78,7 +87,7 @@
             display: flex;
             align-items: center;
             justify-content: flex-end;
-            gap: 18px;
+            gap: 8px;
             margin-bottom: 28px;
         }
 
@@ -92,8 +101,11 @@
         .nav-links {
             display: flex;
             align-items: center;
-            gap: 18px;
+            justify-content: flex-end;
+            column-gap: 6px;
+            row-gap: 6px;
             flex-wrap: wrap;
+            max-width: 100%;
         }
 
         .nav-links a {
@@ -101,9 +113,11 @@
             text-decoration: none;
             font-weight: 600;
             font-size: 0.95em;
-            padding: 6px 10px;
+            padding: 6px 9px;
             border-radius: 999px;
             transition: color 0.2s ease, background 0.2s ease;
+            white-space: nowrap;
+            line-height: 1.2;
         }
 
         .nav-links a:hover {
@@ -592,12 +606,19 @@
 
             .top-nav {
                 flex-direction: column;
-                align-items: flex-start;
+                align-items: stretch;
                 margin-bottom: 24px;
             }
 
             .nav-links {
-                gap: 12px;
+                justify-content: flex-start;
+                column-gap: 8px;
+                row-gap: 8px;
+            }
+
+            .nav-links a {
+                font-size: 0.9em;
+                padding: 6px 8px;
             }
             
             .btn-outline {
