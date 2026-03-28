@@ -51,7 +51,7 @@
         header {
             background: linear-gradient(135deg, var(--primary), var(--dark));
             color: white;
-            padding: 20px 0 50px;
+            padding: 92px 0 50px;
             border-bottom-left-radius: 24px;
             border-bottom-right-radius: 24px;
             box-shadow: 0 16px 34px rgba(24, 44, 72, 0.35);
@@ -88,7 +88,19 @@
             align-items: center;
             justify-content: flex-end;
             gap: 8px;
-            margin-bottom: 28px;
+            position: fixed;
+            top: 12px;
+            left: 0;
+            right: 0;
+            z-index: 1100;
+            width: min(1380px, calc(100% - 24px));
+            margin: 0 auto;
+            padding: 10px 14px;
+            border-radius: 999px;
+            background: rgba(14, 24, 43, 0.58);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 24px rgba(9, 18, 33, 0.35);
         }
 
         .brand-mark {
@@ -207,6 +219,7 @@
             background: var(--surface);
             margin: 16px 0;
             padding: 40px 0;
+            scroll-margin-top: 112px;
             border-radius: 16px;
             border: 1px solid #eaf0f7;
             box-shadow: 0 12px 30px rgba(25, 38, 56, 0.07);
@@ -591,6 +604,14 @@
         }
         
         @media (max-width: 768px) {
+            section {
+                scroll-margin-top: 136px;
+            }
+
+            header {
+                padding-top: 120px;
+            }
+
             .hero h1 {
                 font-size: 2.2em;
             }
@@ -605,9 +626,11 @@
             }
 
             .top-nav {
-                flex-direction: column;
-                align-items: stretch;
-                margin-bottom: 24px;
+                top: 8px;
+                width: calc(100% - 16px);
+                border-radius: 16px;
+                padding: 8px 10px;
+                justify-content: flex-start;
             }
 
             .nav-links {
