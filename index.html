@@ -8,13 +8,13 @@
         @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
 
         :root {
-            --primary: #1f3a5f;
-            --secondary: #0f766e;
-            --accent: #f97316;
+            --primary: #17365d;
+            --secondary: #0ea5a6;
+            --accent: #fb7185;
             --light: #ecf0f1;
-            --dark: #12253f;
+            --dark: #0f2746;
             --surface: #ffffff;
-            --muted: #6b7a8c;
+            --muted: #4f6278;
         }
         
         * {
@@ -35,11 +35,14 @@
         body {
             font-family: 'Manrope', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            color: #333;
+            color: #1f2937;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
             background:
-                radial-gradient(circle at 10% 10%, rgba(15, 118, 110, 0.14) 0%, rgba(15, 118, 110, 0) 35%),
-                radial-gradient(circle at 90% 8%, rgba(249, 115, 22, 0.15) 0%, rgba(249, 115, 22, 0) 34%),
-                linear-gradient(170deg, #f5fbff 0%, #eef4ff 50%, #f7fbff 100%);
+                radial-gradient(circle at 8% 8%, rgba(14, 165, 166, 0.28) 0%, rgba(14, 165, 166, 0) 38%),
+                radial-gradient(circle at 92% 8%, rgba(251, 113, 133, 0.25) 0%, rgba(251, 113, 133, 0) 36%),
+                radial-gradient(circle at 50% 100%, rgba(14, 165, 233, 0.2) 0%, rgba(14, 165, 233, 0) 42%),
+                linear-gradient(165deg, #f1f8ff 0%, #e9f2ff 46%, #f6fbff 100%);
         }
         
         .container {
@@ -54,7 +57,7 @@
             padding: 92px 0 50px;
             border-bottom-left-radius: 24px;
             border-bottom-right-radius: 24px;
-            box-shadow: 0 16px 34px rgba(24, 44, 72, 0.35);
+            box-shadow: 0 22px 44px rgba(24, 44, 72, 0.42);
             position: relative;
             overflow: hidden;
         }
@@ -67,7 +70,7 @@
             right: -90px;
             top: -120px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(34, 211, 238, 0.35) 0%, rgba(34, 211, 238, 0) 70%);
+            background: radial-gradient(circle, rgba(34, 211, 238, 0.48) 0%, rgba(34, 211, 238, 0) 72%);
             pointer-events: none;
         }
 
@@ -79,7 +82,7 @@
             left: -70px;
             bottom: -140px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(249, 115, 22, 0.25) 0%, rgba(249, 115, 22, 0) 70%);
+            background: radial-gradient(circle, rgba(251, 113, 133, 0.38) 0%, rgba(251, 113, 133, 0) 72%);
             pointer-events: none;
         }
 
@@ -97,10 +100,10 @@
             margin: 0 auto;
             padding: 10px 14px;
             border-radius: 999px;
-            background: rgba(14, 24, 43, 0.58);
+            background: rgba(10, 22, 40, 0.74);
             border: 1px solid rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(10px);
-            box-shadow: 0 10px 24px rgba(9, 18, 33, 0.35);
+            box-shadow: 0 12px 28px rgba(9, 18, 33, 0.5);
         }
 
         .brand-mark {
@@ -108,6 +111,11 @@
             font-size: 1.05em;
             letter-spacing: 0.3px;
             color: #e8f2ff;
+            margin-right: auto;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, rgba(45, 212, 191, 0.22), rgba(99, 102, 241, 0.2));
+            border: 1px solid rgba(255, 255, 255, 0.28);
         }
 
         .nav-links {
@@ -124,7 +132,7 @@
             color: #dbeafe;
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.95em;
+            font-size: 0.9em;
             padding: 6px 9px;
             border-radius: 999px;
             transition: color 0.2s ease, background 0.2s ease;
@@ -132,9 +140,16 @@
             line-height: 1.2;
         }
 
+        .nav-links a:focus-visible,
+        .btn:focus-visible,
+        .resume-btn:focus-visible {
+            outline: 2px solid #93c5fd;
+            outline-offset: 2px;
+        }
+
         .nav-links a:hover {
             color: #ffffff;
-            background: rgba(255, 255, 255, 0.14);
+            background: linear-gradient(135deg, rgba(20, 184, 166, 0.35), rgba(14, 165, 233, 0.28));
         }
 
         .hero {
@@ -142,25 +157,26 @@
         }
         
         .hero h1 {
-            font-size: 3em;
+            font-size: clamp(2.15rem, 4.2vw, 3.1rem);
             margin-bottom: 6px;
-            line-height: 1.15;
-            letter-spacing: -0.7px;
+            line-height: 1.12;
+            letter-spacing: -0.9px;
+            text-shadow: 0 2px 18px rgba(56, 189, 248, 0.2);
         }
         
         .hero h2 {
-            font-size: 1.35em;
+            font-size: clamp(1.05rem, 2.2vw, 1.35rem);
             font-weight: 600;
             margin-bottom: 12px;
             opacity: 1;
             color: #8be0ff;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.35px;
         }
         
         .hero p {
             max-width: 760px;
             margin: 0 auto 20px;
-            font-size: 1.08em;
+            font-size: 1.03em;
             color: #d8e4f4;
         }
 
@@ -182,23 +198,24 @@
             border-radius: 999px;
             padding: 7px 12px;
             backdrop-filter: blur(2px);
+            box-shadow: 0 6px 14px rgba(5, 14, 30, 0.22);
         }
         
         .btn {
             display: inline-block;
             padding: 12px 24px;
-            background: linear-gradient(135deg, #0ea5a6, #0284c7);
+            background: linear-gradient(135deg, #2dd4bf, #0ea5e9 55%, #6366f1 100%);
             color: white;
             text-decoration: none;
             border-radius: 999px;
             font-weight: 600;
             transition: all 0.3s ease;
             border: 1px solid transparent;
-            box-shadow: 0 8px 20px rgba(2, 132, 199, 0.28);
+            box-shadow: 0 12px 26px rgba(14, 165, 233, 0.42);
         }
         
         .btn:hover {
-            background: linear-gradient(135deg, #0b8e8f, #0369a1);
+            background: linear-gradient(135deg, #14b8a6, #0284c7 58%, #4f46e5 100%);
             transform: translateY(-2px);
         }
         
@@ -216,13 +233,13 @@
         }
         
         section {
-            background: var(--surface);
+            background: linear-gradient(160deg, #ffffff 0%, #f9fcff 100%);
             margin: 16px 0;
             padding: 40px 0;
             scroll-margin-top: 112px;
             border-radius: 16px;
-            border: 1px solid #eaf0f7;
-            box-shadow: 0 12px 30px rgba(25, 38, 56, 0.07);
+            border: 1px solid #dde8f5;
+            box-shadow: 0 16px 34px rgba(25, 38, 56, 0.12);
             position: relative;
             overflow: hidden;
         }
@@ -233,9 +250,21 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #0ea5a6 0%, #0284c7 45%, #f97316 100%);
+            height: 6px;
+            background: linear-gradient(90deg, #2dd4bf 0%, #0ea5e9 30%, #6366f1 63%, #fb7185 100%);
             opacity: 0.9;
+        }
+
+        section::after {
+            content: "";
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            right: -90px;
+            top: -90px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.13) 0%, rgba(99, 102, 241, 0) 72%);
+            pointer-events: none;
         }
         
         .section-content {
@@ -246,15 +275,22 @@
         
         h2 {
             color: var(--primary);
-            margin-bottom: 24px;
-            font-size: 2.05em;
+            margin-bottom: 20px;
+            font-size: clamp(1.6rem, 2.8vw, 2.05rem);
             text-align: center;
             letter-spacing: -0.5px;
+            line-height: 1.2;
         }
         
         h3 {
             color: var(--secondary);
-            margin: 16px 0 8px;
+            margin: 14px 0 8px;
+            line-height: 1.3;
+        }
+
+        p {
+            color: #334155;
+            line-height: 1.7;
         }
         
         .skills-grid {
@@ -265,18 +301,38 @@
         }
         
         .skill-category {
-            background: linear-gradient(145deg, #f8fbff, #ffffff);
+            background: linear-gradient(145deg, #f6fffd 0%, #ffffff 60%, #f2f9ff 100%);
             padding: 25px;
             border-radius: 12px;
-            border-left: 4px solid #0ea5a6;
-            border: 1px solid #e3edf9;
-            box-shadow: 0 6px 18px rgba(15, 44, 74, 0.08);
+            border-left: 5px solid #0ea5a6;
+            border: 1px solid #d7e6f4;
+            box-shadow: 0 10px 20px rgba(15, 44, 74, 0.13);
             transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
 
         .skill-category:hover {
             transform: translateY(-3px);
-            box-shadow: 0 12px 24px rgba(15, 44, 74, 0.14);
+            box-shadow: 0 16px 30px rgba(15, 44, 74, 0.18);
+        }
+
+        .skills-grid .skill-category:nth-child(1) {
+            border-left-color: #0ea5a6;
+            background: linear-gradient(145deg, #eefcf9 0%, #ffffff 60%, #eff7ff 100%);
+        }
+
+        .skills-grid .skill-category:nth-child(2) {
+            border-left-color: #0ea5e9;
+            background: linear-gradient(145deg, #eef8ff 0%, #ffffff 60%, #f2f7ff 100%);
+        }
+
+        .skills-grid .skill-category:nth-child(3) {
+            border-left-color: #6366f1;
+            background: linear-gradient(145deg, #f1f2ff 0%, #ffffff 60%, #f4f8ff 100%);
+        }
+
+        .skills-grid .skill-category:nth-child(4) {
+            border-left-color: #fb7185;
+            background: linear-gradient(145deg, #fff1f5 0%, #ffffff 60%, #fff7f1 100%);
         }
         
         .skill-category h4 {
@@ -291,12 +347,12 @@
         }
         
         .skill-tag {
-            background: linear-gradient(145deg, #ffffff, #f2f8ff);
+            background: linear-gradient(145deg, #ffffff, #eef6ff);
             padding: 5px 12px;
             border-radius: 15px;
             font-size: 0.9em;
-            border: 1px solid #d8e6f4;
-            color: #2f4c68;
+            border: 1px solid #cfe0f1;
+            color: #1f3d5a;
             transition: background 0.2s ease, transform 0.2s ease;
         }
 
@@ -314,11 +370,11 @@
         }
         
         .project-card {
-            background: white;
+            background: linear-gradient(155deg, #ffffff 0%, #f8fbff 100%);
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 10px 24px rgba(25, 38, 56, 0.1);
-            border: 1px solid #e8eef5;
+            border: 1px solid #dbe6f3;
             transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
@@ -327,7 +383,7 @@
         
         .project-card:hover {
             transform: translateY(-6px);
-            box-shadow: 0 16px 36px rgba(25, 38, 56, 0.2);
+            box-shadow: 0 18px 40px rgba(25, 38, 56, 0.24);
         }
 
         .project-card::after {
@@ -338,7 +394,7 @@
             width: 120px;
             height: 120px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(2, 132, 199, 0.12) 0%, rgba(2, 132, 199, 0) 70%);
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, rgba(99, 102, 241, 0) 70%);
             pointer-events: none;
         }
         
@@ -361,20 +417,22 @@
         }
 
         .project-content h3 {
-            font-size: 1.5em;
+            font-size: 1.35em;
+            color: #163a63;
         }
         
         .project-meta {
             margin-top: 12px;
             padding-top: 12px;
-            border-top: 1px solid #eee;
+            border-top: 1px solid #e3e8ef;
             margin-top: auto;
         }
         
         .tech-stack {
-            font-size: 0.9em;
+            font-size: 0.86em;
             color: #65788d;
             margin-bottom: 10px;
+            font-weight: 600;
         }
         
         .project-links {
@@ -388,6 +446,13 @@
             text-align: center;
             padding: 30px 0;
             margin-top: 40px;
+        }
+
+        footer p {
+            color: #e8f2ff;
+            max-width: 980px;
+            margin: 10px auto 0;
+            line-height: 1.7;
         }
         
         .contact-links {
@@ -414,19 +479,19 @@
         }
         
         .journey-item {
-            background: linear-gradient(145deg, #ffffff, #f9fbff);
+            background: linear-gradient(145deg, #ffffff 0%, #f8fcff 55%, #f4fffd 100%);
             padding: 20px;
-            margin: 12px 0;
+            margin: 10px 0;
             border-radius: 12px;
             box-shadow: 0 6px 18px rgba(32, 48, 69, 0.11);
-            border-left: 4px solid #0284c7;
-            border: 1px solid #e5edf8;
+            border-left: 5px solid #0284c7;
+            border: 1px solid #dae7f5;
             transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
 
         .journey-item:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 22px rgba(32, 48, 69, 0.16);
+            box-shadow: 0 14px 26px rgba(32, 48, 69, 0.19);
         }
         
         .journey-date {
@@ -443,9 +508,9 @@
         }
 
         .experience-item {
-            background: linear-gradient(145deg, #ffffff, #f9fbff);
-            border: 1px solid #e5edf8;
-            border-left: 4px solid #0f766e;
+            background: linear-gradient(145deg, #ffffff 0%, #f8fffd 62%, #f4f9ff 100%);
+            border: 1px solid #d9e7f5;
+            border-left: 5px solid #0f766e;
             border-radius: 12px;
             padding: 18px;
             box-shadow: 0 5px 16px rgba(32, 48, 69, 0.08);
@@ -454,7 +519,7 @@
 
         .experience-item:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 24px rgba(32, 48, 69, 0.14);
+            box-shadow: 0 15px 28px rgba(32, 48, 69, 0.18);
         }
 
         .experience-header {
@@ -484,7 +549,7 @@
         }
 
         .experience-list li {
-            margin: 5px 0;
+            margin: 4px 0;
         }
 
         .recommendations-grid {
@@ -497,9 +562,9 @@
         .recommendation-card {
             display: flex;
             gap: 20px;
-            background: linear-gradient(145deg, #ffffff, #f8fbff);
-            border: 1px solid #e6eef8;
-            border-left: 4px solid #0ea5a6;
+            background: linear-gradient(145deg, #ffffff 0%, #f9fcff 100%);
+            border: 1px solid #dce8f6;
+            border-left: 5px solid #0ea5a6;
             border-radius: 12px;
             padding: 16px;
             box-shadow: 0 5px 16px rgba(32, 48, 69, 0.08);
@@ -521,12 +586,12 @@
         }
 
         .recommendation-card:nth-child(4) {
-            border-left-color: #7c3aed;
+            border-left-color: #6366f1;
         }
 
         .recommendation-card > div:first-child {
-            min-width: 180px;
-            max-width: 200px;
+            min-width: 250px;
+            max-width: 320px;
             flex-shrink: 0;
         }
 
@@ -536,8 +601,19 @@
             font-size: 1.03em;
         }
 
-        .recommendation-role {
-            color: #60758c;
+        .recommendation-designation {
+            color: #41566d;
+            font-size: 0.9em;
+            margin-bottom: 8px;
+            font-weight: 600;
+            line-height: 1.35;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            white-space: normal;
+        }
+
+        .recommendation-meta {
+            color: #64748b;
             font-size: 0.8em;
             margin-bottom: 6px;
             font-weight: 600;
@@ -549,9 +625,9 @@
 
         .recommendation-card p {
             margin: 0;
-            color: #3e536a;
+            color: #2f445c;
             font-style: italic;
-            line-height: 1.65;
+            line-height: 1.58;
             flex: 1;
         }
 
@@ -583,7 +659,7 @@
         .resume-btn {
             display: inline-block;
             padding: 12px 24px;
-            background: linear-gradient(135deg, #0ea5a6, #0284c7);
+            background: linear-gradient(135deg, #2dd4bf, #0ea5e9 55%, #6366f1 100%);
             color: white;
             text-decoration: none;
             border-radius: 999px;
@@ -591,7 +667,7 @@
             font-size: 1em;
             border: 1px solid transparent;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 18px rgba(2, 132, 199, 0.25);
+            box-shadow: 0 12px 24px rgba(14, 165, 233, 0.4);
         }
 
         .resume-btn:hover {
@@ -633,6 +709,12 @@
                 justify-content: flex-start;
             }
 
+            .brand-mark {
+                margin-right: 8px;
+                font-size: 0.95em;
+                padding: 5px 10px;
+            }
+
             .nav-links {
                 justify-content: flex-start;
                 column-gap: 8px;
@@ -669,6 +751,7 @@
 
             .recommendation-card > div:first-child {
                 min-width: 100%;
+                max-width: 100%;
             }
 
         }
@@ -679,6 +762,7 @@
     <header>
         <div class="container">
             <div class="top-nav">
+                <div class="brand-mark">FP</div>
                 <div class="nav-links">
                     <a href="#about">Bio</a>
                     <a href="#value-proposition">Value</a>
@@ -852,8 +936,8 @@
                     <div class="recommendation-card">
                         <div>
                             <h4><a href="https://www.linkedin.com/in/joannie-mchugh-b041a09/" target="_blank" rel="noopener noreferrer">Joannie McHugh</a></h4>
-                            <div class="recommendation-role">Retired from Sr. Business Analyst at Quest Diagnostics</div>
-                            <div class="recommendation-role">March 5, 2023, Joannie was Farukh Ahemad G's client</div>
+                            <div class="recommendation-designation">Retired from Sr. Business Analyst at Quest Diagnostics</div>
+                            <div class="recommendation-meta">March 5, 2023, Joannie was Farukh Ahemad G's client</div>
                         </div>
                         <p>"I have worked with Farukh for several years and he is a highly qualified tester, but he is so much more than that, he is an invaluable team member. His test cases are very thorough with clearly documented expected results, especially around the exception scenarios. He has the technical skills to perform his own detailed analysis before creating defects to understand if the issue is data or code related, and often helps the team determine the specific root cause. When reviewing features and user stories requirements, he will ask questions and provide his input to ensure the requirements are understood by the entire team and he isn't shy to offer alternate solutions. He demonstrates leadership skills by mentoring new QA members but also will step up to help ensure any new team member has the needed application, business, and process training to quickly become part of the team. He is that team member that helps the rest of us succeed."</p>
                     </div>
@@ -861,8 +945,8 @@
                     <div class="recommendation-card">
                         <div>
                             <h4><a href="https://www.linkedin.com/in/cara-langella/" target="_blank" rel="noopener noreferrer">Cara Langella</a></h4>
-                            <div class="recommendation-role">Project Manager | Business &amp; Systems Analyst | Agile &amp; Scrum Expert | Creative Thinker | Digital Transformation Leader | Requirements Gathering | Product Management | SDLC | Vendor Relationships | XL Analytical Skills</div>
-                            <div class="recommendation-role">May 25, 2021, Cara worked with Farukh Ahemad G on the same team</div>
+                            <div class="recommendation-designation">Project Manager | Business &amp; Systems Analyst | Agile &amp; Scrum Expert | Creative Thinker | Digital Transformation Leader | Requirements Gathering | Product Management | SDLC | Vendor Relationships | XL Analytical Skills</div>
+                            <div class="recommendation-meta">May 25, 2021, Cara worked with Farukh Ahemad G on the same team</div>
                         </div>
                         <p>"Farukh is a methodical, thorough software tester who is pleasure to work with. He is an excellent team player with many great ideas of streamlining testing. I enjoyed working with Farukh and appreciated his dedication."</p>
                     </div>
@@ -870,8 +954,8 @@
                     <div class="recommendation-card">
                         <div>
                             <h4><a href="https://www.linkedin.com/in/naman-brahmbhatt-7585a627/" target="_blank" rel="noopener noreferrer">Naman Brahmbhatt</a></h4>
-                            <div class="recommendation-role">Tech enthusiast / Goal-oriented leader</div>
-                            <div class="recommendation-role">May 21, 2021, Naman managed Farukh Ahemad G directly</div>
+                            <div class="recommendation-designation">Tech enthusiast / Goal-oriented leader</div>
+                            <div class="recommendation-meta">May 21, 2021, Naman managed Farukh Ahemad G directly</div>
                         </div>
                         <p>"It was a great pleasure to manage a team that Farukh was part of. One thing stands out for him was his sheer dedication. Adjusting to project needs and taking responsibilities of his work are some of the qualities I look for in my team and Farukh had demonstrated those at all times. I would recommend Farukh to any projects looking for a sincere and dedicated team member."</p>
                     </div>
@@ -879,8 +963,8 @@
                     <div class="recommendation-card">
                         <div>
                             <h4><a href="https://www.linkedin.com/in/ramakrishnaaraod/" target="_blank" rel="noopener noreferrer">Ramakrishnaa Rao Dandanayakula</a></h4>
-                            <div class="recommendation-role">VP Technology &amp; Product Leader | InsurTech &amp; FinTech | AI, OCR &amp; LLM Automation | Enterprise SaaS &amp; ERP Architecture | Agile &amp; DevOps Transformation | Cloud &amp; .NET Ecosystems @ OneInsure.com</div>
-                            <div class="recommendation-role">May 13, 2021, Ramakrishnaa Rao managed Farukh Ahemad G directly</div>
+                            <div class="recommendation-designation">VP Technology &amp; Product Leader | InsurTech &amp; FinTech | AI, OCR &amp; LLM Automation | Enterprise SaaS &amp; ERP Architecture | Agile &amp; DevOps Transformation | Cloud &amp; .NET Ecosystems @ OneInsure.com</div>
+                            <div class="recommendation-meta">May 13, 2021, Ramakrishnaa Rao managed Farukh Ahemad G directly</div>
                         </div>
                         <p>"He worked with me for 2 years as junior resource...with in few months he has emerged as key resource... after that never looked back...."</p>
                     </div>
@@ -1087,6 +1171,28 @@
     </footer>
 
     <script>
+        // Preserve scroll position when opening artifact pages and restore on return.
+        (function () {
+            const restoreKey = 'portfolioScrollY';
+            const shouldRestoreKey = 'portfolioRestoreScroll';
+
+            const shouldRestore = sessionStorage.getItem(shouldRestoreKey) === '1';
+            if (shouldRestore) {
+                const savedY = parseInt(sessionStorage.getItem(restoreKey) || '0', 10);
+                window.requestAnimationFrame(() => {
+                    window.scrollTo({ top: Number.isNaN(savedY) ? 0 : savedY, behavior: 'auto' });
+                    sessionStorage.removeItem(shouldRestoreKey);
+                });
+            }
+
+            document.querySelectorAll('.project-links a[href$=".html"]').forEach(link => {
+                link.addEventListener('click', () => {
+                    sessionStorage.setItem(restoreKey, String(window.scrollY || window.pageYOffset || 0));
+                    sessionStorage.setItem(shouldRestoreKey, '1');
+                });
+            });
+        })();
+
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
