@@ -477,6 +477,71 @@
             max-width: 100%;
             margin: 24px auto;
         }
+
+        .bio-card {
+            background: linear-gradient(145deg, #f0fbff 0%, #ffffff 55%, #f5faf8 100%);
+            border: 1px solid #d8e7f4;
+            border-left: 5px solid #0ea5a6;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 10px 22px rgba(32, 48, 69, 0.1);
+            margin-top: 8px;
+        }
+
+        .bio-card h3 {
+            margin-top: 0;
+            color: #17365d;
+            font-size: 1.45em;
+        }
+
+        .bio-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: rgba(14, 165, 166, 0.12);
+            color: #0f766e;
+            font-size: 0.82em;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .bio-summary {
+            max-width: 980px;
+            color: #31485f;
+            font-size: 1.03em;
+        }
+
+        .bio-highlights {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+            margin-top: 18px;
+        }
+
+        .bio-highlight {
+            background: linear-gradient(145deg, #ffffff 0%, #f8fbff 100%);
+            border: 1px solid #dbe6f3;
+            border-radius: 14px;
+            padding: 14px;
+            box-shadow: 0 6px 16px rgba(25, 38, 56, 0.07);
+        }
+
+        .bio-highlight strong {
+            display: block;
+            color: #17365d;
+            margin-bottom: 6px;
+            font-size: 0.98em;
+        }
+
+        .bio-highlight span {
+            color: #52657b;
+            font-size: 0.92em;
+            line-height: 1.55;
+        }
         
         .journey-item {
             background: linear-gradient(145deg, #ffffff 0%, #f8fcff 55%, #f4fffd 100%);
@@ -744,6 +809,18 @@
                 justify-content: flex-start;
             }
 
+            .bio-card {
+                padding: 18px;
+            }
+
+            .bio-highlights {
+                grid-template-columns: 1fr;
+            }
+
+            .bio-summary {
+                font-size: 1em;
+            }
+
             .recommendation-card {
                 flex-direction: column;
                 gap: 12px;
@@ -795,10 +872,29 @@
 
     <div class="container">
         <!-- About Section -->
-        <!-- Professional Achievements Section (Bio) -->
+        <!-- Professional Bio and Achievements Section -->
         <section id="about">
             <div class="section-content">
-                <h2>Professional Achievements</h2>
+                <h2>Professional Bio &amp; Achievements</h2>
+                <div class="bio-card">
+                    <div class="bio-kicker">Professional Bio</div>
+                    <h3>Quality Engineer Bridging Automation, Data Integrity, and Responsible AI</h3>
+                    <p class="bio-summary">I am a QA Automation Engineer with 8+ years of experience building reliable test frameworks, improving release confidence, and validating enterprise systems across healthcare, logistics, and cloud migration programs. My work sits at the intersection of software quality, data engineering, and AI readiness, where I focus on creating scalable validation strategies that help teams ship dependable products and trustworthy data.</p>
+                    <div class="bio-highlights">
+                        <div class="bio-highlight">
+                            <strong>Automation Leadership</strong>
+                            <span>Designing Selenium, Playwright, and API testing solutions that accelerate regression cycles and reduce manual effort.</span>
+                        </div>
+                        <div class="bio-highlight">
+                            <strong>Data Quality Focus</strong>
+                            <span>Validating ETL pipelines, cloud migrations, and warehouse data to protect accuracy across critical business workflows.</span>
+                        </div>
+                        <div class="bio-highlight">
+                            <strong>AI-Ready Perspective</strong>
+                            <span>Combining quality engineering with AI and analytics awareness to support reliable, ethical, and scalable systems.</span>
+                        </div>
+                    </div>
+                </div>
                 <div class="journey-timeline">
                     <div class="journey-item">
                         <div class="journey-date">Master's in Computer Information Systems – AI Specialization</div>
