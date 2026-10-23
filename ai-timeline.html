@@ -14,45 +14,12 @@
     <link rel="stylesheet" href="style.css">
     <style>
         :root {
-            --page-accent: #4a6cf7;
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-            background:
-                radial-gradient(circle at 10% 10%, rgba(15, 118, 110, 0.14) 0%, rgba(15, 118, 110, 0) 35%),
-                radial-gradient(circle at 90% 8%, rgba(249, 115, 22, 0.15) 0%, rgba(249, 115, 22, 0) 34%),
-                linear-gradient(170deg, #f5fbff 0%, #eef4ff 50%, #f7fbff 100%);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .timeline-container {
-            width: 80%;
-            margin: auto;
-            padding: 40px 0;
-            background: linear-gradient(160deg, #ffffff 0%, #f9fcff 100%);
-            border-radius: 12px;
-            border: 1px solid #dfe9f5;
-            box-shadow: 0 14px 30px rgba(25, 38, 56, 0.09);
-        }
-
-        .timeline-container h2 {
-            text-align: center;
-            margin-bottom: 40px;
-            color: #2c3e50;
-            font-size: 2em;
-        }
+            
 
         .timeline {
             border-left: 4px solid #4a6cf7;
             padding-left: 30px;
-            padding-right: 30px;
+            margin: 10px 0 0 8px;
         }
 
         .timeline-item {
@@ -95,30 +62,17 @@
             font-size: 11px;
             border-radius: 4px;
             font-weight: 600;
-            color: #333;
-        }
+            
 
-        .insights-highlight {
-            background: #fff3cd;
-            padding: 20px;
-            border-radius: 5px;
-            margin: 15px 0;
-            border-left: 4px solid #ffc107;
-        }
-
-        @media (max-width: 768px) {
-            .timeline-container {
-                width: 95%;
-            }
+ (max-width: 768px) {
 
             .timeline {
-                padding-left: 15px;
-                padding-right: 15px;
+                padding-left: 18px;
             }
         }
     </style>
 </head>
-<body>
+<body class="artifact-page">
     <header>
         <div class="container">
             <a href="index.html" class="back-btn">← Back to Portfolio</a>
@@ -128,11 +82,21 @@
     <div class="container">
         <!-- Artifact Header -->
         <div class="artifact-header">
+            <span class="artifact-kicker">Portfolio Artifact · AI History & Ethics</span>
             <h1>AI Evolution & Ethics Timeline Analysis</h1>
             <p>Tracking technological milestones and the growing importance of ethical frameworks in AI development</p>
+            <div class="tag-row" aria-label="Tech stack">
+                <span class="tag-chip">AI History</span>
+                <span class="tag-chip">Ethics</span>
+                <span class="tag-chip">Governance</span>
+                <span class="tag-chip">Research</span>
+                <span class="tag-chip">Timeline</span>
+            </div>
         </div>
 
-        <div class="analysis-section">
+        <nav class="page-nav" aria-label="On this page"></nav>
+
+        <div class="analysis-section" data-nav="Artifact Info">
             <h2>Artifact Information</h2>
             <div class="analysis-grid">
                 <div class="analysis-card">
@@ -187,10 +151,8 @@
             </div>
         </div>
 
-        <!-- Artifact Information Section -->
-        <div class="container">
-            <div class="analysis-section">
-                <h2>Artifact Overview</h2>
+        <div class="analysis-section">
+            <h2>Artifact Overview</h2>
                 <div class="analysis-grid">
                     <div class="analysis-card">
                         <h3>📌 Objective</h3>
@@ -222,11 +184,9 @@
                         <p>The most valuable insight: <strong>Technical excellence and ethical responsibility are not trade-offs but investments in sustainable systems.</strong> This principle applies to QA Automation (ensuring code quality), Data Engineering (data integrity), and AI development (responsible deployment).</p>
                     </div>
                 </div>
-            </div>
-        </div>
 
         <!-- Timeline Visualization -->
-        <div class="timeline-container">
+        <div class="analysis-section" data-nav="Timeline">
             <h2>AI Development Timeline: Technology vs Ethics</h2>
             <div class="timeline">
                 <div class="timeline-item">
@@ -379,11 +339,9 @@
 
             </div>
         </div>
-    </div>
 
-    <!-- Technical & Ethical Analysis Section -->
-    <div class="container">
-        <div class="analysis-section">
+        <!-- Technical & Ethical Analysis Section -->
+        <div class="analysis-section" data-nav="Analysis">
             <h2>Technical & Ethical Analysis</h2>
             <p>The timeline above illustrates a critical evolution: AI has shifted from theoretical research to practical deployment at scale. Each milestone represents technological progress, but the increasing frequency of ethics-marked milestones reflects a growing recognition that technology alone is insufficient.</p>
             
@@ -406,10 +364,10 @@
         </div>
 
         <!-- Key Insights Section -->
-        <div class="analysis-section">
+        <div class="analysis-section" data-nav="Ethics Gap">
             <h2>Key Insights: The Ethics Gap</h2>
             
-            <div class="insights-highlight">
+            <div class="callout callout-warn">
                 <strong>The Paradox:</strong> AI systems are becoming increasingly powerful, yet ethical frameworks are still catching up. Timeline shows 23 major milestones-only 4 explicitly focus on ethics and governance (2019, 2023-2024, 2026).
             </div>
 
@@ -435,18 +393,15 @@
         </div>
 
         <!-- Professional Reflection Section -->
-        <div class="analysis-section">
-            <h2>Professional Reflection</h2>
+        <div class="professional-reflection" data-nav="Reflection">
+            <h2>💭 Professional Reflection</h2>
+            <p><strong>As someone working in QA Automation and Data Engineering,</strong> I've observed that quality assurance extends beyond bug detection. It encompasses system reliability, data integrity, and responsible deployment practices.</p>
             
-            <div class="professional-reflection">
-                <p><strong>As someone working in QA Automation and Data Engineering,</strong> I've observed that quality assurance extends beyond bug detection. It encompasses system reliability, data integrity, and responsible deployment practices.</p>
-                
-                <p>The AI timeline demonstrates that <strong>technical excellence and ethical responsibility are not competing priorities</strong>-they are complementary. A well-tested, audited AI system serves users better than an unvetted cutting-edge model.</p>
-                
-                <p>Looking at 2026's landscape, the focus on <strong>"Responsible AI Era"</strong> means that future careers in AI and data engineering will increasingly require understanding governance, bias mitigation, security vulnerabilities, and societal impact. The role of QA evolves from testing features to validating fairness, security, and ethical alignment.</p>
-                
-                <p><strong>Key Takeaway:</strong> Building trustworthy AI systems requires collaboration between developers, QA engineers, data scientists, ethicists, and policymakers. Technical skills matter, but so does the commitment to responsible deployment and continuous improvement.</p>
-            </div>
+            <p>The AI timeline demonstrates that <strong>technical excellence and ethical responsibility are not competing priorities</strong>-they are complementary. A well-tested, audited AI system serves users better than an unvetted cutting-edge model.</p>
+            
+            <p>Looking at 2026's landscape, the focus on <strong>"Responsible AI Era"</strong> means that future careers in AI and data engineering will increasingly require understanding governance, bias mitigation, security vulnerabilities, and societal impact. The role of QA evolves from testing features to validating fairness, security, and ethical alignment.</p>
+            
+            <p><strong>Key Takeaway:</strong> Building trustworthy AI systems requires collaboration between developers, QA engineers, data scientists, ethicists, and policymakers. Technical skills matter, but so does the commitment to responsible deployment and continuous improvement.</p>
         </div>
     </div>
 
@@ -457,5 +412,6 @@
         </div>
     </footer>
     <script src="back-to-top.js" defer></script>
+    <script src="page-nav.js" defer></script>
 </body>
 </html>

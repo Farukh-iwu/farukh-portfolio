@@ -17,43 +17,9 @@
         :root {
             --page-accent: #e74c3c;
         }
-
-        body {
-            margin: 0;
-            padding: 0;
-            background:
-                radial-gradient(circle at 10% 10%, rgba(15, 118, 110, 0.14) 0%, rgba(15, 118, 110, 0) 35%),
-                radial-gradient(circle at 90% 8%, rgba(249, 115, 22, 0.15) 0%, rgba(249, 115, 22, 0) 34%),
-                linear-gradient(170deg, #f5fbff 0%, #eef4ff 50%, #f7fbff 100%);
-        }
-
-        .tech-badges {
-            margin-top: 16px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .tech-badge {
-            display: inline-block;
-            padding: 7px 12px;
-            border-radius: 999px;
-            border: 1px solid #f3d5d1;
-            background: #fff5f4;
-            color: #a93226;
-            font-size: 0.88em;
-            font-weight: 600;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
     </style>
 </head>
-<body>
+<body class="artifact-page">
     <header>
         <div class="container">
             <a href="index.html" class="back-btn">← Back to Portfolio</a>
@@ -62,20 +28,23 @@
 
     <div class="container">
         <div class="artifact-header">
+            <span class="artifact-kicker">Portfolio Artifact · Quality Engineering</span>
             <h1>API Testing with Postman and RestAssured (Java)</h1>
             <p>Enterprise-focused API validation, automation framework design, and CI/CD execution strategy</p>
-            <div class="tech-badges" aria-label="Tech Stack">
-                <span class="tech-badge">Postman</span>
-                <span class="tech-badge">RestAssured</span>
-                <span class="tech-badge">Java</span>
-                <span class="tech-badge">JSON</span>
-                <span class="tech-badge">Newman</span>
-                <span class="tech-badge">Jenkins</span>
-                <span class="tech-badge">GitHub</span>
+            <div class="tag-row" aria-label="Tech stack">
+                <span class="tag-chip">Postman</span>
+                <span class="tag-chip">RestAssured</span>
+                <span class="tag-chip">Java</span>
+                <span class="tag-chip">JSON</span>
+                <span class="tag-chip">Newman</span>
+                <span class="tag-chip">Jenkins</span>
+                <span class="tag-chip">GitHub</span>
             </div>
         </div>
 
-        <div class="analysis-section">
+        <nav class="page-nav" aria-label="On this page"></nav>
+
+        <div class="analysis-section" data-nav="Artifact Info">
             <h2>Artifact Information</h2>
             <div class="analysis-grid">
                 <div class="analysis-card">
@@ -208,7 +177,7 @@
             </div>
         </div>
 
-        <div class="analysis-section">
+        <div class="analysis-section" data-nav="Image Evidence">
             <h2>Image Evidence (Click to View Full Size)</h2>
             <p>The gallery below shows five API testing artifacts. Click any card to open the full image.</p>
 
@@ -240,7 +209,7 @@
             </div>
         </div>
 
-        <div class="professional-reflection">
+        <div class="professional-reflection" data-nav="Reflection">
             <h2>💭 Professional Reflection</h2>
             <p>My API testing journey taught me that effective automation is not only about faster validation, it is about creating confidence in the backend systems that power business workflows. Across projects at HCL Technologies, Infosys, and Quest Diagnostics, I focused on making API quality measurable, repeatable, and dependable through strong design and disciplined execution.</p>
             <p>Moving from manual endpoint checks to framework-driven testing changed my perspective on quality engineering. Postman collections helped accelerate exploratory and integration flow checks, while RestAssured frameworks brought structure, reuse, and maintainability through POJO models, reusable utilities, and robust JSON assertions. This combination enabled both speed and long-term scalability.</p>
@@ -257,6 +226,7 @@
     </footer>
 
     <script src="back-to-top.js" defer></script>
+    <script src="page-nav.js" defer></script>
     <script src="lightbox.js" defer></script>
 </body>
 </html>

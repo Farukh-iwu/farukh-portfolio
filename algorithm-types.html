@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Algorithm Types Framework - Farukh Ahemad Gesukhan Pathan</title>
+    <meta name="description" content="A visual framework of 12 machine learning algorithms classified by learning type and application domain: tabular data, computer vision, NLP, and generative AI.">
+    <meta property="og:title" content="Machine Learning Algorithm Types: A Visual Framework - Farukh Ahemad Gesukhan Pathan">
+    <meta property="og:description" content="How 12 core ML algorithms work, how they relate, and where they are used across tabular data, computer vision, NLP, and generative AI.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://farukh-iwu.github.io/farukh-portfolio/algorithm-types.html">
+    <meta name="twitter:card" content="summary">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --page-accent: #0e7490;
+            --sup: #27ae60;
+            --unsup: #8e44ad;
+            --self: #f39c12;
+            --tab: #3498db;
+            --cv: #e74c3c;
+            --nlp: #16a085;
+            --gen: #e91e63;
+        }
+
+        .section-intro {
+            margin-top: 16px;
+            color: #555;
+        }
+
+        .fw-note {
+            margin-top: 16px;
+            font-size: 0.92em;
+            color: #555;
+        }
+
+        /* Legend for learning-type colors */
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 18px;
+            margin: 16px 0 20px;
+            font-size: 0.92em;
+            color: #2f3d4a;
+        }
+
+        .legend span {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            flex-shrink: 0;
+        }
+
+        .dot.sup { background: var(--sup); }
+        .dot.unsup { background: var(--unsup); }
+        .dot.self { background: var(--self); }
+
+        /* Framework map: learning type rows x domain columns */
+        .framework {
+            display: grid;
+            grid-template-columns: 150px repeat(4, minmax(0, 1fr));
+            gap: 8px;
+        }
+
+        .fw-head {
+            color: white;
+            font-weight: 700;
+            text-align: center;
+            padding: 12px 8px;
+            border-radius: 10px;
+            font-size: 0.95em;
+        }
+
+        .fw-head small {
+            display: block;
+            font-weight: 500;
+            opacity: 0.85;
+            font-size: 0.8em;
+        }
+
+        .fw-head.tab { background: var(--tab); }
+        .fw-head.cv { background: var(--cv); }
+        .fw-head.nlp { background: var(--nlp); }
+        .fw-head.gen { background: var(--gen); }
+
+        .fw-corner {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            font-size: 0.8em;
+            color: #555;
+            text-align: center;
+            padding: 6px;
+        }
+
+        .fw-row-label {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.92em;
+            border: 1px solid #dce8f6;
+        }
+
+        .fw-row-label small {
+            font-weight: 500;
+            font-size: 0.82em;
+            color: #555;
+        }
+
+        .fw-row-label.sup { background: linear-gradient(135deg, #f4fbf6, #ffffff); color: var(--sup); border-left: 5px solid var(--sup); }
+        .fw-row-label.unsup { background: linear-gradient(135deg, #f8f2fc, #ffffff); color: var(--unsup); border-left: 5px solid var(--unsup); }
+        .fw-row-label.self { background: linear-gradient(135deg, #fff9f2, #ffffff); color: #d68910; border-left: 5px solid var(--self); }
+
+        .fw-cell {
+            background: #fbfcfe;
+            border: 1px dashed #d5e1ef;
+            border-radius: 10px;
+            padding: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            align-content: flex-start;
+            min-height: 64px;
+        }
+
+        .fw-cell.empty::after {
+            content: "-";
+            color: #94a3b8;
+            margin: auto;
+        }
+
+        .algo-pill {
+            display: inline-block;
+            padding: 5px 11px;
+            border-radius: 999px;
+            font-size: 0.84em;
+            font-weight: 600;
+            text-decoration: none;
+            color: white;
+            transition: transform 0.15s ease;
+        }
+
+        .algo-pill:hover {
+            transform: translateY(-1px);
+        }
+
+        .algo-pill.sup { background: var(--sup); }
+        .algo-pill.unsup { background: var(--unsup); }
+        .algo-pill.self { background: #d68910; }
+
+        /* Filter bar */
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 20px;
+        }
+
+        .filter-btn {
+            font: inherit;
+            font-size: 0.88em;
+            font-weight: 600;
+            padding: 7px 14px;
+            border-radius: 999px;
+            border: 1px solid #d5e1ef;
+            background: white;
+            color: #2c3e50;
+            cursor: pointer;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--page-accent);
+        }
+
+        .filter-btn.active {
+            background: var(--page-accent);
+            border-color: var(--page-accent);
+            color: white;
+        }
+
+        .filter-btn:focus-visible {
+            outline: 2px solid #93c5fd;
+            outline-offset: 2px;
+        }
+
+        /* Algorithm profiles reuse .analysis-card, colored by learning type instead of position */
+        .algo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .algo-card {
+            scroll-margin-top: 76px;
+        }
+
+        .algo-card[hidden] {
+            display: none;
+        }
+
+        .algo-card.sup { background: linear-gradient(135deg, #f4fbf6, #ffffff); border-left: 5px solid var(--sup); }
+        .algo-card.unsup { background: linear-gradient(135deg, #f8f2fc, #ffffff); border-left: 5px solid var(--unsup); }
+        .algo-card.self { background: linear-gradient(135deg, #fff9f2, #ffffff); border-left: 5px solid var(--self); }
+
+        .algo-card:target {
+            box-shadow: 0 0 0 3px #93c5fd, 0 6px 16px rgba(32, 48, 69, 0.1);
+        }
+
+        .algo-family {
+            font-size: 0.85em;
+            color: #6b7c8f;
+            margin-top: 2px;
+        }
+
+        .badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin: 10px 0 4px;
+        }
+
+        .badge {
+            font-size: 0.74em;
+            font-weight: 700;
+            padding: 3px 9px;
+            border-radius: 999px;
+            letter-spacing: 0.02em;
+        }
+
+        .badge.sup { background: var(--sup); color: white; }
+        .badge.unsup { background: var(--unsup); color: white; }
+        .badge.self { background: #d68910; color: white; }
+        .badge.tab { background: #eaf3fc; color: #1f6fb2; }
+        .badge.cv { background: #fdecea; color: #c0392b; }
+        .badge.nlp { background: #e8f6f3; color: #117a65; }
+        .badge.gen { background: #fde8f0; color: #c2185b; }
+
+        .algo-card h4 {
+            font-size: 0.78em;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #6b7c8f;
+            margin: 14px 0 0;
+        }
+
+        .algo-card ul {
+            margin: 6px 0 0;
+            padding-left: 18px;
+            color: #555;
+        }
+
+        .algo-card li {
+            margin: 4px 0;
+        }
+
+        .no-results {
+            display: none;
+            color: #555;
+            padding: 20px 0;
+        }
+
+        /* Comparison matrix */
+        .table-wrap {
+            overflow-x: auto;
+            margin-top: 22px;
+            border-radius: 12px;
+            border: 1px solid #dce8f6;
+            box-shadow: 0 6px 16px rgba(32, 48, 69, 0.1);
+        }
+
+        .matrix {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 760px;
+            background: white;
+            font-size: 0.95em;
+        }
+
+        .matrix th {
+            background: var(--primary);
+            color: white;
+            padding: 14px 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .matrix th.c,
+        .matrix td.c {
+            text-align: center;
+        }
+
+        .matrix td {
+            padding: 12px;
+            border-bottom: 1px solid #eef2f7;
+            color: #2f3d4a;
+        }
+
+        .matrix tr:nth-child(even) td {
+            background: #f8fafc;
+        }
+
+        .check {
+            font-weight: 800;
+            font-size: 1.1em;
+        }
+
+        .check.tab { color: var(--tab); }
+        .check.cv { color: var(--cv); }
+        .check.nlp { color: var(--nlp); }
+        .check.gen { color: var(--gen); }
+
+        .level {
+            display: inline-block;
+            min-width: 64px;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .level.high { background: #e8f5e9; color: #1e7e34; }
+        .level.med { background: #fff3e0; color: #b9770e; }
+        .level.low { background: #fdecea; color: #c0392b; }
+
+        /* Lineage chain inside relationship cards */
+        .chain {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 6px;
+            margin: 12px 0 4px;
+        }
+
+        .chain .step {
+            background: white;
+            border: 1px solid #d5e1ef;
+            border-radius: 8px;
+            padding: 4px 10px;
+            font-size: 0.86em;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .chain .link {
+            font-size: 0.8em;
+            color: #6b7c8f;
+            font-style: italic;
+        }
+
+        @media (max-width: 860px) {
+            .framework {
+                grid-template-columns: 1fr;
+            }
+
+            .fw-corner,
+            .fw-head {
+                display: none;
+            }
+
+            /* Stacked: each cell shows its domain name since the column headers are hidden */
+            .fw-cell::before {
+                content: attr(data-domain);
+                width: 100%;
+                font-size: 0.75em;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                color: #6b7c8f;
+            }
+
+            .fw-cell.empty {
+                display: none;
+            }
+
+            .fw-row-label {
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body class="artifact-page">
+    <header>
+        <div class="container">
+            <a href="index.html" class="back-btn">← Back to Portfolio</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Artifact Header -->
+        <div class="artifact-header">
+            <span class="artifact-kicker">Portfolio Artifact · Machine Learning</span>
+            <h1>Machine Learning Algorithm Types: A Visual Framework</h1>
+            <p>12 core algorithms classified by learning style and application domain: tabular data, computer vision, NLP, and generative AI</p>
+            <div class="tag-row" aria-label="Tech stack">
+                <span class="tag-chip">Supervised</span>
+                <span class="tag-chip">Unsupervised</span>
+                <span class="tag-chip">Tabular Data</span>
+                <span class="tag-chip">Computer Vision</span>
+                <span class="tag-chip">NLP</span>
+                <span class="tag-chip">Generative AI</span>
+            </div>
+        </div>
+
+        <nav class="page-nav" aria-label="On this page"></nav>
+
+        <div class="analysis-section" data-nav="Artifact Info">
+            <h2>Artifact Information</h2>
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <h3>Artifact Title</h3>
+                    <p>Machine Learning Algorithm Types: A Visual Framework</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Introduction</h3>
+                    <p>Choosing the right algorithm starts with two questions: do I have labels, and what kind of data am I working with? This framework maps 12 widely used algorithms against those two questions so the right starting point is visible at a glance.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Description</h3>
+                    <p>An interactive infographic that classifies each algorithm by learning type and application domain, then explains how it works, where it is used in practice, and how it relates to the other algorithms in its family.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Objective</h3>
+                    <p>Identify and categorize key ML algorithms, illustrate their primary domains, give real-world use cases, and communicate why each one matters, including the generative models behind today's AI products.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Process</h3>
+                    <p>Selected 12 algorithms spanning classical ML through generative AI, researched each from primary sources, classified them on a learning-type by domain grid, grouped them into families, and built a selection guide.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Tools and Tech Used</h3>
+                    <p>Original research papers and scikit-learn documentation for content; HTML, CSS, and vanilla JavaScript for the interactive framework and filters; GitHub Pages for publishing.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Value Proposition of the Artifact</h3>
+                    <p>A one-page reference that shortens algorithm selection: start from the data type and label availability, then narrow to a family and a specific model with known trade-offs.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Unique Value</h3>
+                    <p>Every algorithm includes a use case from QA automation and data engineering alongside general industry examples, showing how the same models apply to test reliability, defect triage, and pipeline quality.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Relevance</h3>
+                    <p>Relevant for ML engineers, QA and data engineering leads, and technical reviewers who need to justify why a given model fits a problem before investing in it.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>References</h3>
+                    <p>Original papers for Random Forests, Gradient Boosting, SVM, CNNs, GANs, Transformers, BERT, and Diffusion models, plus the scikit-learn User Guide. Full list below.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="analysis-section" data-nav="Overview">
+            <h2>Project Overview</h2>
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <h3>Objective</h3>
+                    <p>Build a visual framework of at least 8-10 algorithms that shows each one's <strong>learning type</strong>, <strong>application domains</strong>, <strong>real-world use cases</strong>, and <strong>how it works</strong>, and makes clear how the algorithms relate to and differ from each other.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Process</h3>
+                    <p><strong>Selection:</strong> Chose 12 algorithms covering all four domains. <strong>Classification:</strong> Placed each on a learning-type by domain grid. <strong>Research:</strong> Summarized mechanics from original papers. <strong>Synthesis:</strong> Grouped algorithms into families, compared them on interpretability and data needs, and built a decision guide.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Tools & Technologies</h3>
+                    <p><strong>Algorithms:</strong> Linear Regression, Decision Tree, Random Forest, Gradient Boosting, SVM, K-Means, PCA, CNN, BERT, GPT, GAN, Diffusion. <strong>Build:</strong> HTML, CSS, JavaScript. <strong>Publishing:</strong> Git, GitHub Pages.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Skills Demonstrated</h3>
+                    <p><strong>Technical:</strong> Supervised, unsupervised, and self-supervised learning; classical ML vs deep learning; generative model mechanics. <strong>Professional:</strong> Technical communication, information design, and mapping algorithms to business problems.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Value Proposition</h3>
+                    <p><strong>For Teams:</strong> Faster, better-justified model selection. <strong>For Stakeholders:</strong> A plain-language view of what each algorithm does and what it costs in data and interpretability. <strong>For Learners:</strong> A single map connecting classical ML to generative AI.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Key Learning</h3>
+                    <p>Most valuable insight: <strong>the data type and the availability of labels decide most of the algorithm choice.</strong> Generative AI scaled because self-supervised learning removed the need for human labels.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Visual Framework -->
+        <div class="analysis-section" id="framework" data-nav="Framework">
+            <h2>The Framework at a Glance</h2>
+            <p class="section-intro">Rows show <strong>how</strong> an algorithm learns. Columns show <strong>where</strong> it is mainly applied. Select any algorithm to jump to its profile.</p>
+
+            <div class="legend" aria-label="Legend">
+                <span><i class="dot sup"></i> Supervised: learns from labeled examples</span>
+                <span><i class="dot unsup"></i> Unsupervised: finds structure without labels</span>
+                <span><i class="dot self"></i> Self-supervised: creates its own labels from raw data (a form of unsupervised learning)</span>
+            </div>
+
+            <div class="framework">
+                <div class="fw-corner">Learning type ↓ / Domain →</div>
+                <div class="fw-head tab">Tabular Data<small>rows &amp; columns</small></div>
+                <div class="fw-head cv">Computer Vision<small>images &amp; video</small></div>
+                <div class="fw-head nlp">NLP<small>text &amp; language</small></div>
+                <div class="fw-head gen">Generative AI<small>new content</small></div>
+
+                <div class="fw-row-label sup">Supervised<small>labels available</small></div>
+                <div class="fw-cell" data-domain="Tabular Data">
+                    <a class="algo-pill sup" href="#linear-regression">Linear Regression</a>
+                    <a class="algo-pill sup" href="#decision-tree">Decision Tree</a>
+                    <a class="algo-pill sup" href="#random-forest">Random Forest</a>
+                    <a class="algo-pill sup" href="#gradient-boosting">Gradient Boosting</a>
+                    <a class="algo-pill sup" href="#svm">SVM</a>
+                </div>
+                <div class="fw-cell" data-domain="Computer Vision">
+                    <a class="algo-pill sup" href="#cnn">CNN</a>
+                    <a class="algo-pill sup" href="#svm">SVM</a>
+                </div>
+                <div class="fw-cell" data-domain="NLP">
+                    <a class="algo-pill sup" href="#svm">SVM</a>
+                    <a class="algo-pill sup" href="#bert">BERT (fine-tuned)</a>
+                </div>
+                <div class="fw-cell empty" data-domain="Generative AI"></div>
+
+                <div class="fw-row-label unsup">Unsupervised<small>no labels</small></div>
+                <div class="fw-cell" data-domain="Tabular Data">
+                    <a class="algo-pill unsup" href="#kmeans">K-Means</a>
+                    <a class="algo-pill unsup" href="#pca">PCA</a>
+                </div>
+                <div class="fw-cell" data-domain="Computer Vision">
+                    <a class="algo-pill unsup" href="#pca">PCA</a>
+                    <a class="algo-pill unsup" href="#kmeans">K-Means</a>
+                </div>
+                <div class="fw-cell empty" data-domain="NLP"></div>
+                <div class="fw-cell" data-domain="Generative AI">
+                    <a class="algo-pill unsup" href="#gan">GAN</a>
+                </div>
+
+                <div class="fw-row-label self">Self-supervised<small>labels from the data itself</small></div>
+                <div class="fw-cell empty" data-domain="Tabular Data"></div>
+                <div class="fw-cell" data-domain="Computer Vision">
+                    <a class="algo-pill self" href="#diffusion">Diffusion</a>
+                </div>
+                <div class="fw-cell" data-domain="NLP">
+                    <a class="algo-pill self" href="#bert">BERT (pre-training)</a>
+                    <a class="algo-pill self" href="#gpt">GPT</a>
+                </div>
+                <div class="fw-cell" data-domain="Generative AI">
+                    <a class="algo-pill self" href="#gpt">GPT</a>
+                    <a class="algo-pill self" href="#diffusion">Diffusion</a>
+                </div>
+            </div>
+            <p class="fw-note">Note: modern language and image models are trained in stages. BERT and GPT are pre-trained self-supervised on unlabeled text, then fine-tuned with labels (supervised) for specific tasks. Self-supervised learning is usually grouped under the unsupervised family because it needs no human labels.</p>
+        </div>
+
+        <!-- Algorithm Profiles -->
+        <div class="analysis-section" id="algorithms" data-nav="Algorithms">
+            <h2>Algorithm Profiles</h2>
+            <p class="section-intro">Each profile covers the four required dimensions: algorithm type, application domains, real-world use cases, and how it works. Use the filters to compare groups.</p>
+
+            <div class="filter-bar" role="group" aria-label="Filter algorithms">
+                <button type="button" class="filter-btn active" data-filter="all" aria-pressed="true">All (12)</button>
+                <button type="button" class="filter-btn" data-filter="sup" aria-pressed="false">Supervised</button>
+                <button type="button" class="filter-btn" data-filter="unsup" aria-pressed="false">Unsupervised</button>
+                <button type="button" class="filter-btn" data-filter="self" aria-pressed="false">Self-supervised</button>
+                <button type="button" class="filter-btn" data-filter="tab" aria-pressed="false">Tabular</button>
+                <button type="button" class="filter-btn" data-filter="cv" aria-pressed="false">Computer Vision</button>
+                <button type="button" class="filter-btn" data-filter="nlp" aria-pressed="false">NLP</button>
+                <button type="button" class="filter-btn" data-filter="gen" aria-pressed="false">Generative AI</button>
+            </div>
+
+            <div class="algo-grid">
+                <!-- 1. Linear Regression -->
+                <article class="analysis-card algo-card sup" id="linear-regression" data-tags="sup tab">
+                    <h3>1. Linear Regression</h3>
+                    <div class="algo-family">Family: Linear models</div>
+                    <div class="badges">
+                        <span class="badge sup">SUPERVISED</span>
+                        <span class="badge tab">Tabular</span>
+                    </div>
+                    <h4>How it works</h4>
+                    <p>Fits a straight line (or hyperplane) through the data by choosing weights that minimize the squared error between predicted and actual values. The output is a continuous number, and each weight shows how much a feature moves the prediction.</p>
+                    <h4>Use cases</h4>
+                    <ul>
+                        <li>House price and sales forecasting</li>
+                        <li>Estimating demand from price and seasonality</li>
+                        <li><strong>QA:</strong> predicting regression-suite run time from the number of tests and changed modules</li>
+                    </ul>
+                </article>
+
+                <!-- 2. Decision Tree -->
+                <article class="analysis-card algo-card sup" id="decision-tree" data-tags="sup tab">
+                    <h3>2. Decision Tree</h3>
+                    <div class="algo-family">Family: Tree-based models</div>
+                    <div class="badges">
+                        <span class="badge sup">SUPERVISED</span>
+                        <span class="badge tab">Tabular</span>
+                    </div>
+                    <h4>How it works</h4>
+                    <p>Splits the data with a sequence of if/else questions on features (for example, "files changed &gt; 20?"). At each step it picks the split that best separates the target, measured by Gini impurity or entropy. Leaves hold the final prediction.</p>
+                    <h4>Use cases</h4>
+                    <ul>
+                        <li>Loan approval and credit risk rules</li>
+                        <li>Medical triage decision support</li>
+                        <li><strong>QA:</strong> explainable rules for routing defects to the right team</li>
+                    </ul>
+                </article>
+
+                <!-- 3. Random Forest -->
+                <article class="analysis-card algo-card sup" id="random-forest" data-tags="sup tab">
+                    <h3>3. Random Forest</h3>
+                    <div class="algo-family">Family: Tree ensembles (bagging)</div>
+                    <div class="badges">
+                        <span class="badge sup">SUPERVISED</span>
+                        <span class="badge tab">Tabular</span>
+                    </div>
+                    <h4>How it works</h4>
+                    <p>Trains hundreds of decision trees, each on a random sample of rows and features, then averages their votes. Because the trees make different mistakes, averaging them reduces overfitting and gives stable, accurate predictions.</p>
+                    <h4>Use cases</h4>
+                    <ul>
+                        <li>Credit card fraud detection</li>
+                        <li>Customer churn prediction</li>
+                        <li><strong>QA:</strong> predicting which tests are likely to fail for a given code change</li>
+                    </ul>
+                </article>
+
+                <!-- 4. Gradient Boosting -->
+                <article class="analysis-card algo-card sup" id="gradient-boosting" data-tags="sup tab">
+                    <h3>4. Gradient Boosting (XGBoost, LightGBM)</h3>
+                    <div class="algo-family">Family: Tree ensembles (boosting)</div>
+                    <div class="badges">
+                        <span class="badge sup">SUPERVISED</span>
+                        <span class="badge tab">Tabular</span>
+                    </div>
+                    <h4>How it works</h4>
+                    <p>Builds small trees one after another. Each new tree is trained to correct the errors left by the trees before it, following the gradient of the loss function. The final model is the weighted sum of all trees, and it is often the most accurate choice for tabular data.</p>
+                    <h4>Use cases</h4>
+                    <ul>
+                        <li>Search ranking and ad click-through prediction</li>
+                        <li>Insurance claim risk scoring</li>
+                        <li><strong>Data engineering:</strong> scoring ETL batches for data-quality risk before loading</li>
+                    </ul>
+                </article>
+
+                <!-- 5. SVM -->
+                <article class="analysis-card algo-card sup" id="svm" data-tags="sup tab cv nlp">
+                    <h3>5. Support Vector Machine (SVM)</h3>
+                    <div class="algo-family">Family: Margin-based classifiers</div>
+                    <div class="badges">
+                        <span class="badge sup">SUPERVISED</span>
+                        <span class="badge tab">Tabular</span>
+                        <span class="badge nlp">NLP</span>
+                        <span class="badge cv">Computer Vision</span>
+                    </div>
+                    <h4>How it works</h4>
+                    <p>Finds the boundary that separates classes with the widest possible margin. The "kernel trick" maps data into a higher-dimensional space so curved boundaries become straight lines. It works well on small or high-dimensional datasets.</p>
+                    <h4>Use cases</h4>
+                    <ul>
+                        <li>Spam filtering and text categorization (TF-IDF features)</li>
+                        <li>Handwriting and face recognition on extracted features</li>
+                        <li><strong>QA:</strong> classifying bug reports as UI, API, or data issues</li>
+                    </ul>
+                </article>
+
+                <!-- 6. K-Means -->
+                <article class="analysis-card algo-card unsup" id="kmeans" data-tags="unsup tab cv">
+                    <h3>6. K-Means Clustering</h3>
+                    <div class="algo-family">Family: Clustering</div>
+                    <div class="badges">
+                        <span class="badge unsup">UNSUPERVISED</span>
+                        <span class="badge tab">Tabular</span>
+                        <span class="badge cv">Computer Vision</span>
+                    </div>
+                    <h4>How it works</h4>
+                    <p>Places K center points, assigns every data point to its nearest center, moves each center to the mean of its points, and repeats until the groups stop changing. No labels are needed. The algorithm discovers the groups on its own.</p>
+                    <h4>Use cases</h4>
+                    <ul>
+                        <li>Customer segmentation for marketing</li>
+                        <li>Image color quantization and compression</li>
+                        <li><strong>QA:</strong> grouping thousands of failure logs into a handful of root-cause clusters</li>
+                    </ul>
+                </article>
+
+                <!-- 7. PCA -->
+                <article class="analysis-card algo-card unsup" id="pca" data-tags="unsup tab cv">
+                    <h3>7. Principal Component Analysis (PCA)</h3>
+                    <div class="algo-family">Family: Dimensionality reduction</div>
+                    <div class="badges">
+                        <span class="badge unsup">UNSUPERVISED</span>
+                        <span class="badge tab">Tabular</span>
+                        <span class="badge cv">Computer Vision</span>
+                    </div>
+                    <h4>How it works</h4>
+                    <p>Finds new axes (principal components) that capture the most variance in the data, then projects the data onto the top few. Many correlated features are compressed into a small number of informative ones with minimal information loss.</p>
+                    <h4>Use cases</h4>
+                    <ul>
+                        <li>Visualizing high-dimensional data in 2D</li>
+                        <li>Noise reduction and faster training before another model</li>
+                        <li><strong>Data engineering:</strong> spotting anomalous pipeline runs across dozens of metrics</li>
+                    </ul>
+                </article>
+
+                <!-- 8. CNN -->
+                <article class="analysis-card algo-card sup" id="cnn" data-tags="sup cv">
+                    <h3>8. Convolutional Neural Network (CNN)</h3>
+                    <div class="algo-family">Family: Deep learning (vision)</div>
+                    <div class="badges">
+                        <span class="badge sup">SUPERVISED</span>
+                        <span class="badge cv">Computer Vision</span>
+                    </div>
+                    <h4>How it works</h4>
+                    <p>Slides small learned filters across an image to detect local patterns. Early layers find edges, middle layers find textures and shapes, and deep layers recognize whole objects. Pooling layers shrink the image so the network sees more context at each level.</p>
+                    <h4>Use cases</h4>
+                    <ul>
+                        <li>Medical image diagnosis (X-ray, MRI)</li>
+                        <li>Object detection in self-driving cars</li>
+                        <li><strong>QA:</strong> visual regression testing that flags real UI layout breaks but ignores harmless rendering noise</li>
+                    </ul>
+                </article>
+
+                <!-- 9. BERT -->
+                <article class="analysis-card algo-card self" id="bert" data-tags="self sup nlp">
+                    <h3>9. Transformer Encoder (BERT)</h3>
+                    <div class="algo-family">Family: Transformers (encoder)</div>
+                    <div class="badges">
+                        <span class="badge self">SELF-SUPERVISED</span>
+                        <span class="badge sup">+ SUPERVISED FINE-TUNING</span>
+                        <span class="badge nlp">NLP</span>
+                    </div>
+                    <h4>How it works</h4>
+                    <p>Uses self-attention so every word looks at every other word in both directions. It is pre-trained by hiding random words and predicting them from context (masked language modeling). It is then fine-tuned on a smaller labeled dataset for the target task.</p>
+                    <h4>Use cases</h4>
+                    <ul>
+                        <li>Sentiment analysis of product reviews</li>
+                        <li>Search query understanding and named-entity recognition</li>
+                        <li><strong>QA:</strong> detecting duplicate bug tickets by semantic similarity</li>
+                    </ul>
+                </article>
+
+                <!-- 10. GPT -->
+                <article class="analysis-card algo-card self" id="gpt" data-tags="self nlp gen">
+                    <h3>10. Transformer Decoder / LLM (GPT)</h3>
+                    <div class="algo-family">Family: Transformers (decoder)</div>
+                    <div class="badges">
+                        <span class="badge self">SELF-SUPERVISED</span>
+                        <span class="badge nlp">NLP</span>
+                        <span class="badge gen">Generative AI</span>
+                    </div>
+                    <h4>How it works</h4>
+                    <p>Is trained on huge amounts of text to predict the next token, using attention over all previous tokens. It generates text by repeatedly predicting and appending one token at a time. Instruction tuning and human feedback then align it with helpful behavior.</p>
+                    <h4>Use cases</h4>
+                    <ul>
+                        <li>Chat assistants, summarization, and code generation</li>
+                        <li>Retrieval-augmented question answering over company documents</li>
+                        <li><strong>QA:</strong> generating test cases and test data from user stories</li>
+                    </ul>
+                </article>
+
+                <!-- 11. GAN -->
+                <article class="analysis-card algo-card unsup" id="gan" data-tags="unsup gen cv">
+                    <h3>11. Generative Adversarial Network (GAN)</h3>
+                    <div class="algo-family">Family: Deep generative models</div>
+                    <div class="badges">
+                        <span class="badge unsup">UNSUPERVISED</span>
+                        <span class="badge gen">Generative AI</span>
+                        <span class="badge cv">Computer Vision</span>
+                    </div>
+                    <h4>How it works</h4>
+                    <p>Two networks compete. A generator turns random noise into fake samples, and a discriminator tries to tell fake from real. As each improves against the other, the generator learns to produce realistic data without any labels.</p>
+                    <h4>Use cases</h4>
+                    <ul>
+                        <li>Photo-realistic faces and image super-resolution</li>
+                        <li>Synthetic medical images to augment small datasets</li>
+                        <li><strong>Data engineering:</strong> privacy-safe synthetic tabular test data (for example, CTGAN)</li>
+                    </ul>
+                </article>
+
+                <!-- 12. Diffusion -->
+                <article class="analysis-card algo-card self" id="diffusion" data-tags="self gen cv">
+                    <h3>12. Diffusion Model (Stable Diffusion)</h3>
+                    <div class="algo-family">Family: Deep generative models</div>
+                    <div class="badges">
+                        <span class="badge self">SELF-SUPERVISED</span>
+                        <span class="badge gen">Generative AI</span>
+                        <span class="badge cv">Computer Vision</span>
+                    </div>
+                    <h4>How it works</h4>
+                    <p>During training, noise is added to images step by step, and a network learns to predict and remove that noise. To generate, it starts from pure noise and denoises it step by step into a new image. A text encoder steers each step toward the prompt.</p>
+                    <h4>Use cases</h4>
+                    <ul>
+                        <li>Text-to-image generation for design and marketing</li>
+                        <li>Image inpainting, editing, and upscaling</li>
+                        <li><strong>QA:</strong> generating varied UI and document images to test OCR and vision pipelines</li>
+                    </ul>
+                </article>
+            </div>
+            <p class="no-results" id="no-results">No algorithms match this filter.</p>
+        </div>
+
+        <!-- Comparison Matrix -->
+        <div class="analysis-section" id="matrix" data-nav="Matrix">
+            <h2>Comparison Matrix</h2>
+            <p class="section-intro">How the algorithms differ on domain fit and on the practical factors that drive selection.</p>
+            <div class="table-wrap">
+                <table class="matrix">
+                    <thead>
+                        <tr>
+                            <th>Algorithm</th>
+                            <th>Type</th>
+                            <th class="c">Tabular</th>
+                            <th class="c">Vision</th>
+                            <th class="c">NLP</th>
+                            <th class="c">GenAI</th>
+                            <th class="c">Interpretability</th>
+                            <th class="c">Data needed</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Linear Regression</strong></td><td><i class="dot sup"></i> Supervised</td><td class="c"><span class="check tab">✓</span></td><td class="c"></td><td class="c"></td><td class="c"></td><td class="c"><span class="level high">High</span></td><td class="c"><span class="level high">Low</span></td></tr>
+                        <tr><td><strong>Decision Tree</strong></td><td><i class="dot sup"></i> Supervised</td><td class="c"><span class="check tab">✓</span></td><td class="c"></td><td class="c"></td><td class="c"></td><td class="c"><span class="level high">High</span></td><td class="c"><span class="level high">Low</span></td></tr>
+                        <tr><td><strong>Random Forest</strong></td><td><i class="dot sup"></i> Supervised</td><td class="c"><span class="check tab">✓</span></td><td class="c"></td><td class="c"></td><td class="c"></td><td class="c"><span class="level med">Medium</span></td><td class="c"><span class="level med">Medium</span></td></tr>
+                        <tr><td><strong>Gradient Boosting</strong></td><td><i class="dot sup"></i> Supervised</td><td class="c"><span class="check tab">✓</span></td><td class="c"></td><td class="c"></td><td class="c"></td><td class="c"><span class="level med">Medium</span></td><td class="c"><span class="level med">Medium</span></td></tr>
+                        <tr><td><strong>SVM</strong></td><td><i class="dot sup"></i> Supervised</td><td class="c"><span class="check tab">✓</span></td><td class="c"><span class="check cv">✓</span></td><td class="c"><span class="check nlp">✓</span></td><td class="c"></td><td class="c"><span class="level med">Medium</span></td><td class="c"><span class="level high">Low</span></td></tr>
+                        <tr><td><strong>K-Means</strong></td><td><i class="dot unsup"></i> Unsupervised</td><td class="c"><span class="check tab">✓</span></td><td class="c"><span class="check cv">✓</span></td><td class="c"></td><td class="c"></td><td class="c"><span class="level high">High</span></td><td class="c"><span class="level high">Low</span></td></tr>
+                        <tr><td><strong>PCA</strong></td><td><i class="dot unsup"></i> Unsupervised</td><td class="c"><span class="check tab">✓</span></td><td class="c"><span class="check cv">✓</span></td><td class="c"></td><td class="c"></td><td class="c"><span class="level med">Medium</span></td><td class="c"><span class="level high">Low</span></td></tr>
+                        <tr><td><strong>CNN</strong></td><td><i class="dot sup"></i> Supervised</td><td class="c"></td><td class="c"><span class="check cv">✓</span></td><td class="c"></td><td class="c"></td><td class="c"><span class="level low">Low</span></td><td class="c"><span class="level low">High</span></td></tr>
+                        <tr><td><strong>BERT</strong></td><td><i class="dot self"></i> Self-sup. + fine-tune</td><td class="c"></td><td class="c"></td><td class="c"><span class="check nlp">✓</span></td><td class="c"></td><td class="c"><span class="level low">Low</span></td><td class="c"><span class="level low">Very high*</span></td></tr>
+                        <tr><td><strong>GPT / LLM</strong></td><td><i class="dot self"></i> Self-supervised</td><td class="c"></td><td class="c"></td><td class="c"><span class="check nlp">✓</span></td><td class="c"><span class="check gen">✓</span></td><td class="c"><span class="level low">Low</span></td><td class="c"><span class="level low">Very high*</span></td></tr>
+                        <tr><td><strong>GAN</strong></td><td><i class="dot unsup"></i> Unsupervised</td><td class="c"></td><td class="c"><span class="check cv">✓</span></td><td class="c"></td><td class="c"><span class="check gen">✓</span></td><td class="c"><span class="level low">Low</span></td><td class="c"><span class="level low">High</span></td></tr>
+                        <tr><td><strong>Diffusion</strong></td><td><i class="dot self"></i> Self-supervised</td><td class="c"></td><td class="c"><span class="check cv">✓</span></td><td class="c"></td><td class="c"><span class="check gen">✓</span></td><td class="c"><span class="level low">Low</span></td><td class="c"><span class="level low">Very high*</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="fw-note">* For pre-training. In practice most teams start from a pre-trained model and fine-tune it, or use it through an API, which needs far less data.</p>
+        </div>
+
+        <!-- Relationships -->
+        <div class="analysis-section" id="relationships" data-nav="Relationships">
+            <h2>How the Algorithms Relate</h2>
+            <p class="section-intro">The 12 algorithms fall into five families. Within each family, later models build directly on earlier ideas.</p>
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <h3>🌳 Tree-based Models</h3>
+                    <div class="chain">
+                        <span class="step">Decision Tree</span><span class="link">many trees, averaged</span>
+                        <span class="step">Random Forest</span><span class="link">trees fix each other's errors</span>
+                        <span class="step">Gradient Boosting</span>
+                    </div>
+                    <p>One tree is easy to read but overfits. Bagging (Random Forest) and boosting (Gradient Boosting) trade some readability for much higher accuracy. These are the default first choice for tabular data.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>📏 Linear and Margin-based Models</h3>
+                    <div class="chain">
+                        <span class="step">Linear Regression</span><span class="link">widest-margin boundary + kernels</span>
+                        <span class="step">SVM</span>
+                    </div>
+                    <p>Both learn weighted combinations of features. Linear Regression predicts numbers, while SVM separates classes and can bend its boundary with kernels. They are fast, simple baselines that are hard to beat on small data.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>🔍 Unsupervised Structure Finders</h3>
+                    <div class="chain">
+                        <span class="step">PCA</span><span class="link">compress, then group</span>
+                        <span class="step">K-Means</span>
+                    </div>
+                    <p>PCA reduces the number of dimensions, and K-Means groups similar points. They are often chained: PCA first to remove noise, then K-Means to find segments.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>🧠 Deep Learning for Perception and Language</h3>
+                    <div class="chain">
+                        <span class="step">CNN</span><span class="link">attention replaces convolution</span>
+                        <span class="step">Transformer</span><span class="link">encoder / decoder</span>
+                        <span class="step">BERT · GPT</span>
+                    </div>
+                    <p>CNNs learn features from pixels automatically. Transformers learn relationships between all parts of the input through attention. BERT keeps the encoder to <em>understand</em> text, while GPT keeps the decoder to <em>generate</em> it.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>🎨 Generative Models</h3>
+                    <div class="chain">
+                        <span class="step">GAN</span><span class="link">more stable training</span>
+                        <span class="step">Diffusion</span><span class="link">prompted by</span>
+                        <span class="step">Transformer text encoder</span>
+                    </div>
+                    <p>GANs produced the first convincing synthetic images but are unstable to train. Diffusion models train more reliably and now power most text-to-image tools, guided by a language model's understanding of the prompt.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>⚖️ The Big Divide</h3>
+                    <div class="chain">
+                        <span class="step">Classical ML</span><span class="link">vs</span>
+                        <span class="step">Deep Learning</span>
+                    </div>
+                    <p>Algorithms 1-7 rely on structured features and stay interpretable and cheap. Algorithms 8-12 learn their own features from raw images and text, and need more data and compute. The data type usually decides which side a problem falls on.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Selection Guide -->
+        <div class="analysis-section" id="guide" data-nav="Selection Guide">
+            <h2>Choosing an Algorithm: A Practical Guide</h2>
+            <p class="section-intro">The framework becomes useful when it turns into a decision. Start with the question that matches your situation.</p>
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <h3>Labeled tabular data, and stakeholders need the "why"?</h3>
+                    <p>Start with a <strong>Decision Tree</strong> or <strong>Linear Regression</strong>. Move to <strong>Random Forest</strong> or <strong>Gradient Boosting</strong> if accuracy matters more.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Tabular data with no labels?</h3>
+                    <p>Use <strong>PCA</strong> to reduce noise, then <strong>K-Means</strong> to find natural groups or outliers.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Small dataset with many features?</h3>
+                    <p><strong>SVM</strong> is a strong, inexpensive baseline for short text or extracted image features before reaching for deep learning.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Raw images or video?</h3>
+                    <p>A <strong>CNN</strong>, ideally a pre-trained one fine-tuned on your own images.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Need to understand or classify text?</h3>
+                    <p>A fine-tuned <strong>BERT</strong>-style encoder.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Need to create new content?</h3>
+                    <p>Text: a <strong>GPT</strong>-style LLM. Images: <strong>Diffusion</strong>. Synthetic tabular test data: a <strong>GAN</strong>.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Artifact Evidence Section -->
+        <div class="analysis-section" data-nav="Evidence">
+            <h2>Artifact Evidence</h2>
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <h3>📁 Tangible Deliverables</h3>
+                    <p><strong>Framework Assets:</strong> Learning-type by domain map, 12 algorithm profiles, comparison matrix, family relationship map, and selection guide.</p>
+                    <p><strong>Publishing:</strong> Interactive web page hosted on GitHub Pages as part of this portfolio.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>🧪 Coursework Alignment</h3>
+                    <p>Model Development (AIML-501), Workshop 1, Assignment 1.5. Demonstrates the ability to identify, categorize, and explain ML algorithms across tabular data, computer vision, NLP, and generative AI.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>👥 Intended Audience</h3>
+                    <p><strong>Technical Reviewers:</strong> Instructors, ML engineers, and QA or data engineering leads evaluating model selection reasoning.</p>
+                    <p><strong>Business Stakeholders:</strong> Managers who need a plain-language view of what each algorithm does and costs.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>✅ Required Template Elements</h3>
+                    <p><strong>8-10+ algorithms:</strong> 12 covered. <strong>Per algorithm:</strong> type, domains, use cases, and how it works, in each profile.</p>
+                    <p><strong>Visual clarity:</strong> Framework map, matrix, and family relationships show how the algorithms relate and differ.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- References -->
+        <div class="analysis-section" id="references" data-nav="References">
+            <h2>References</h2>
+            <div class="project-item">
+                <h3>Primary Sources</h3>
+                <ul class="repo-list">
+                    <li>Breiman, L. (2001). Random Forests. <em>Machine Learning</em>, 45(1), 5-32.</li>
+                    <li>Friedman, J. H. (2001). Greedy function approximation: A gradient boosting machine. <em>Annals of Statistics</em>, 29(5), 1189-1232.</li>
+                    <li>Cortes, C., &amp; Vapnik, V. (1995). Support-vector networks. <em>Machine Learning</em>, 20(3), 273-297.</li>
+                    <li>LeCun, Y., Bottou, L., Bengio, Y., &amp; Haffner, P. (1998). Gradient-based learning applied to document recognition. <em>Proceedings of the IEEE</em>, 86(11), 2278-2324.</li>
+                    <li>Goodfellow, I., et al. (2014). Generative adversarial nets. <a href="https://arxiv.org/abs/1406.2661" target="_blank" rel="noopener">arXiv:1406.2661</a></li>
+                    <li>Vaswani, A., et al. (2017). Attention is all you need. <a href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener">arXiv:1706.03762</a></li>
+                    <li>Devlin, J., et al. (2018). BERT: Pre-training of deep bidirectional transformers for language understanding. <a href="https://arxiv.org/abs/1810.04805" target="_blank" rel="noopener">arXiv:1810.04805</a></li>
+                    <li>Ho, J., Jain, A., &amp; Abbeel, P. (2020). Denoising diffusion probabilistic models. <a href="https://arxiv.org/abs/2006.11239" target="_blank" rel="noopener">arXiv:2006.11239</a></li>
+                    <li>Rombach, R., et al. (2022). High-resolution image synthesis with latent diffusion models. <a href="https://arxiv.org/abs/2112.10752" target="_blank" rel="noopener">arXiv:2112.10752</a></li>
+                    <li>scikit-learn User Guide. <a href="https://scikit-learn.org/stable/user_guide.html" target="_blank" rel="noopener">scikit-learn.org/stable/user_guide.html</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Professional Reflection Section -->
+        <div class="professional-reflection" data-nav="Reflection">
+            <h2>💭 Professional Reflection</h2>
+            <p>
+                Building this framework changed how I think about algorithm selection. Before, I tended to think in terms of individual models. Laying them out on a learning-type by domain grid showed me that <span class="reflection-highlight">the choice is mostly decided by two facts: whether labels exist, and what shape the data takes.</span> Once those are known, the list of sensible candidates shrinks to two or three.
+            </p>
+            <p>
+                The hardest part was classification itself. The assignment asks for supervised or unsupervised, but models like BERT, GPT, and diffusion do not fit cleanly into either. Researching how they are trained led me to <span class="reflection-highlight">self-supervised learning, where the data provides its own labels.</span> That idea explains why generative AI scaled so quickly: it removed the need for expensive human labeling.
+            </p>
+            <p>
+                Connecting each algorithm to my own work in QA automation and data engineering made the material concrete. Random Forest for test-failure prediction, K-Means for clustering failure logs, CNNs for visual regression, and LLMs for test-case generation are all problems I have faced or can apply directly. <span class="reflection-highlight">Matching model complexity to the problem, not to the hype,</span> is the principle I will carry through the rest of this program and my engineering work.
+            </p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>© 2026 Farukh Ahemad Gesukhan Pathan | All rights reserved</p>
+            <p>Machine Learning | Algorithm Selection | Generative AI</p>
+        </div>
+    </footer>
+
+    <script>
+        // Filter algorithm cards by learning type or domain using each card's data-tags
+        (function () {
+            var buttons = document.querySelectorAll('.filter-btn');
+            var cards = document.querySelectorAll('.algo-card');
+            var empty = document.getElementById('no-results');
+
+            buttons.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    var filter = btn.dataset.filter;
+                    var shown = 0;
+
+                    buttons.forEach(function (b) {
+                        b.classList.toggle('active', b === btn);
+                        b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+                    });
+
+                    cards.forEach(function (card) {
+                        var match = filter === 'all' || card.dataset.tags.split(' ').indexOf(filter) !== -1;
+                        card.hidden = !match;
+                        if (match) shown++;
+                    });
+
+                    empty.style.display = shown ? 'none' : 'block';
+                });
+            });
+
+            // Framework pills jump to a card; clear any filter that would hide it
+            document.querySelectorAll('.algo-pill').forEach(function (pill) {
+                pill.addEventListener('click', function () {
+                    var target = document.querySelector(pill.getAttribute('href'));
+                    if (target && target.hidden) buttons[0].click();
+                });
+            });
+        })();
+    </script>
+    <script src="back-to-top.js" defer></script>
+    <script src="page-nav.js" defer></script>
+</body>
+</html>

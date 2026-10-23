@@ -17,24 +17,9 @@
         :root {
             --page-accent: #27ae60;
         }
-
-        body {
-            margin: 0;
-            padding: 0;
-            background:
-                radial-gradient(circle at 10% 10%, rgba(15, 118, 110, 0.14) 0%, rgba(15, 118, 110, 0) 35%),
-                radial-gradient(circle at 90% 8%, rgba(249, 115, 22, 0.15) 0%, rgba(249, 115, 22, 0) 34%),
-                linear-gradient(170deg, #f5fbff 0%, #eef4ff 50%, #f7fbff 100%);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
     </style>
 </head>
-<body>
+<body class="artifact-page">
     <header>
         <div class="container">
             <a href="index.html" class="back-btn">← Back to Portfolio</a>
@@ -44,11 +29,22 @@
     <div class="container">
         <!-- Artifact Header -->
         <div class="artifact-header">
+            <span class="artifact-kicker">Portfolio Artifact · Data Engineering</span>
             <h1>Data Engineering & ETL Pipeline</h1>
             <p>Showcase of data architecture, pipeline design, and data integrity practices</p>
+            <div class="tag-row" aria-label="Tech stack">
+                <span class="tag-chip">Snowflake</span>
+                <span class="tag-chip">Matillion</span>
+                <span class="tag-chip">AWS</span>
+                <span class="tag-chip">SQL</span>
+                <span class="tag-chip">Jenkins</span>
+                <span class="tag-chip">ETL</span>
+            </div>
         </div>
 
-        <div class="analysis-section">
+        <nav class="page-nav" aria-label="On this page"></nav>
+
+        <div class="analysis-section" data-nav="Artifact Info">
             <h2>Artifact Information</h2>
             <div class="analysis-grid">
                 <div class="analysis-card">
@@ -173,42 +169,42 @@
 
             <div class="project-item">
                 <h3>Results & Performance Metrics</h3>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
-                    <div style="padding: 15px; background: #e8f5e9; border-left: 4px solid #27ae60; border-radius: 5px;">
-                        <h4 style="margin-top: 0; color: #27ae60;">Cost Savings</h4>
-                        <p style="font-size: 1.5em; font-weight: bold; color: #2c3e50; margin: 10px 0;">$50K Annual</p>
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Cost Savings</div>
+                        <div class="stat-value">$50K Annual</div>
                         <p>AWS cloud migration + optimized licensing model</p>
                     </div>
-                    <div style="padding: 15px; background: #e3f2fd; border-left: 4px solid #3498db; border-radius: 5px;">
-                        <h4 style="margin-top: 0; color: #3498db;">Data Integrity</h4>
-                        <p style="font-size: 1.5em; font-weight: bold; color: #2c3e50; margin: 10px 0;">100% Assurance</p>
+                    <div class="stat-card">
+                        <div class="stat-label">Data Integrity</div>
+                        <div class="stat-value">100% Assurance</div>
                         <p>Zero data loss in transition to cloud</p>
                     </div>
-                    <div style="padding: 15px; background: #fce4ec; border-left: 4px solid #e91e63; border-radius: 5px;">
-                        <h4 style="margin-top: 0; color: #e91e63;">Data Volume Migrated</h4>
-                        <p style="font-size: 1.5em; font-weight: bold; color: #2c3e50; margin: 10px 0;">2TB+</p>
+                    <div class="stat-card">
+                        <div class="stat-label">Data Volume Migrated</div>
+                        <div class="stat-value">2TB+</div>
                         <p>Multiple legacy systems consolidated</p>
                     </div>
-                    <div style="padding: 15px; background: #fff3e0; border-left: 4px solid #ff9800; border-radius: 5px;">
-                        <h4 style="margin-top: 0; color: #ff9800;">ETL Performance</h4>
-                        <p style="font-size: 1.5em; font-weight: bold; color: #2c3e50; margin: 10px 0;">Daily Incremental</p>
+                    <div class="stat-card">
+                        <div class="stat-label">ETL Performance</div>
+                        <div class="stat-value">Daily Incremental</div>
                         <p>Optimized for minimal data transfer</p>
                     </div>
-                    <div style="padding: 15px; background: #f3e5f5; border-left: 4px solid #9c27b0; border-radius: 5px;">
-                        <h4 style="margin-top: 0; color: #9c27b0;">System Availability</h4>
-                        <p style="font-size: 1.5em; font-weight: bold; color: #2c3e50; margin: 10px 0;">99.9% SLA</p>
+                    <div class="stat-card">
+                        <div class="stat-label">System Availability</div>
+                        <div class="stat-value">99.9% SLA</div>
                         <p>Snowflake reliability in cloud</p>
                     </div>
-                    <div style="padding: 15px; background: #e0f2f1; border-left: 4px solid #009688; border-radius: 5px;">
-                        <h4 style="margin-top: 0; color: #009688;">Query Performance</h4>
-                        <p style="font-size: 1.5em; font-weight: bold; color: #2c3e50; margin: 10px 0;">35% Faster</p>
+                    <div class="stat-card">
+                        <div class="stat-label">Query Performance</div>
+                        <div class="stat-value">35% Faster</div>
                         <p>Analytics queries on Snowflake</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="analysis-section">
+        <div class="analysis-section" data-nav="Evidence & Plan">
             <h2>Project Evidence and Upgrade Plan</h2>
             <div class="project-item">
                 <h3>Data Intelligence Architecture from Implemented Project</h3>
@@ -250,7 +246,7 @@
         </div>
 
         <!-- Professional Reflection Section -->
-        <div class="professional-reflection">
+        <div class="professional-reflection" data-nav="Reflection">
             <h2>💭 Professional Reflection</h2>
             <p>
                 My journey in data engineering - from managing legacy MSSQL databases to orchestrating cloud-native Snowflake pipelines - has reinforced a fundamental truth: <span class="reflection-highlight">data is the lifeblood of organizational decision-making, and quality engineering ensures it flows reliably.</span> Every ETL pipeline I designed, every transformation I optimized, and every data quality validation I implemented was driven by the conviction that bad data is worse than no data.
@@ -274,6 +270,7 @@
         </div>
     </footer>
     <script src="back-to-top.js" defer></script>
+    <script src="page-nav.js" defer></script>
     <script src="lightbox.js" defer></script>
 </body>
 </html>

@@ -13,7 +13,7 @@
 
     function init() {
         var triggers = Array.prototype.slice.call(
-            document.querySelectorAll('.gallery-card, .evidence-media img')
+            document.querySelectorAll('.gallery-card, .evidence-media img, .figure img')
         );
         if (!triggers.length) {
             return;

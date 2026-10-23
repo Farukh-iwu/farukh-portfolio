@@ -16,24 +16,9 @@
         :root {
             --page-accent: #e74c3c;
         }
-
-        body {
-            margin: 0;
-            padding: 0;
-            background:
-                radial-gradient(circle at 10% 10%, rgba(15, 118, 110, 0.14) 0%, rgba(15, 118, 110, 0) 35%),
-                radial-gradient(circle at 90% 8%, rgba(249, 115, 22, 0.15) 0%, rgba(249, 115, 22, 0) 34%),
-                linear-gradient(170deg, #f5fbff 0%, #eef4ff 50%, #f7fbff 100%);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
     </style>
 </head>
-<body>
+<body class="artifact-page">
     <header>
         <div class="container">
             <a href="index.html" class="back-btn">← Back to Portfolio</a>
@@ -43,11 +28,22 @@
     <div class="container">
         <!-- Artifact Header -->
         <div class="artifact-header">
+            <span class="artifact-kicker">Portfolio Artifact · Quality Engineering</span>
             <h1>QA Automation & SDET Framework</h1>
             <p>Showcase of test automation expertise, frameworks, and quality engineering practices</p>
+            <div class="tag-row" aria-label="Tech stack">
+                <span class="tag-chip">Playwright</span>
+                <span class="tag-chip">Selenium</span>
+                <span class="tag-chip">Cucumber</span>
+                <span class="tag-chip">TypeScript</span>
+                <span class="tag-chip">Java</span>
+                <span class="tag-chip">Jenkins</span>
+            </div>
         </div>
 
-        <div class="analysis-section">
+        <nav class="page-nav" aria-label="On this page"></nav>
+
+        <div class="analysis-section" data-nav="Artifact Info">
             <h2>Artifact Information</h2>
             <div class="analysis-grid">
                 <div class="analysis-card">
@@ -146,7 +142,7 @@
                 <h3>Framework Architecture</h3>
                 <p><strong>Project 1: Playwright TypeScript Framework (HCL Technologies, Oct 2022 – Apr 2023)</strong></p>
                 <p>Designed a modern, scalable Playwright framework using TypeScript with Page Object Model pattern. Implemented parallel test execution leveraging Playwright's built-in parallelization, reducing total test suite runtime by 40%. Integrated with Jenkins for daily scheduled runs and pull request validation. GitHub Copilot accelerated script development by 30%, while maintaining strict code quality standards.</p>
-                <p style="margin-top: 15px;"><strong>Project 2: BDD Framework with Cucumber (Infosys, Jul 2017 – Oct 2020)</strong></p>
+                <p><strong>Project 2: BDD Framework with Cucumber (Infosys, Jul 2017 – Oct 2020)</strong></p>
                 <p>Architected a Selenium WebDriver-based BDD framework using Cucumber and Java for the FileNet ECM project. Business analysts could write test scenarios in Gherkin language, enabling non-technical stakeholders to understand test coverage. Configured Maven for dependency management and established Bamboo pipelines for continuous integration.</p>
             </div>
 
@@ -162,42 +158,42 @@
 
             <div class="project-item">
                 <h3>Results & Metrics</h3>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
-                    <div style="padding: 15px; background: #e8f5e9; border-left: 4px solid #27ae60; border-radius: 5px;">
-                        <h4 style="margin-top: 0; color: #27ae60;">Regression Testing Speed</h4>
-                        <p style="font-size: 1.5em; font-weight: bold; color: #2c3e50; margin: 10px 0;">40% Reduction</p>
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Regression Testing Speed</div>
+                        <div class="stat-value">40% Reduction</div>
                         <p>HCL Technologies: Playwright framework with parallel execution</p>
                     </div>
-                    <div style="padding: 15px; background: #e3f2fd; border-left: 4px solid #3498db; border-radius: 5px;">
-                        <h4 style="margin-top: 0; color: #3498db;">Test Automation Coverage</h4>
-                        <p style="font-size: 1.5em; font-weight: bold; color: #2c3e50; margin: 10px 0;">85% UI Coverage</p>
+                    <div class="stat-card">
+                        <div class="stat-label">Test Automation Coverage</div>
+                        <div class="stat-value">85% UI Coverage</div>
                         <p>Quest Diagnostics: Full Quest Analytics platform automation</p>
                     </div>
-                    <div style="padding: 15px; background: #fce4ec; border-left: 4px solid #e91e63; border-radius: 5px;">
-                        <h4 style="margin-top: 0; color: #e91e63;">Manual Effort Reduction</h4>
-                        <p style="font-size: 1.5em; font-weight: bold; color: #2c3e50; margin: 10px 0;">60% Decrease</p>
+                    <div class="stat-card">
+                        <div class="stat-label">Manual Effort Reduction</div>
+                        <div class="stat-value">60% Decrease</div>
                         <p>Jenkins automation across multiple environments</p>
                     </div>
-                    <div style="padding: 15px; background: #fff3e0; border-left: 4px solid #ff9800; border-radius: 5px;">
-                        <h4 style="margin-top: 0; color: #ff9800;">Development Acceleration</h4>
-                        <p style="font-size: 1.5em; font-weight: bold; color: #2c3e50; margin: 10px 0;">30% Faster Scripts</p>
+                    <div class="stat-card">
+                        <div class="stat-label">Development Acceleration</div>
+                        <div class="stat-value">30% Faster Scripts</div>
                         <p>AI tool integration (GitHub Copilot + ChatGPT)</p>
                     </div>
-                    <div style="padding: 15px; background: #f3e5f5; border-left: 4px solid #9c27b0; border-radius: 5px;">
-                        <h4 style="margin-top: 0; color: #9c27b0;">Test Coverage Increase</h4>
-                        <p style="font-size: 1.5em; font-weight: bold; color: #2c3e50; margin: 10px 0;">35% Growth</p>
+                    <div class="stat-card">
+                        <div class="stat-label">Test Coverage Increase</div>
+                        <div class="stat-value">35% Growth</div>
                         <p>Excel-driven data approach at Quest Diagnostics</p>
                     </div>
-                    <div style="padding: 15px; background: #e0f2f1; border-left: 4px solid #009688; border-radius: 5px;">
-                        <h4 style="margin-top: 0; color: #009688;">Cost Savings</h4>
-                        <p style="font-size: 1.5em; font-weight: bold; color: #2c3e50; margin: 10px 0;">$5K–$50K Annual</p>
+                    <div class="stat-card">
+                        <div class="stat-label">Cost Savings</div>
+                        <div class="stat-value">$5K–$50K Annual</div>
                         <p>Per-cycle savings + cloud optimization</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="analysis-section">
+        <div class="analysis-section" data-nav="Evidence & Plan">
             <h2>Project Evidence and Upgrade Plan</h2>
             <div class="project-item">
                 <h3>QA Report from Implemented Project</h3>
@@ -239,7 +235,7 @@
         </div>
 
         <!-- Professional Reflection Section -->
-        <div class="professional-reflection">
+        <div class="professional-reflection" data-nav="Reflection">
             <h2>🎯 Professional Reflection</h2>
             <p>
                 Throughout my QA automation journey across HCL Technologies, Infosys, and Quest Diagnostics, I've learned that <span class="reflection-highlight">test automation is not merely about executing tests faster - it's about building confidence in software delivery.</span> Every framework I architected, every test case I refined, and every CI/CD pipeline I optimized was driven by a single mission: enabling teams to ship quality software at predictable cadences.
@@ -263,6 +259,7 @@
         </div>
     </footer>
     <script src="back-to-top.js" defer></script>
+    <script src="page-nav.js" defer></script>
     <script src="lightbox.js" defer></script>
 </body>
 </html>

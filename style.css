@@ -38,6 +38,21 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
+/* Artifact pages: shared backdrop and column width. The homepage overrides
+   both inline, so these only need to suit the sub-pages. */
+body.artifact-page {
+    background:
+        radial-gradient(circle at 10% 10%, rgba(15, 118, 110, 0.14) 0%, rgba(15, 118, 110, 0) 35%),
+        radial-gradient(circle at 90% 8%, rgba(249, 115, 22, 0.15) 0%, rgba(249, 115, 22, 0) 34%),
+        linear-gradient(170deg, #f5fbff 0%, #eef4ff 50%, #f7fbff 100%);
+}
+
+.artifact-page .container {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
 /* Simple sub-page header bar ("← Back to Portfolio") */
 header {
     background: linear-gradient(135deg, var(--primary), var(--dark));
@@ -76,11 +91,115 @@ header {
 
 .artifact-header h1 {
     color: var(--primary);
+    font-size: 2.3em;
+    line-height: 1.2;
+    max-width: 860px;
+    margin: 0 auto;
 }
 
 .artifact-header p {
     color: #52657b;
-    margin-top: 8px;
+    margin: 12px auto 0;
+    max-width: 760px;
+    font-size: 1.08em;
+}
+
+/* Small label above the title: "Artifact · Category" */
+.artifact-kicker {
+    display: inline-block;
+    margin-bottom: 14px;
+    padding: 5px 14px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--page-accent, var(--secondary)) 12%, white);
+    color: var(--page-accent, var(--secondary));
+    font-size: 0.78em;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+/* Author / date / category line under the subtitle */
+.artifact-meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px 22px;
+    margin-top: 16px;
+    font-size: 0.92em;
+    color: #52657b;
+}
+
+/* Tech / topic chips under the subtitle */
+.tag-row {
+    margin-top: 18px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+}
+
+.tag-chip {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1px solid #dce8f6;
+    background: #ffffff;
+    color: #2c3e50;
+    font-size: 0.86em;
+    font-weight: 600;
+}
+
+/* "On this page" bar, filled in by page-nav.js from each section's h2 */
+.page-nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    margin: 0 0 8px;
+    padding: 10px 12px;
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(8px);
+    border: 1px solid #dfe9f5;
+    border-radius: 14px;
+    box-shadow: 0 8px 20px rgba(25, 38, 56, 0.08);
+}
+
+.page-nav::-webkit-scrollbar {
+    display: none;
+}
+
+.page-nav:empty {
+    display: none;
+}
+
+.page-nav a {
+    flex-shrink: 0;
+    padding: 6px 12px;
+    border-radius: 999px;
+    color: #4f6278;
+    text-decoration: none;
+    font-size: 0.86em;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.page-nav a:hover {
+    background: #eef4fb;
+    color: var(--primary);
+}
+
+.page-nav a.active {
+    background: var(--page-accent, var(--secondary));
+    color: #ffffff;
+}
+
+.page-nav a:focus-visible {
+    outline: 2px solid #93c5fd;
+    outline-offset: 2px;
 }
 
 /* Buttons */
@@ -147,22 +266,48 @@ header {
 
 /* Generic analysis layout used across artifact pages */
 .analysis-section {
-    width: 88%;
-    max-width: 1060px;
-    margin: 28px auto;
+    margin: 28px 0;
     padding: 34px;
     background: linear-gradient(160deg, #ffffff 0%, #f9fcff 100%);
     border-radius: 16px;
     border: 1px solid #dfe9f5;
     box-shadow: 0 14px 30px rgba(25, 38, 56, 0.09);
+    scroll-margin-top: 76px;
 }
 
 .analysis-section h2 {
     color: #2c3e50;
-    font-size: 1.8em;
+    font-size: 1.7em;
+    line-height: 1.25;
     margin-top: 0;
+    margin-bottom: 18px;
     border-bottom: 3px solid var(--page-accent, var(--secondary));
-    padding-bottom: 15px;
+    padding-bottom: 14px;
+}
+
+.analysis-section > p,
+.section-lead {
+    color: #4b5b6c;
+    margin: 0 0 14px;
+    max-width: 860px;
+}
+
+.analysis-section h3 {
+    color: #2c3e50;
+}
+
+.analysis-section > h3 {
+    margin: 24px 0 10px;
+}
+
+.analysis-section ul,
+.analysis-section ol {
+    padding-left: 22px;
+}
+
+.analysis-section li {
+    margin: 6px 0;
+    color: #4b5b6c;
 }
 
 .analysis-grid {
@@ -175,9 +320,9 @@ header {
 .analysis-card {
     padding: 20px;
     background: linear-gradient(145deg, #ffffff 0%, #f9fcff 100%);
-    border-left: 5px solid var(--page-accent, var(--secondary));
     border-radius: 12px;
     border: 1px solid #dce8f6;
+    border-left: 5px solid var(--page-accent, var(--secondary));
     box-shadow: 0 6px 16px rgba(32, 48, 69, 0.1);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -222,12 +367,223 @@ header {
 }
 
 .project-item {
-    margin: 30px 0;
+    margin: 22px 0;
     padding: 22px;
     background: #fbfcfe;
-    border-left: 4px solid var(--page-accent, var(--secondary));
-    border-radius: 10px;
+    border-radius: 12px;
     border: 1px solid #ebeef2;
+    border-left: 5px solid var(--page-accent, var(--secondary));
+}
+
+.project-item p {
+    color: #4b5b6c;
+    margin: 10px 0;
+}
+
+/* Good-fit / poor-fit cards (override the positional colors) */
+.analysis-grid .analysis-card.is-positive {
+    background: linear-gradient(135deg, #f4fbf6, #ffffff);
+    border-left-color: #27ae60;
+}
+
+.analysis-grid .analysis-card.is-negative {
+    background: linear-gradient(135deg, #fff5f4, #ffffff);
+    border-left-color: #e74c3c;
+}
+
+/* Highlighted note / summary box */
+.callout {
+    margin: 18px 0;
+    padding: 18px 22px;
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--page-accent, var(--secondary)) 8%, white);
+    border: 1px solid color-mix(in srgb, var(--page-accent, var(--secondary)) 25%, white);
+    border-left: 5px solid var(--page-accent, var(--secondary));
+    color: #2f3d4a;
+}
+
+.callout p {
+    margin: 8px 0;
+}
+
+.callout h3,
+.callout h4 {
+    margin: 0 0 6px;
+    color: #2c3e50;
+}
+
+.callout-warn {
+    background: #fff8e6;
+    border-color: #fde7b0;
+    border-left-color: #f39c12;
+}
+
+/* Shared data table */
+.table-wrap {
+    overflow-x: auto;
+    margin: 18px 0;
+    border-radius: 12px;
+    border: 1px solid #dce8f6;
+    box-shadow: 0 6px 16px rgba(32, 48, 69, 0.08);
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+    font-size: 0.95em;
+}
+
+.data-table th {
+    background: var(--primary);
+    color: #ffffff;
+    padding: 13px 14px;
+    text-align: left;
+    font-weight: 600;
+}
+
+.data-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid #eef2f7;
+    vertical-align: top;
+    color: #2f3d4a;
+}
+
+.data-table tbody tr:nth-child(even) td {
+    background: #f8fafc;
+}
+
+.data-table .group-row td {
+    background: color-mix(in srgb, var(--page-accent, var(--secondary)) 12%, white);
+    color: var(--primary);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.data-table .highlight-cell {
+    background: #e8f5e9 !important;
+    color: #1e7e34;
+    font-weight: 700;
+}
+
+/* Headline metric tiles */
+.stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    margin-top: 14px;
+}
+
+.stat-card {
+    padding: 16px 18px;
+    border-radius: 12px;
+    background: #ffffff;
+    border: 1px solid #dce8f6;
+    border-top: 4px solid var(--stat-color, var(--page-accent, var(--secondary)));
+}
+
+.stat-card .stat-label {
+    font-size: 0.85em;
+    font-weight: 700;
+    color: var(--stat-color, var(--page-accent, var(--secondary)));
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.stat-card .stat-value {
+    font-size: 1.6em;
+    font-weight: 800;
+    color: #2c3e50;
+    margin: 4px 0;
+    line-height: 1.2;
+}
+
+.stat-card p {
+    margin: 0;
+    font-size: 0.92em;
+    color: #4b5b6c;
+}
+
+.stat-grid .stat-card:nth-child(6n+1) { --stat-color: #27ae60; }
+.stat-grid .stat-card:nth-child(6n+2) { --stat-color: #3498db; }
+.stat-grid .stat-card:nth-child(6n+3) { --stat-color: #e91e63; }
+.stat-grid .stat-card:nth-child(6n+4) { --stat-color: #f39c12; }
+.stat-grid .stat-card:nth-child(6n+5) { --stat-color: #9c27b0; }
+.stat-grid .stat-card:nth-child(6n+6) { --stat-color: #009688; }
+
+/* Numbered process steps */
+.steps {
+    list-style: none;
+    counter-reset: step;
+    padding: 0 !important;
+    margin: 16px 0;
+}
+
+.steps li {
+    counter-increment: step;
+    position: relative;
+    margin: 10px 0;
+    padding: 14px 16px 14px 58px;
+    background: #ffffff;
+    border: 1px solid #dce8f6;
+    border-radius: 12px;
+    color: #4b5b6c;
+}
+
+.steps li::before {
+    content: counter(step);
+    position: absolute;
+    left: 16px;
+    top: 14px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--page-accent, var(--secondary));
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.steps li strong {
+    color: #2c3e50;
+}
+
+/* Figure with caption */
+.figure {
+    margin: 18px 0;
+    padding: 16px;
+    background: #ffffff;
+    border: 1px solid #e3e9f2;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.figure img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    cursor: zoom-in;
+}
+
+.figure figcaption {
+    margin-top: 10px;
+    font-size: 0.92em;
+    color: #52657b;
+}
+
+/* Small colored label inside text */
+.pill {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 0.78em;
+    font-weight: 700;
+    color: #ffffff;
+    background: var(--pill-color, var(--page-accent, var(--secondary)));
+    vertical-align: middle;
 }
 
 .analysis-section .project-item:nth-of-type(1) {
@@ -417,13 +773,11 @@ header {
     border-radius: 16px;
     line-height: 1.8;
     color: #333;
-    font-style: italic;
-    border-left: 5px solid var(--page-accent, var(--secondary));
-    margin: 28px auto;
-    width: 88%;
-    max-width: 1060px;
-    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.08);
     border: 1px solid #e3e9f2;
+    border-left: 5px solid var(--page-accent, var(--secondary));
+    margin: 28px 0;
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.08);
+    scroll-margin-top: 76px;
 }
 
 .professional-reflection h2 {
@@ -462,9 +816,22 @@ footer p {
 }
 
 @media (max-width: 768px) {
-    .analysis-section {
-        width: 95%;
+    .artifact-header {
+        padding: 32px 18px;
+    }
+
+    .artifact-header h1 {
+        font-size: 1.7em;
+    }
+
+    .analysis-section,
+    .professional-reflection {
         padding: 22px;
+    }
+
+    .analysis-section h2,
+    .professional-reflection h2 {
+        font-size: 1.4em;
     }
 
     .analysis-grid {
