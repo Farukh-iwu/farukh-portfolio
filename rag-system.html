@@ -4,65 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RAG System Implementation - Farukh Ahemad Gesukhan Pathan</title>
+    <meta name="description" content="A case study implementing a Retrieval-Augmented Generation (RAG) system for knowledge management in the food and beverage industry.">
+    <meta property="og:title" content="RAG System Implementation - Farukh Ahemad Gesukhan Pathan">
+    <meta property="og:description" content="Implementing a Retrieval-Augmented Generation system: architecture, workflow, and stakeholder impact for a food and beverage knowledge base.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://farukh-iwu.github.io/farukh-portfolio/rag-system.html">
+    <meta name="twitter:card" content="summary">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
     <style>
         :root {
-            --primary: #1f3a5f;
+            --primary: #17365d;
             --secondary: #0f766e;
             --accent: #f97316;
             --food: #e67e22;
             --compliance: #27ae60;
             --rd: #9b59b6;
             --light: #ecf0f1;
-            --dark: #12253f;
+            --dark: #0f2746;
         }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background:
-                radial-gradient(circle at 10% 10%, rgba(15, 118, 110, 0.14) 0%, rgba(15, 118, 110, 0) 35%),
-                radial-gradient(circle at 90% 8%, rgba(249, 115, 22, 0.15) 0%, rgba(249, 115, 22, 0) 34%),
-                linear-gradient(170deg, #f5fbff 0%, #eef4ff 50%, #f7fbff 100%);
-        }
-        
+
         .container {
             max-width: 1000px;
             margin: 0 auto;
             padding: 20px;
         }
-        
-        header {
-            background: linear-gradient(135deg, var(--primary), var(--dark));
-            color: white;
-            padding: 40px 0;
-            box-shadow: 0 16px 34px rgba(24, 44, 72, 0.3);
-        }
-        
-        .back-btn {
-            color: white;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 20px;
-        }
-        
-        .artifact-header {
-            text-align: center;
-            padding: 40px 0;
-            background: white;
-            margin: 20px 0;
-            border-radius: 10px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-        }
-        
+
         .intro-section {
             background: linear-gradient(135deg, var(--food), #d35400);
             color: white;
@@ -215,14 +182,6 @@
             margin: 40px 0;
         }
 
-          footer {
-            background: var(--primary);
-            color: white;
-            text-align: center;
-            padding: 40px 0;
-            margin-top: 60px;
-        }
-        
         .challenge-solution {
             display: grid;
             grid-template-columns: 1fr 1fr;
