@@ -576,7 +576,7 @@
         <!-- Classification Method -->
         <div class="analysis-section" id="classification" data-nav="Method">
             <h2>How the Classification Was Built</h2>
-            <p class="section-intro">The framework is the result of four decisions: which axes to use, which categories to allow on each axis, how to sort each algorithm, and how to handle the cases that did not fit.</p>
+            <p class="section-intro">The framework is the result of five decisions: which axes to use, which categories to allow on each axis, how to sort each algorithm, how to handle the cases that did not fit, and which criteria to compare them on.</p>
             <div class="analysis-grid">
                 <div class="analysis-card">
                     <h3>1. Choosing the Two Axes</h3>
@@ -604,7 +604,12 @@
                 </div>
 
                 <div class="analysis-card">
-                    <h3>6. What the Classification Reveals</h3>
+                    <h3>6. Choosing the Comparison Criteria</h3>
+                    <p>For the comparison matrix I rated two attributes: <strong>interpretability</strong>, meaning how easily a person can explain a prediction, and <strong>data needed</strong>, meaning the volume required for good results. I chose them because they split the classical models (1-7) from the deep learning models (8-12) most clearly, and because they drive real trade-offs: whether a model's decisions can be justified to stakeholders, and whether a team has enough data to train it.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>7. What the Classification Reveals</h3>
                     <p>Two patterns emerged. Classical algorithms (1-7) cluster in the supervised and unsupervised rows on tabular data. Deep learning algorithms (8-12) move toward the self-supervised row and toward unstructured data. The shift from human labels to self-generated labels is the change that made large generative models possible.</p>
                 </div>
             </div>
@@ -1049,6 +1054,9 @@
             </p>
             <p>
                 The hardest part was classification itself. The assignment asks for supervised or unsupervised models, but models like BERT, GPT, and diffusion do not fit cleanly into either category. Researching how they are trained led me to <span class="reflection-highlight">self-supervised learning, where the data provides its own labels.</span> That idea explains why generative AI scaled so quickly: it removed the need for expensive human labeling.
+            </p>
+            <p>
+                The work also made core Model Development concepts concrete. The comparison matrix showed the trade-off between interpretability and accuracy. The tree family showed how bagging and boosting reduce the overfitting of a single decision tree. The data-needed column showed why <span class="reflection-highlight">transfer learning and fine-tuning matter</span> for teams that cannot afford to pre-train large models.
             </p>
             <p>
                 Connecting each algorithm to my own work in QA automation and data engineering made the material concrete. Random Forest for test-failure prediction, K-Means for clustering failure logs, CNNs for visual regression, and LLMs for test-case generation are all problems I have faced or can apply directly. <span class="reflection-highlight">Matching model complexity to the problem, not to the hype,</span> is the principle I will carry through the rest of this program and my engineering work.
