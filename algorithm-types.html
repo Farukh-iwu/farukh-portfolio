@@ -549,6 +549,7 @@
                 <div class="fw-cell" data-domain="Computer Vision">
                     <a class="algo-pill unsup" href="#pca">PCA</a>
                     <a class="algo-pill unsup" href="#kmeans">K-Means</a>
+                    <a class="algo-pill unsup" href="#gan">GAN</a>
                 </div>
                 <div class="fw-cell empty" data-domain="NLP"></div>
                 <div class="fw-cell" data-domain="Generative AI">
@@ -570,6 +571,43 @@
                 </div>
             </div>
             <p class="fw-note">Note: modern language and image models are trained in stages. BERT and GPT are pre-trained self-supervised on unlabeled text, then fine-tuned with labels (supervised) for specific tasks. Self-supervised learning is usually grouped under the unsupervised family because it needs no human labels.</p>
+        </div>
+
+        <!-- Classification Method -->
+        <div class="analysis-section" id="classification" data-nav="Method">
+            <h2>How the Classification Was Built</h2>
+            <p class="section-intro">The framework is the result of four decisions: which axes to use, which categories to allow on each axis, how to sort each algorithm, and how to handle the cases that did not fit.</p>
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <h3>1. Choosing the Two Axes</h3>
+                    <p>I tested several ways to group the algorithms, including by family, by complexity, and by year introduced. None of them helped answer the practical question of which model to try first. Two factors did: <strong>whether labeled data exists</strong>, which decides the learning type, and <strong>what shape the data takes</strong>, which decides the domain. Together they narrow the choice to two or three candidates, so they became the rows and columns.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>2. Defining the Categories</h3>
+                    <p>The learning-type axis started with the two categories the assignment names, supervised and unsupervised. BERT, GPT, and diffusion models did not fit either one: they need no human labels, yet they train on a prediction target. Their training method, where the target is hidden or corrupted data the model must restore, is <strong>self-supervised learning</strong>, so I added it as a third row. The domain axis uses four columns for the main kinds of input and output: tabular data, images, text, and new content.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>3. Sorting Rules</h3>
+                    <p><strong>Learning type</strong> was assigned by what the training signal is: human labels (supervised), no target at all (unsupervised), or a target created from the data itself (self-supervised). <strong>Domain</strong> was assigned by documented, common use rather than theoretical possibility. An algorithm appears in more than one column only when it is widely used there in practice. This is why SVM spans tabular, vision, and NLP while CNN stays in vision.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>4. Resolving Edge Cases</h3>
+                    <p><strong>BERT</strong> appears in two rows because its two training stages differ: self-supervised pre-training, then supervised fine-tuning. <strong>GAN</strong> stays unsupervised even though its discriminator is a classifier, because the "real or fake" labels are created inside the model and no human labels are needed. <strong>Diffusion</strong> is self-supervised because it learns by predicting the noise added to its own training images. <strong>Linear Regression and SVM</strong> share a family because both learn a weighted combination of features, even though one predicts numbers and the other classes.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>5. Checking the Result</h3>
+                    <p>I cross-checked each placement against the original paper and the scikit-learn documentation, then made the framework grid, the profile badges, and the comparison matrix agree on every algorithm. Empty cells were kept on purpose. For example, there is no supervised generative model here, and no unsupervised NLP model. The gaps show where the current field concentrates.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>6. What the Classification Reveals</h3>
+                    <p>Two patterns emerged. Classical algorithms (1-7) cluster in the supervised and unsupervised rows on tabular data. Deep learning algorithms (8-12) move toward the self-supervised row and toward unstructured data. The shift from human labels to self-generated labels is the change that made large generative models possible.</p>
+                </div>
+            </div>
         </div>
 
         <!-- Algorithm Profiles -->
@@ -766,7 +804,7 @@
                         <span class="badge gen">Generative AI</span>
                     </div>
                     <h4>How it works</h4>
-                    <p>Is trained on huge amounts of text to predict the next token, using attention over all previous tokens. It generates text by repeatedly predicting and appending one token at a time. Instruction tuning and human feedback then align it with helpful behavior.</p>
+                    <p>It is trained on huge amounts of text to predict the next token, using attention over all previous tokens. It generates text by repeatedly predicting and appending one token at a time. Instruction tuning and human feedback then align it with helpful behavior.</p>
                     <h4>Use cases</h4>
                     <ul>
                         <li>Chat assistants, summarization, and code generation</li>
@@ -871,7 +909,7 @@
                 <div class="analysis-card">
                     <h3>📏 Linear and Margin-based Models</h3>
                     <div class="chain">
-                        <span class="step">Linear Regression</span><span class="link">widest-margin boundary + kernels</span>
+                        <span class="step">Linear Regression</span><span class="link">both linear; SVM adds margin + kernels</span>
                         <span class="step">SVM</span>
                     </div>
                     <p>Both learn weighted combinations of features. Linear Regression predicts numbers, while SVM separates classes and can bend its boundary with kernels. They are fast, simple baselines that are hard to beat on small data.</p>
@@ -960,7 +998,7 @@
             <div class="analysis-grid">
                 <div class="analysis-card">
                     <h3>📁 Tangible Deliverables</h3>
-                    <p><strong>Framework Assets:</strong> Learning-type by domain map, 12 algorithm profiles, comparison matrix, family relationship map, and selection guide.</p>
+                    <p><strong>Framework Assets:</strong> Learning-type by domain map, classification method, 12 algorithm profiles, comparison matrix, family relationship map, and selection guide.</p>
                     <p><strong>Publishing:</strong> Interactive web page hosted on GitHub Pages as part of this portfolio.</p>
                 </div>
 
@@ -1007,10 +1045,10 @@
         <div class="professional-reflection" data-nav="Reflection">
             <h2>💭 Professional Reflection</h2>
             <p>
-                Building this framework changed how I think about algorithm selection. Before, I tended to think in terms of individual models. Laying them out on a learning-type by domain grid showed me that <span class="reflection-highlight">the choice is mostly decided by two facts: whether labels exist, and what shape the data takes.</span> Once those are known, the list of sensible candidates shrinks to two or three.
+                Building this framework changed how I think about algorithm selection. Before, I tended to think in terms of individual models. Laying them out on a learning-type-by-domain grid showed me that <span class="reflection-highlight">the choice is mostly determined by two factors: whether labels exist and what shape the data takes.</span> Once those are known, the list of sensible candidates shrinks to two or three.
             </p>
             <p>
-                The hardest part was classification itself. The assignment asks for supervised or unsupervised, but models like BERT, GPT, and diffusion do not fit cleanly into either. Researching how they are trained led me to <span class="reflection-highlight">self-supervised learning, where the data provides its own labels.</span> That idea explains why generative AI scaled so quickly: it removed the need for expensive human labeling.
+                The hardest part was classification itself. The assignment asks for supervised or unsupervised models, but models like BERT, GPT, and diffusion do not fit cleanly into either category. Researching how they are trained led me to <span class="reflection-highlight">self-supervised learning, where the data provides its own labels.</span> That idea explains why generative AI scaled so quickly: it removed the need for expensive human labeling.
             </p>
             <p>
                 Connecting each algorithm to my own work in QA automation and data engineering made the material concrete. Random Forest for test-failure prediction, K-Means for clustering failure logs, CNNs for visual regression, and LLMs for test-case generation are all problems I have faced or can apply directly. <span class="reflection-highlight">Matching model complexity to the problem, not to the hype,</span> is the principle I will carry through the rest of this program and my engineering work.
