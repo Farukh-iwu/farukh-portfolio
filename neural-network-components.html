@@ -1,0 +1,1429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neural Network Components - Farukh Ahemad Gesukhan Pathan</title>
+    <meta name="description" content="A visual presentation of the six core components of a neural network: layers, neurons, weights, activation functions, loss functions, and optimization algorithms.">
+    <meta property="og:title" content="Inside a Neural Network: A Visual Guide to Its Components - Farukh Ahemad Gesukhan Pathan">
+    <meta property="og:description" content="How layers, neurons, weights, activation functions, loss functions, and optimizers work together to make a neural network learn.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://farukh-iwu.github.io/farukh-portfolio/neural-network-components.html">
+    <meta name="twitter:card" content="summary">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --page-accent: #4f46e5;
+            --layers: #2563eb;
+            --neurons: #7c3aed;
+            --weights: #0d9488;
+            --activation: #ea580c;
+            --loss: #dc2626;
+            --optim: #16a34a;
+        }
+
+        .section-intro {
+            margin-top: 16px;
+            color: #555;
+        }
+
+        .note {
+            margin-top: 14px;
+            font-size: 0.92em;
+            color: #555;
+        }
+
+        /* Component legend, reused by the diagram and the reference table */
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 18px;
+            margin: 14px 0 6px;
+            font-size: 0.92em;
+            color: #2f3d4a;
+        }
+
+        .legend span {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            flex-shrink: 0;
+        }
+
+        .dot.layers { background: var(--layers); }
+        .dot.neurons { background: var(--neurons); }
+        .dot.weights { background: var(--weights); }
+        .dot.activation { background: var(--activation); }
+        .dot.loss { background: var(--loss); }
+        .dot.optim { background: var(--optim); }
+
+        /* Slide deck */
+        .deck-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin: 18px 0 14px;
+        }
+
+        .deck-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .deck-btn {
+            font: inherit;
+            font-size: 0.92em;
+            font-weight: 600;
+            padding: 8px 14px;
+            border-radius: 999px;
+            border: 1px solid #cfd8ea;
+            background: #ffffff;
+            color: #2c3e50;
+            cursor: pointer;
+            transition: background 0.2s ease, border-color 0.2s ease;
+        }
+
+        .deck-btn:hover {
+            border-color: var(--page-accent);
+            background: #f3f2ff;
+        }
+
+        .deck-btn:focus-visible {
+            outline: 3px solid var(--page-accent);
+            outline-offset: 2px;
+        }
+
+        .deck-btn:disabled {
+            opacity: 0.45;
+            cursor: default;
+        }
+
+        .deck-counter {
+            min-width: 64px;
+            text-align: center;
+            font-weight: 700;
+            color: #2c3e50;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .deck-dots {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            justify-content: center;
+            margin-top: 14px;
+        }
+
+        .deck-dots button {
+            width: 10px;
+            height: 10px;
+            padding: 0;
+            border-radius: 50%;
+            border: none;
+            background: #cfd8ea;
+            cursor: pointer;
+        }
+
+        .deck-dots button[aria-current="true"] {
+            background: var(--page-accent);
+            transform: scale(1.25);
+        }
+
+        /* Without JavaScript, or in "show all" mode, slides simply stack */
+        .deck {
+            display: grid;
+            gap: 22px;
+            outline: none;
+        }
+
+        .deck.is-paged .slide:not(.is-active) {
+            display: none;
+        }
+
+        .deck-toolbar .deck-controls,
+        .deck-dots {
+            display: none;
+        }
+
+        .js-ready .deck-toolbar .deck-controls {
+            display: flex;
+        }
+
+        .js-ready .deck.is-paged ~ .deck-dots {
+            display: flex;
+        }
+
+        .slide {
+            --c: var(--page-accent);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            min-height: 500px;
+            padding: 30px 34px 26px;
+            background: #ffffff;
+            border-radius: 16px;
+            border: 1px solid #dce3f2;
+            border-top: 6px solid var(--c);
+            box-shadow: 0 10px 26px rgba(32, 48, 69, 0.1);
+        }
+
+        .slide-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 8px;
+            font-size: 0.85em;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: var(--c);
+        }
+
+        .slide-num {
+            color: #8592a6;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .slide h3 {
+            margin: 0 0 6px;
+            font-size: 1.65em;
+            line-height: 1.2;
+            color: #1f2937;
+        }
+
+        .slide .slide-sub {
+            margin: 0 0 18px;
+            color: #4b5b6c;
+            font-size: 1.05em;
+        }
+
+        .slide-body {
+            display: grid;
+            grid-template-columns: 1.05fr 1fr;
+            gap: 26px;
+            align-items: center;
+            flex: 1;
+        }
+
+        .slide-body.single {
+            grid-template-columns: 1fr;
+        }
+
+        .slide p,
+        .slide li {
+            color: #3b4a5c;
+        }
+
+        .slide ul {
+            margin: 6px 0;
+            padding-left: 20px;
+        }
+
+        .slide li {
+            margin: 6px 0;
+        }
+
+        .slide strong {
+            color: #1f2937;
+        }
+
+        .slide-foot {
+            margin-top: 18px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            background: color-mix(in srgb, var(--c) 8%, white);
+            border-left: 4px solid var(--c);
+            font-size: 0.95em;
+            color: #2f3d4a;
+        }
+
+        .slide-foot strong {
+            color: var(--c);
+        }
+
+        .visual {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .visual svg {
+            width: 100%;
+            height: auto;
+        }
+
+        .visual figcaption {
+            font-size: 0.88em;
+            color: #5b6878;
+            text-align: center;
+        }
+
+        /* Wide diagrams scroll inside their box on small screens */
+        .diagram-scroll {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .diagram-scroll svg {
+            min-width: 620px;
+        }
+
+        .formula {
+            display: inline-block;
+            margin: 8px 0;
+            padding: 8px 14px;
+            border-radius: 8px;
+            background: #f5f7fb;
+            border: 1px solid #e3e8f2;
+            font-family: 'Cambria Math', 'Times New Roman', serif;
+            font-size: 1.12em;
+            color: #1f2937;
+        }
+
+        /* Title slide */
+        .slide.title-slide {
+            justify-content: center;
+            text-align: center;
+            background:
+                radial-gradient(circle at 15% 20%, rgba(79, 70, 229, 0.1) 0%, rgba(79, 70, 229, 0) 40%),
+                radial-gradient(circle at 85% 80%, rgba(13, 148, 136, 0.1) 0%, rgba(13, 148, 136, 0) 40%),
+                #ffffff;
+        }
+
+        .title-slide h3 {
+            font-size: 2.3em;
+        }
+
+        .title-slide .slide-sub {
+            max-width: 640px;
+            margin: 6px auto 22px;
+        }
+
+        .chip-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .comp-chip {
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 0.9em;
+            font-weight: 700;
+            color: #ffffff;
+            background: var(--c);
+        }
+
+        .byline {
+            margin-top: 24px;
+            color: #5b6878;
+            font-size: 0.95em;
+        }
+
+        /* Component map slide */
+        .group-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+        }
+
+        .group-card {
+            padding: 16px;
+            border-radius: 12px;
+            background: #f8fafc;
+            border: 1px solid #e3e8f2;
+        }
+
+        .group-card h4 {
+            margin: 0 0 4px;
+            color: #1f2937;
+        }
+
+        .group-card .q {
+            margin: 0 0 10px;
+            font-size: 0.9em;
+            font-style: italic;
+            color: #5b6878;
+        }
+
+        .group-card .comp-chip {
+            display: inline-block;
+            margin: 3px 4px 3px 0;
+            font-size: 0.82em;
+        }
+
+        .split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-top: 16px;
+        }
+
+        .split > div {
+            padding: 12px 16px;
+            border-radius: 10px;
+            border: 1px dashed #c9d3e6;
+        }
+
+        .split h4 {
+            margin: 0 0 4px;
+        }
+
+        .split p {
+            margin: 0;
+            font-size: 0.95em;
+        }
+
+        /* Small cards inside slides (activation, loss, optimizer choices) */
+        .mini-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .mini {
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid #e3e8f2;
+            background: #fbfcfe;
+        }
+
+        .mini h4 {
+            margin: 0 0 2px;
+            font-size: 1em;
+            color: #1f2937;
+        }
+
+        .mini .eq {
+            font-family: 'Cambria Math', 'Times New Roman', serif;
+            font-size: 0.95em;
+            color: var(--c);
+        }
+
+        .mini p {
+            margin: 4px 0 0;
+            font-size: 0.88em;
+        }
+
+        .mini svg {
+            display: block;
+            width: 100%;
+            height: auto;
+            margin: 6px 0 2px;
+        }
+
+        /* Training loop slide */
+        .loop {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            counter-reset: loop;
+        }
+
+        .loop-step {
+            position: relative;
+            padding: 16px;
+            border-radius: 12px;
+            background: color-mix(in srgb, var(--c) 7%, white);
+            border: 1px solid color-mix(in srgb, var(--c) 30%, white);
+            border-top: 5px solid var(--c);
+        }
+
+        .loop-step h4 {
+            margin: 0 0 6px;
+            color: #1f2937;
+        }
+
+        .loop-step h4::before {
+            counter-increment: loop;
+            content: counter(loop) ". ";
+            color: var(--c);
+        }
+
+        .loop-step p {
+            margin: 0 0 8px;
+            font-size: 0.92em;
+        }
+
+        .loop-step .uses {
+            font-size: 0.82em;
+            font-weight: 700;
+            color: var(--c);
+        }
+
+        .loop-step:not(:last-child)::after {
+            content: "→";
+            position: absolute;
+            right: -14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #8592a6;
+        }
+
+        .loop-repeat {
+            margin-top: 14px;
+            text-align: center;
+            font-weight: 700;
+            color: #4b5b6c;
+        }
+
+        /* Tables inside slides and the reference section */
+        .slide .table-wrap {
+            margin: 0;
+        }
+
+        .slide .data-table {
+            font-size: 0.9em;
+        }
+
+        .data-table td .dot {
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .summary-grid h4 {
+            margin: 0 0 6px;
+            color: var(--c);
+        }
+
+        .js-ready .deck:fullscreen {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3vh 4vw;
+            background: #eef2fb;
+            overflow: auto;
+        }
+
+        .deck:fullscreen .slide {
+            width: 100%;
+            max-width: 1200px;
+            min-height: 0;
+            font-size: 1.12em;
+        }
+
+        @media (max-width: 860px) {
+            .slide {
+                min-height: 0;
+                padding: 22px 18px;
+            }
+
+            .slide h3 {
+                font-size: 1.35em;
+            }
+
+            .title-slide h3 {
+                font-size: 1.7em;
+            }
+
+            .slide-body,
+            .summary-grid,
+            .split {
+                grid-template-columns: 1fr;
+            }
+
+            .group-grid,
+            .loop {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .loop-step:not(:last-child)::after {
+                display: none;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .group-grid,
+            .loop,
+            .mini-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="artifact-page">
+    <header>
+        <div class="container">
+            <a href="index.html" class="back-btn">← Back to Portfolio</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Artifact Header -->
+        <div class="artifact-header">
+            <span class="artifact-kicker">Portfolio Artifact · Deep Learning</span>
+            <h1>Inside a Neural Network: A Visual Guide to Its Components</h1>
+            <p>A 12-slide presentation on how layers, neurons, weights, activation functions, loss functions, and optimizers work together to make a network learn</p>
+            <div class="artifact-meta">
+                <span><strong>Author:</strong> Farukh Ahemad Gesukhan Pathan</span>
+            </div>
+            <div class="tag-row" aria-label="Topics">
+                <span class="tag-chip">Layers</span>
+                <span class="tag-chip">Neurons</span>
+                <span class="tag-chip">Weights</span>
+                <span class="tag-chip">Activation Functions</span>
+                <span class="tag-chip">Loss Functions</span>
+                <span class="tag-chip">Optimizers</span>
+            </div>
+        </div>
+
+        <nav class="page-nav" aria-label="On this page"></nav>
+
+        <div class="analysis-section" data-nav="Artifact Info">
+            <h2>Artifact Information</h2>
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <h3>Artifact Title</h3>
+                    <p>Inside a Neural Network: A Visual Guide to Its Components</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Introduction</h3>
+                    <p>A neural network is often presented as a black box. This presentation opens the box and shows the six components inside it, what each one does, and how they cooperate on every training step.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Description</h3>
+                    <p>A web-based slide deck with an architecture diagram, one slide per component, a training-loop slide that connects them, findings from hands-on experiments in the TensorFlow Neural Network Playground, and a summary slide.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Objective</h3>
+                    <p>Define and describe layers, neurons, weights, activation functions, loss functions, and optimization algorithms, illustrate how data flows through a network, and explain these ideas concisely for a mixed technical and non-technical audience.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Process</h3>
+                    <p>Trained models in the Neural Network Playground while varying datasets, noise, input features, layers, and learning rate. Researched each component from primary sources, grouped the components by role, drew the diagrams, and built the deck.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Tools and Tech Used</h3>
+                    <p>TensorFlow Neural Network Playground for experiments; original papers and the <em>Deep Learning</em> textbook for content; HTML, CSS, inline SVG, and vanilla JavaScript for the slides and diagrams; GitHub Pages for publishing.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Value Proposition of the Artifact</h3>
+                    <p>A short, visual explanation that lets a reviewer, manager, or new engineer understand what is happening inside a neural network in about ten minutes, without heavy mathematics.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Unique Value</h3>
+                    <p>One color per component is used consistently across every diagram, slide, and table. Each component is also mapped to a QA automation analogy, such as treating the loss function as a test assertion that measures the gap between expected and actual output.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Relevance</h3>
+                    <p>Where my previous artifact compared algorithms from the outside, this one explains how a deep learning model works from the inside. It underpins the CNN, BERT, GPT, and diffusion models covered elsewhere in this portfolio.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>References</h3>
+                    <p>Goodfellow, Bengio, and Courville's <em>Deep Learning</em>, the original backpropagation, ReLU, and Adam papers, and the TensorFlow Playground. Full list below.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Presentation -->
+        <div class="analysis-section" id="presentation" data-nav="Presentation">
+            <h2>The Presentation</h2>
+            <p class="section-intro">Use the arrow buttons or the ← and → keys to move between slides. Select <strong>Show all slides</strong> to read the whole deck on one page, or <strong>Present</strong> for full screen.</p>
+
+            <div class="deck-toolbar">
+                <div class="legend" aria-label="Component colors">
+                    <span><i class="dot layers"></i> Layers</span>
+                    <span><i class="dot neurons"></i> Neurons</span>
+                    <span><i class="dot weights"></i> Weights</span>
+                    <span><i class="dot activation"></i> Activation</span>
+                    <span><i class="dot loss"></i> Loss</span>
+                    <span><i class="dot optim"></i> Optimizer</span>
+                </div>
+                <div class="deck-controls">
+                    <button type="button" class="deck-btn" data-deck="prev" aria-label="Previous slide">←</button>
+                    <span class="deck-counter" aria-live="polite">1 / 12</span>
+                    <button type="button" class="deck-btn" data-deck="next" aria-label="Next slide">→</button>
+                    <button type="button" class="deck-btn" data-deck="all" aria-pressed="false">Show all slides</button>
+                    <button type="button" class="deck-btn" data-deck="present">Present</button>
+                </div>
+            </div>
+
+            <div class="deck" tabindex="0" aria-label="Neural network components slides">
+
+                <!-- Slide 1: Title -->
+                <section class="slide title-slide" aria-label="Slide 1 of 12">
+                    <div class="slide-top"><span>Neural Network Components</span><span class="slide-num">01 / 12</span></div>
+                    <h3>Inside a Neural Network</h3>
+                    <p class="slide-sub">Six components turn a pile of numbers into a model that learns from its own mistakes. This deck shows what each one does and how they work together.</p>
+                    <div class="chip-row">
+                        <span class="comp-chip" style="--c: var(--layers)">Layers</span>
+                        <span class="comp-chip" style="--c: var(--neurons)">Neurons</span>
+                        <span class="comp-chip" style="--c: var(--weights)">Weights</span>
+                        <span class="comp-chip" style="--c: var(--activation)">Activation Functions</span>
+                        <span class="comp-chip" style="--c: var(--loss)">Loss Functions</span>
+                        <span class="comp-chip" style="--c: var(--optim)">Optimization Algorithms</span>
+                    </div>
+                    <p class="byline">Farukh Ahemad Gesukhan Pathan · Model Development</p>
+                </section>
+
+                <!-- Slide 2: Architecture -->
+                <section class="slide" aria-label="Slide 2 of 12">
+                    <div class="slide-top"><span>The Big Picture</span><span class="slide-num">02 / 12</span></div>
+                    <h3>How Data Flows Through a Network</h3>
+                    <p class="slide-sub">Data moves forward from the input layer to a prediction. The error then flows backward so the weights can be corrected.</p>
+                    <figure class="visual">
+                        <div class="diagram-scroll">
+                            <svg viewBox="0 0 860 390" role="img" aria-labelledby="arch-title arch-desc">
+                                <title id="arch-title">Neural network architecture</title>
+                                <desc id="arch-desc">Three input neurons connect to two hidden layers of four neurons each, which connect to two output neurons. The output feeds a loss function. A forward arrow runs left to right, and a backpropagation arrow runs right to left back to the weights.</desc>
+                                <defs>
+                                    <marker id="arrow-fwd" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                                        <path d="M0 0L10 5L0 10z" fill="#4f46e5"/>
+                                    </marker>
+                                    <marker id="arrow-back" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                                        <path d="M0 0L10 5L0 10z" fill="#16a34a"/>
+                                    </marker>
+                                    <marker id="arrow-gray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                                        <path d="M0 0L10 5L0 10z" fill="#64748b"/>
+                                    </marker>
+                                </defs>
+
+                                <!-- Layer bands -->
+                                <g fill="#2563eb" fill-opacity="0.07" stroke="#2563eb" stroke-opacity="0.35" stroke-dasharray="4 4">
+                                    <rect x="55" y="50" width="70" height="240" rx="14"/>
+                                    <rect x="225" y="50" width="70" height="240" rx="14"/>
+                                    <rect x="395" y="50" width="70" height="240" rx="14"/>
+                                    <rect x="565" y="50" width="70" height="240" rx="14"/>
+                                </g>
+                                <g font-size="14" font-weight="700" fill="#2563eb" text-anchor="middle">
+                                    <text x="90" y="38">Input layer</text>
+                                    <text x="260" y="38">Hidden layer 1</text>
+                                    <text x="430" y="38">Hidden layer 2</text>
+                                    <text x="600" y="38">Output layer</text>
+                                </g>
+
+                                <!-- Connections (weights) -->
+                                <g stroke="#94a3b8" stroke-opacity="0.55" stroke-width="1.2">
+                                    <path d="M90 110L260 80M90 110L260 140M90 110L260 200M90 110L260 260M90 170L260 80M90 170L260 140M90 170L260 200M90 170L260 260M90 230L260 80M90 230L260 140M90 230L260 200M90 230L260 260"/>
+                                    <path d="M260 80L430 80M260 80L430 140M260 80L430 200M260 80L430 260M260 140L430 80M260 140L430 140M260 140L430 200M260 140L430 260M260 200L430 80M260 200L430 140M260 200L430 200M260 200L430 260M260 260L430 80M260 260L430 140M260 260L430 200M260 260L430 260"/>
+                                    <path d="M430 80L600 140M430 80L600 200M430 140L600 140M430 140L600 200M430 200L600 140M430 200L600 200M430 260L600 140M430 260L600 200"/>
+                                </g>
+                                <!-- One highlighted weight -->
+                                <line x1="90" y1="110" x2="260" y2="80" stroke="#0d9488" stroke-width="3.5"/>
+                                <text x="168" y="82" font-size="13" font-weight="700" fill="#0d9488" text-anchor="middle">weight w</text>
+
+                                <!-- Neurons -->
+                                <g fill="#ede9fe" stroke="#7c3aed" stroke-width="2">
+                                    <circle cx="90" cy="110" r="18"/>
+                                    <circle cx="90" cy="170" r="18"/>
+                                    <circle cx="90" cy="230" r="18"/>
+                                    <circle cx="260" cy="80" r="18"/>
+                                    <circle cx="260" cy="140" r="18"/>
+                                    <circle cx="260" cy="200" r="18"/>
+                                    <circle cx="260" cy="260" r="18"/>
+                                    <circle cx="430" cy="80" r="18"/>
+                                    <circle cx="430" cy="140" r="18"/>
+                                    <circle cx="430" cy="200" r="18"/>
+                                    <circle cx="430" cy="260" r="18"/>
+                                    <circle cx="600" cy="140" r="18"/>
+                                    <circle cx="600" cy="200" r="18"/>
+                                </g>
+                                <g font-size="12" font-weight="700" fill="#4c1d95" text-anchor="middle" dominant-baseline="central">
+                                    <text x="90" y="110">x₁</text>
+                                    <text x="90" y="170">x₂</text>
+                                    <text x="90" y="230">x₃</text>
+                                    <text x="600" y="140">ŷ₁</text>
+                                    <text x="600" y="200">ŷ₂</text>
+                                </g>
+                                <!-- Activation marks on computing neurons -->
+                                <g font-size="12" font-weight="700" fill="#ea580c" text-anchor="middle" dominant-baseline="central">
+                                    <text x="260" y="80">f</text>
+                                    <text x="260" y="140">f</text>
+                                    <text x="260" y="200">f</text>
+                                    <text x="260" y="260">f</text>
+                                    <text x="430" y="80">f</text>
+                                    <text x="430" y="140">f</text>
+                                    <text x="430" y="200">f</text>
+                                    <text x="430" y="260">f</text>
+                                </g>
+                                <g font-size="12" fill="#5b6878" text-anchor="middle">
+                                    <text x="90" y="310">features</text>
+                                    <text x="260" y="310">ReLU</text>
+                                    <text x="430" y="310">ReLU</text>
+                                    <text x="600" y="310">softmax</text>
+                                </g>
+
+                                <!-- Loss -->
+                                <line x1="620" y1="140" x2="686" y2="162" stroke="#64748b" stroke-width="1.6" marker-end="url(#arrow-gray)"/>
+                                <line x1="620" y1="200" x2="686" y2="178" stroke="#64748b" stroke-width="1.6" marker-end="url(#arrow-gray)"/>
+                                <rect x="690" y="134" width="140" height="72" rx="12" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+                                <text x="760" y="162" font-size="14" font-weight="700" fill="#b91c1c" text-anchor="middle">Loss function</text>
+                                <text x="760" y="182" font-size="12" fill="#7f1d1d" text-anchor="middle">prediction vs truth</text>
+                                <text x="760" y="226" font-size="12" fill="#5b6878" text-anchor="middle">true label y</text>
+
+                                <!-- Forward and backward passes -->
+                                <line x1="70" y1="338" x2="800" y2="338" stroke="#4f46e5" stroke-width="2.5" marker-end="url(#arrow-fwd)"/>
+                                <text x="435" y="330" font-size="13" font-weight="700" fill="#4f46e5" text-anchor="middle">Forward pass: input → weighted sums → activations → prediction</text>
+                                <line x1="800" y1="368" x2="70" y2="368" stroke="#16a34a" stroke-width="2.5" stroke-dasharray="8 6" marker-end="url(#arrow-back)"/>
+                                <text x="435" y="386" font-size="13" font-weight="700" fill="#16a34a" text-anchor="middle">Backpropagation: gradients of the loss → optimizer updates every weight</text>
+                            </svg>
+                        </div>
+                        <figcaption>A 3-4-4-2 fully connected network. Each color marks one of the six components.</figcaption>
+                    </figure>
+                </section>
+
+                <!-- Slide 3: Component map -->
+                <section class="slide" aria-label="Slide 3 of 12">
+                    <div class="slide-top"><span>Component Map</span><span class="slide-num">03 / 12</span></div>
+                    <h3>Six Components, Four Jobs</h3>
+                    <p class="slide-sub">Each component answers a different question about the network.</p>
+                    <div class="group-grid">
+                        <div class="group-card">
+                            <h4>Structure</h4>
+                            <p class="q">Where does the data go?</p>
+                            <span class="comp-chip" style="--c: var(--layers)">Layers</span>
+                            <span class="comp-chip" style="--c: var(--neurons)">Neurons</span>
+                        </div>
+                        <div class="group-card">
+                            <h4>Parameters</h4>
+                            <p class="q">What does the network learn?</p>
+                            <span class="comp-chip" style="--c: var(--weights)">Weights &amp; biases</span>
+                        </div>
+                        <div class="group-card">
+                            <h4>Transformation</h4>
+                            <p class="q">How does it capture curves, not just lines?</p>
+                            <span class="comp-chip" style="--c: var(--activation)">Activation functions</span>
+                        </div>
+                        <div class="group-card">
+                            <h4>Learning</h4>
+                            <p class="q">How does it get better?</p>
+                            <span class="comp-chip" style="--c: var(--loss)">Loss functions</span>
+                            <span class="comp-chip" style="--c: var(--optim)">Optimizers</span>
+                        </div>
+                    </div>
+                    <div class="split">
+                        <div>
+                            <h4>Learned by the network</h4>
+                            <p><strong>Weights and biases</strong> are the only components that training changes. Everything the model "knows" is stored in them.</p>
+                        </div>
+                        <div>
+                            <h4>Chosen by the engineer</h4>
+                            <p><strong>Number of layers and neurons, activation, loss, and optimizer</strong> are design decisions (hyperparameters) set before training starts.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Slide 4: Layers -->
+                <section class="slide" style="--c: var(--layers)" aria-label="Slide 4 of 12">
+                    <div class="slide-top"><span>Component 1 · Layers</span><span class="slide-num">04 / 12</span></div>
+                    <h3>Layers: The Network's Stages</h3>
+                    <p class="slide-sub">A layer is a group of neurons that processes data at the same stage. Each layer passes its output to the next.</p>
+                    <div class="slide-body">
+                        <div>
+                            <ul>
+                                <li><strong>Input layer:</strong> receives the raw features, with one neuron per feature. It does no computation.</li>
+                                <li><strong>Hidden layers:</strong> transform the data step by step. Early layers learn simple patterns, and deeper layers combine them into complex ones.</li>
+                                <li><strong>Output layer:</strong> produces the prediction. It has one neuron for a number (regression) or one per class (classification).</li>
+                            </ul>
+                            <p><strong>Depth</strong> (number of hidden layers) is what puts the "deep" in deep learning. Specialized layer types include convolutional layers for images and attention layers for text.</p>
+                        </div>
+                        <figure class="visual">
+                            <svg viewBox="0 0 320 210" role="img" aria-label="Three stacked stages: input, hidden, output">
+                                <g font-size="13" font-weight="700" text-anchor="middle">
+                                    <rect x="10" y="40" width="80" height="120" rx="12" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+                                    <text x="50" y="96" fill="#1e3a8a">Input</text>
+                                    <text x="50" y="114" font-size="11" font-weight="400" fill="#1e3a8a">features</text>
+                                    <rect x="120" y="20" width="80" height="160" rx="12" fill="#bfdbfe" stroke="#2563eb" stroke-width="2"/>
+                                    <text x="160" y="96" fill="#1e3a8a">Hidden</text>
+                                    <text x="160" y="114" font-size="11" font-weight="400" fill="#1e3a8a">patterns</text>
+                                    <rect x="230" y="55" width="80" height="90" rx="12" fill="#93c5fd" stroke="#2563eb" stroke-width="2"/>
+                                    <text x="270" y="96" fill="#1e3a8a">Output</text>
+                                    <text x="270" y="114" font-size="11" font-weight="400" fill="#1e3a8a">prediction</text>
+                                </g>
+                                <g stroke="#64748b" stroke-width="2" fill="none">
+                                    <path d="M92 100H116M202 100H226"/>
+                                </g>
+                                <text x="160" y="204" font-size="12" fill="#5b6878" text-anchor="middle">raw data → simple patterns → complex patterns → answer</text>
+                            </svg>
+                        </figure>
+                    </div>
+                    <p class="slide-foot"><strong>QA analogy:</strong> layers work like stages in a CI pipeline. Each stage takes the previous stage's output, adds its own processing, and hands the result on.</p>
+                </section>
+
+                <!-- Slide 5: Neurons -->
+                <section class="slide" style="--c: var(--neurons)" aria-label="Slide 5 of 12">
+                    <div class="slide-top"><span>Component 2 · Neurons</span><span class="slide-num">05 / 12</span></div>
+                    <h3>Neurons: The Basic Unit of Computation</h3>
+                    <p class="slide-sub">A neuron takes several inputs, weighs them, adds a bias, and passes the result through an activation function.</p>
+                    <div class="slide-body">
+                        <figure class="visual">
+                            <svg viewBox="0 0 520 250" role="img" aria-label="Three inputs multiplied by weights feed a summation node with a bias, followed by an activation function that produces the output">
+                                <defs>
+                                    <marker id="arrow-n" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                                        <path d="M0 0L10 5L0 10z" fill="#64748b"/>
+                                    </marker>
+                                </defs>
+                                <g stroke="#0d9488" stroke-width="2.5" fill="none" marker-end="url(#arrow-n)">
+                                    <line x1="58" y1="50" x2="222" y2="118"/>
+                                    <line x1="58" y1="130" x2="220" y2="130"/>
+                                    <line x1="58" y1="210" x2="222" y2="142"/>
+                                </g>
+                                <g fill="#ede9fe" stroke="#7c3aed" stroke-width="2">
+                                    <circle cx="40" cy="50" r="18"/>
+                                    <circle cx="40" cy="130" r="18"/>
+                                    <circle cx="40" cy="210" r="18"/>
+                                </g>
+                                <g font-size="13" font-weight="700" fill="#4c1d95" text-anchor="middle" dominant-baseline="central">
+                                    <text x="40" y="50">x₁</text>
+                                    <text x="40" y="130">x₂</text>
+                                    <text x="40" y="210">x₃</text>
+                                </g>
+                                <g font-size="13" font-weight="700" fill="#0d9488" text-anchor="middle">
+                                    <text x="132" y="72">w₁</text>
+                                    <text x="132" y="122">w₂</text>
+                                    <text x="132" y="196">w₃</text>
+                                </g>
+                                <!-- Bias -->
+                                <line x1="250" y1="34" x2="250" y2="96" stroke="#0d9488" stroke-width="2.5" marker-end="url(#arrow-n)"/>
+                                <text x="250" y="26" font-size="13" font-weight="700" fill="#0d9488" text-anchor="middle">bias b</text>
+                                <!-- Sum -->
+                                <circle cx="250" cy="130" r="30" fill="#ede9fe" stroke="#7c3aed" stroke-width="2.5"/>
+                                <text x="250" y="131" font-size="24" font-weight="700" fill="#4c1d95" text-anchor="middle" dominant-baseline="central">Σ</text>
+                                <text x="250" y="186" font-size="12" fill="#5b6878" text-anchor="middle">weighted sum</text>
+                                <!-- Activation -->
+                                <line x1="282" y1="130" x2="336" y2="130" stroke="#64748b" stroke-width="2" marker-end="url(#arrow-n)"/>
+                                <rect x="340" y="102" width="64" height="56" rx="10" fill="#ffedd5" stroke="#ea580c" stroke-width="2.5"/>
+                                <text x="372" y="131" font-size="20" font-weight="700" fill="#9a3412" text-anchor="middle" dominant-baseline="central">f</text>
+                                <text x="372" y="186" font-size="12" fill="#5b6878" text-anchor="middle">activation</text>
+                                <!-- Output -->
+                                <line x1="406" y1="130" x2="466" y2="130" stroke="#64748b" stroke-width="2" marker-end="url(#arrow-n)"/>
+                                <text x="490" y="131" font-size="16" font-weight="700" fill="#1f2937" text-anchor="middle" dominant-baseline="central">a</text>
+                                <text x="490" y="160" font-size="12" fill="#5b6878" text-anchor="middle">output</text>
+                            </svg>
+                            <figcaption><span class="formula">a = f(w₁x₁ + w₂x₂ + w₃x₃ + b)</span></figcaption>
+                        </figure>
+                        <div>
+                            <ul>
+                                <li><strong>Step 1, weigh:</strong> multiply each input by its weight.</li>
+                                <li><strong>Step 2, sum:</strong> add the results and the bias.</li>
+                                <li><strong>Step 3, activate:</strong> pass the sum through the activation function to get the neuron's output.</li>
+                            </ul>
+                            <p>A single neuron can only draw a straight boundary. Many neurons across several layers can draw almost any shape. The neuron is loosely inspired by biology, but it is pure arithmetic.</p>
+                        </div>
+                    </div>
+                    <p class="slide-foot"><strong>QA analogy:</strong> a neuron is like a weighted risk score for a release. Each signal (failed tests, code churn, open defects) counts by its importance, and the total decides go or no-go.</p>
+                </section>
+
+                <!-- Slide 6: Weights -->
+                <section class="slide" style="--c: var(--weights)" aria-label="Slide 6 of 12">
+                    <div class="slide-top"><span>Component 3 · Weights</span><span class="slide-num">06 / 12</span></div>
+                    <h3>Weights and Biases: Where the Learning Lives</h3>
+                    <p class="slide-sub">A weight is a number on each connection that sets how strongly one neuron influences the next. A bias shifts a neuron's output up or down.</p>
+                    <div class="slide-body">
+                        <div>
+                            <ul>
+                                <li><strong>Large positive weight:</strong> the input strongly pushes the output up.</li>
+                                <li><strong>Negative weight:</strong> the input pushes the output down.</li>
+                                <li><strong>Weight near zero:</strong> the input is mostly ignored.</li>
+                                <li><strong>Bias:</strong> lets a neuron activate even when all inputs are zero, like the intercept of a line.</li>
+                            </ul>
+                            <p>Weights start as <strong>small random values</strong>. If they all started equal, every neuron would learn the same thing. Training then adjusts them, one small step at a time, to reduce the loss.</p>
+                        </div>
+                        <div>
+                            <div class="table-wrap">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr><th>Parameters in the slide 2 network</th><th>Count</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>Input → Hidden 1 weights (3 × 4)</td><td>12</td></tr>
+                                        <tr><td>Hidden 1 → Hidden 2 weights (4 × 4)</td><td>16</td></tr>
+                                        <tr><td>Hidden 2 → Output weights (4 × 2)</td><td>8</td></tr>
+                                        <tr><td>Biases (4 + 4 + 2)</td><td>10</td></tr>
+                                        <tr><td><strong>Total learnable parameters</strong></td><td class="highlight-cell">46</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p class="note">Large language models apply the same idea with billions of parameters.</p>
+                        </div>
+                    </div>
+                    <p class="slide-foot"><strong>QA analogy:</strong> weights are like the priority each check gets in a quality gate. Training is the process of tuning those priorities until the gate's decisions match reality.</p>
+                </section>
+
+                <!-- Slide 7: Activation functions -->
+                <section class="slide" style="--c: var(--activation)" aria-label="Slide 7 of 12">
+                    <div class="slide-top"><span>Component 4 · Activation Functions</span><span class="slide-num">07 / 12</span></div>
+                    <h3>Activation Functions: Adding the Curves</h3>
+                    <p class="slide-sub">An activation function transforms a neuron's weighted sum. Without it, any number of layers would collapse into one straight-line model.</p>
+                    <div class="slide-body">
+                        <div class="mini-grid">
+                            <div class="mini">
+                                <h4>ReLU</h4>
+                                <span class="eq">max(0, z)</span>
+                                <svg viewBox="0 0 120 80" aria-hidden="true">
+                                    <line x1="0" y1="60" x2="120" y2="60" stroke="#cbd5e1"/>
+                                    <line x1="60" y1="0" x2="60" y2="80" stroke="#cbd5e1"/>
+                                    <polyline points="0,60 60,60 115,5" fill="none" stroke="#ea580c" stroke-width="3"/>
+                                </svg>
+                                <p>Default for hidden layers. Fast and avoids vanishing gradients for positive inputs.</p>
+                            </div>
+                            <div class="mini">
+                                <h4>Sigmoid</h4>
+                                <span class="eq">1 / (1 + e⁻ᶻ)</span>
+                                <svg viewBox="0 0 120 80" aria-hidden="true">
+                                    <line x1="0" y1="70" x2="120" y2="70" stroke="#cbd5e1"/>
+                                    <line x1="60" y1="0" x2="60" y2="80" stroke="#cbd5e1"/>
+                                    <polyline points="0,69.85 20,68.9 40,62.9 50,53.9 60,40 70,26.1 80,17.1 100,11.1 120,10.15" fill="none" stroke="#ea580c" stroke-width="3"/>
+                                </svg>
+                                <p>Squashes output to 0 to 1. Used for yes/no (binary) outputs.</p>
+                            </div>
+                            <div class="mini">
+                                <h4>Tanh</h4>
+                                <span class="eq">tanh(z)</span>
+                                <svg viewBox="0 0 120 80" aria-hidden="true">
+                                    <line x1="0" y1="40" x2="120" y2="40" stroke="#cbd5e1"/>
+                                    <line x1="60" y1="0" x2="60" y2="80" stroke="#cbd5e1"/>
+                                    <polyline points="0,69.85 20,68.9 40,62.9 50,53.9 60,40 70,26.1 80,17.1 100,11.1 120,10.15" fill="none" stroke="#ea580c" stroke-width="3"/>
+                                </svg>
+                                <p>Outputs −1 to 1, centered on zero. Common in older and recurrent networks.</p>
+                            </div>
+                            <div class="mini">
+                                <h4>Softmax</h4>
+                                <span class="eq">eᶻⁱ / Σ eᶻʲ</span>
+                                <svg viewBox="0 0 120 80" aria-hidden="true">
+                                    <g fill="#fdba74">
+                                        <rect x="12" y="10" width="24" height="56"/>
+                                        <rect x="48" y="38" width="24" height="28"/>
+                                        <rect x="84" y="56" width="24" height="10"/>
+                                    </g>
+                                    <line x1="4" y1="66" x2="116" y2="66" stroke="#cbd5e1"/>
+                                    <g font-size="9" fill="#9a3412" text-anchor="middle">
+                                        <text x="24" y="77">0.66</text>
+                                        <text x="60" y="77">0.24</text>
+                                        <text x="96" y="77">0.10</text>
+                                    </g>
+                                </svg>
+                                <p>Turns output scores into class probabilities that sum to 1.</p>
+                            </div>
+                        </div>
+                        <div>
+                            <p><strong>Why it matters:</strong> stacking linear layers still gives a linear model. The activation's bend is what lets a network separate circles, spirals, faces, and sentences.</p>
+                            <p><strong>Rule of thumb:</strong> ReLU in the hidden layers. For the output, sigmoid for binary classification, softmax for multi-class, and no activation (linear) for regression.</p>
+                            <p class="note">Softmax example: scores of 2.0, 1.0, and 0.1 become probabilities of 0.66, 0.24, and 0.10.</p>
+                        </div>
+                    </div>
+                    <p class="slide-foot"><strong>QA analogy:</strong> an activation is like a threshold rule on a metric. It decides how strongly a raw signal should pass on, instead of passing every value through unchanged.</p>
+                </section>
+
+                <!-- Slide 8: Loss functions -->
+                <section class="slide" style="--c: var(--loss)" aria-label="Slide 8 of 12">
+                    <div class="slide-top"><span>Component 5 · Loss Functions</span><span class="slide-num">08 / 12</span></div>
+                    <h3>Loss Functions: Measuring the Mistake</h3>
+                    <p class="slide-sub">A loss function compares the prediction with the true answer and returns one number: how wrong the network is. Training exists to make that number smaller.</p>
+                    <div class="slide-body">
+                        <figure class="visual">
+                            <svg viewBox="0 0 260 190" role="img" aria-label="Loss plotted against the probability given to the correct answer. Cross-entropy rises steeply as the probability approaches zero, while squared error rises gently.">
+                                <line x1="20" y1="150" x2="240" y2="150" stroke="#94a3b8"/>
+                                <line x1="20" y1="20" x2="20" y2="150" stroke="#94a3b8"/>
+                                <polyline points="30,30 40,58 60,85.6 100,113.2 140,129.6 180,141.2 220,150" fill="none" stroke="#dc2626" stroke-width="3"/>
+                                <polyline points="20,110 60,124.4 100,135.6 140,143.6 180,148.4 220,150" fill="none" stroke="#f87171" stroke-width="2.5" stroke-dasharray="6 4"/>
+                                <g font-size="11" fill="#5b6878">
+                                    <text x="130" y="170" text-anchor="middle">probability given to the correct answer</text>
+                                    <text x="20" y="164" text-anchor="middle">0</text>
+                                    <text x="220" y="164" text-anchor="middle">1</text>
+                                    <text x="14" y="16">loss</text>
+                                </g>
+                                <text x="48" y="40" font-size="11" font-weight="700" fill="#dc2626">cross-entropy</text>
+                                <text x="70" y="112" font-size="11" font-weight="700" fill="#f87171">squared error</text>
+                            </svg>
+                            <figcaption>Cross-entropy punishes a confident wrong answer far more than squared error does.</figcaption>
+                        </figure>
+                        <div>
+                            <ul>
+                                <li><strong>Mean Squared Error (MSE):</strong> the average of (prediction − truth)². Used for regression, such as predicting prices or run times.</li>
+                                <li><strong>Binary cross-entropy:</strong> used with a sigmoid output for yes/no tasks, such as pass or fail.</li>
+                                <li><strong>Categorical cross-entropy:</strong> used with a softmax output for multi-class tasks, such as labeling a defect as UI, API, or data.</li>
+                            </ul>
+                            <p>The loss must match the task. The wrong loss can train a model that scores well on paper but optimizes the wrong goal.</p>
+                        </div>
+                    </div>
+                    <p class="slide-foot"><strong>QA analogy:</strong> the loss function is the test assertion. It compares expected and actual output, but instead of only pass or fail it reports <em>how far off</em> the result is.</p>
+                </section>
+
+                <!-- Slide 9: Optimizers -->
+                <section class="slide" style="--c: var(--optim)" aria-label="Slide 9 of 12">
+                    <div class="slide-top"><span>Component 6 · Optimization Algorithms</span><span class="slide-num">09 / 12</span></div>
+                    <h3>Optimizers: Walking Downhill</h3>
+                    <p class="slide-sub">An optimizer uses the gradient of the loss to decide how to change each weight. The learning rate sets how big each step is.</p>
+                    <div class="slide-body">
+                        <figure class="visual">
+                            <svg viewBox="0 0 300 200" role="img" aria-label="A bowl-shaped loss curve. Green steps with a good learning rate settle at the bottom. Red steps with a learning rate that is too high bounce from side to side and climb away from the minimum.">
+                                <path d="M20 30Q150 290 280 30" fill="none" stroke="#94a3b8" stroke-width="2"/>
+                                <polyline points="40,66.9 80,122.3 108,146.4 126,155.6 138,158.9 145,159.8" fill="none" stroke="#16a34a" stroke-width="2"/>
+                                <g fill="#16a34a">
+                                    <circle cx="40" cy="66.9" r="4.5"/>
+                                    <circle cx="80" cy="122.3" r="4.5"/>
+                                    <circle cx="108" cy="146.4" r="4.5"/>
+                                    <circle cx="126" cy="155.6" r="4.5"/>
+                                    <circle cx="138" cy="158.9" r="4.5"/>
+                                    <circle cx="145" cy="159.8" r="4.5"/>
+                                </g>
+                                <polyline points="230,110.8 55,90.6 262,63.5 25,39.8" fill="none" stroke="#dc2626" stroke-width="1.8" stroke-dasharray="5 4"/>
+                                <g fill="#dc2626">
+                                    <circle cx="230" cy="110.8" r="4"/>
+                                    <circle cx="55" cy="90.6" r="4"/>
+                                    <circle cx="262" cy="63.5" r="4"/>
+                                    <circle cx="25" cy="39.8" r="4"/>
+                                </g>
+                                <text x="150" y="182" font-size="11" fill="#5b6878" text-anchor="middle">weight value → (lowest point = lowest loss)</text>
+                                <text x="60" y="176" font-size="11" font-weight="700" fill="#16a34a" text-anchor="middle">good step size</text>
+                                <text x="236" y="132" font-size="11" font-weight="700" fill="#dc2626" text-anchor="middle">too large</text>
+                            </svg>
+                            <figcaption>A good learning rate settles at the minimum. One that is too high overshoots and can diverge.</figcaption>
+                        </figure>
+                        <div class="mini-grid">
+                            <div class="mini">
+                                <h4>Gradient Descent</h4>
+                                <p>Steps against the gradient using the whole dataset. Accurate but slow on large data.</p>
+                            </div>
+                            <div class="mini">
+                                <h4>SGD (mini-batch)</h4>
+                                <p>Updates after each small batch. Noisy but fast, and the noise can help escape poor solutions.</p>
+                            </div>
+                            <div class="mini">
+                                <h4>Momentum</h4>
+                                <p>Keeps a running direction, like a ball rolling downhill, to move faster and smooth out zigzags.</p>
+                            </div>
+                            <div class="mini">
+                                <h4>Adam</h4>
+                                <p>Combines momentum with a separate adaptive step size per weight. A strong default for most projects.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="slide-foot"><strong>QA analogy:</strong> the optimizer is the fix-and-retest cycle. After each failed run it makes a small, targeted change in the direction that reduces failures, then runs again.</p>
+                </section>
+
+                <!-- Slide 10: Training loop -->
+                <section class="slide" aria-label="Slide 10 of 12">
+                    <div class="slide-top"><span>Putting It Together</span><span class="slide-num">10 / 12</span></div>
+                    <h3>One Training Step Uses All Six Components</h3>
+                    <p class="slide-sub">Training repeats this loop thousands of times. One pass over the full dataset is called an epoch.</p>
+                    <div class="loop">
+                        <div class="loop-step" style="--c: var(--layers)">
+                            <h4>Forward pass</h4>
+                            <p>A batch of data flows through the layers. Each neuron computes its weighted sum and applies its activation.</p>
+                            <span class="uses">Layers · Neurons · Weights · Activation</span>
+                        </div>
+                        <div class="loop-step" style="--c: var(--loss)">
+                            <h4>Measure the error</h4>
+                            <p>The loss function compares the predictions with the true labels and returns a single error score.</p>
+                            <span class="uses">Loss function</span>
+                        </div>
+                        <div class="loop-step" style="--c: var(--neurons)">
+                            <h4>Backpropagation</h4>
+                            <p>The chain rule traces the error backward, calculating how much each weight contributed to it (the gradient).</p>
+                            <span class="uses">Gradients for every weight</span>
+                        </div>
+                        <div class="loop-step" style="--c: var(--optim)">
+                            <h4>Update the weights</h4>
+                            <p>The optimizer nudges every weight and bias in the direction that lowers the loss, scaled by the learning rate.</p>
+                            <span class="uses">Optimizer · Weights</span>
+                        </div>
+                    </div>
+                    <p class="loop-repeat">↻ Repeat until the loss stops improving on data the model has not seen</p>
+                    <p class="slide-foot"><strong>Key point:</strong> backpropagation is not a seventh component. It is the method that calculates the gradients the optimizer needs, which is why it appears here in the loop rather than on its own slide.</p>
+                </section>
+
+                <!-- Slide 11: Playground -->
+                <section class="slide" aria-label="Slide 11 of 12">
+                    <div class="slide-top"><span>Hands-on Experiments</span><span class="slide-num">11 / 12</span></div>
+                    <h3>What the Neural Network Playground Showed</h3>
+                    <p class="slide-sub">I trained classifiers in the TensorFlow Playground and changed one setting at a time to see how each component affects the result.</p>
+                    <div class="slide-body single">
+                        <div class="table-wrap">
+                            <table class="data-table">
+                                <thead>
+                                    <tr><th>Experiment</th><th>What I changed</th><th>What happened</th><th>Component lesson</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>Simple data</td><td>Gaussian clusters, inputs X₁ and X₂, no hidden layer</td><td>Solved almost instantly with a straight boundary</td><td>Linearly separable data needs no hidden <strong>layers</strong></td></tr>
+                                    <tr><td>Circle data</td><td>Same setup on the circle dataset</td><td>Could not separate the inner ring from the outer ring</td><td>One <strong>neuron</strong> can only draw a straight line</td></tr>
+                                    <tr><td>Add a hidden layer</td><td>One hidden layer of 4 ReLU neurons</td><td>Learned a closed, curved boundary around the circle</td><td>More neurons combine lines into shapes</td></tr>
+                                    <tr><td>Remove the curve</td><td>Switched the activation to Linear</td><td>Circle could not be solved, even with several layers</td><td>The <strong>activation</strong> supplies non-linearity</td></tr>
+                                    <tr><td>Spiral data</td><td>Spiral dataset with only X₁ and X₂</td><td>Needed several hidden layers and many more epochs</td><td>Harder patterns need more depth and training time</td></tr>
+                                    <tr><td>Step size</td><td>Learning rate raised to 3, then lowered to 0.0001</td><td>High: loss jumped around. Low: loss barely moved</td><td>The <strong>optimizer</strong>'s learning rate controls stability and speed</td></tr>
+                                    <tr><td>Noise</td><td>Noise raised to 50</td><td>Test loss rose above training loss; L2 regularization smoothed the boundary</td><td>A low training <strong>loss</strong> alone can hide overfitting</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Slide 12: Summary -->
+                <section class="slide" aria-label="Slide 12 of 12">
+                    <div class="slide-top"><span>Summary</span><span class="slide-num">12 / 12</span></div>
+                    <h3>Why Visualizing Neural Networks Matters</h3>
+                    <div class="summary-grid">
+                        <div>
+                            <h4>The importance of visualizing</h4>
+                            <ul>
+                                <li><strong>It removes the black box.</strong> A diagram shows that a network is layers of simple, weighted sums, not magic.</li>
+                                <li><strong>It shows cause and effect.</strong> Watching the boundary change in the Playground connects each setting to a visible result.</li>
+                                <li><strong>It speeds up debugging.</strong> A plot of training and test loss reveals overfitting or a bad learning rate quickly.</li>
+                                <li><strong>It builds shared understanding.</strong> Managers and engineers can discuss the same picture, which makes design decisions easier to explain.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4>Key insights from this exercise</h4>
+                            <ul>
+                                <li><strong>Only weights and biases are learned.</strong> Everything else is an engineering choice.</li>
+                                <li><strong>Activation functions make depth useful.</strong> Without them, ten layers act like one.</li>
+                                <li><strong>The loss defines success.</strong> The network gets very good at whatever the loss measures, so it must match the real goal.</li>
+                                <li><strong>The learning rate is the most sensitive setting.</strong> Too high diverges, too low stalls.</li>
+                                <li><strong>Start simple.</strong> Add layers and neurons only when the data's shape requires them.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <p class="slide-foot"><strong>Takeaway:</strong> a neural network learns by repeating one loop: predict, measure the error, trace it back, and adjust. Every component exists to make one step of that loop work.</p>
+                </section>
+            </div>
+
+            <div class="deck-dots" aria-label="Go to slide"></div>
+        </div>
+
+        <!-- Component reference -->
+        <div class="analysis-section" id="reference" data-nav="Reference">
+            <h2>Component Quick Reference</h2>
+            <p class="section-intro">The six components side by side: what each one is, the job it does, and the most common choices.</p>
+            <div class="table-wrap">
+                <table class="data-table">
+                    <thead>
+                        <tr><th>Component</th><th>What it is</th><th>Role in learning</th><th>Learned or chosen?</th><th>Common choices</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><i class="dot layers"></i><strong>Layers</strong></td><td>Groups of neurons at the same stage</td><td>Transform data step by step, from raw input to prediction</td><td>Chosen</td><td>Dense, convolutional, recurrent, attention</td></tr>
+                        <tr><td><i class="dot neurons"></i><strong>Neurons</strong></td><td>A unit that computes a weighted sum plus bias, then an activation</td><td>Detect one pattern in its inputs</td><td>Chosen (how many)</td><td>A few to thousands per layer</td></tr>
+                        <tr><td><i class="dot weights"></i><strong>Weights &amp; biases</strong></td><td>Numbers on each connection and neuron</td><td>Store everything the model has learned</td><td>Learned</td><td>Small random initialization</td></tr>
+                        <tr><td><i class="dot activation"></i><strong>Activation functions</strong></td><td>A function applied to each neuron's sum</td><td>Add non-linearity so the network can model curves</td><td>Chosen</td><td>ReLU, sigmoid, tanh, softmax</td></tr>
+                        <tr><td><i class="dot loss"></i><strong>Loss functions</strong></td><td>A formula that scores prediction error</td><td>Define what "better" means</td><td>Chosen</td><td>MSE, binary and categorical cross-entropy</td></tr>
+                        <tr><td><i class="dot optim"></i><strong>Optimization algorithms</strong></td><td>A rule for updating weights from gradients</td><td>Decide how the weights change each step</td><td>Chosen</td><td>SGD, momentum, RMSProp, Adam</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Organization method -->
+        <div class="analysis-section" id="method" data-nav="Method">
+            <h2>How I Organized the Components</h2>
+            <p class="section-intro">The order, grouping, and colors in the deck were deliberate choices. These are the reasons behind them.</p>
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <h3>1. Following the Data</h3>
+                    <p>The component slides follow the order in which a training example meets each component: it enters the <strong>layers</strong>, is processed by <strong>neurons</strong> through their <strong>weights</strong> and <strong>activation</strong>, is scored by the <strong>loss</strong>, and is corrected by the <strong>optimizer</strong>. Reading the deck in order mirrors one training step.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>2. Grouping by Job</h3>
+                    <p>I sorted the six components into four groups, each answering one question: <strong>Structure</strong> (where the data goes), <strong>Parameters</strong> (what is learned), <strong>Transformation</strong> (how curves are captured), and <strong>Learning</strong> (how the network improves). Grouping by job shows that the components are not a flat list but parts with distinct roles.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>3. Learned vs Chosen</h3>
+                    <p>The most useful split I found is between what the network learns and what the engineer decides. Only weights and biases change during training. Making this explicit clarifies what "training a model" actually changes, and where an engineer's design decisions have their effect.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>4. Resolving Edge Cases</h3>
+                    <p><strong>Biases</strong> are grouped with weights because both are learned parameters, even though a bias is not a connection. The <strong>activation</strong> is part of every neuron but gets its own slide, because it is chosen separately and is what makes depth useful. <strong>Backpropagation</strong> is shown in the training loop rather than as a component, because it calculates gradients for the optimizer instead of being a part of the network.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>5. One Color per Component</h3>
+                    <p>Each component keeps the same color on the architecture diagram, its slide, the training loop, and the reference table. A reader who learns that teal means "weights" on slide 2 can recognize weights everywhere else without re-reading labels.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>6. Theory Checked by Experiment</h3>
+                    <p>Each claim on the component slides was tested in the Neural Network Playground before it went into the deck. For example, the claim that activation functions supply non-linearity was confirmed by switching to a linear activation and watching the circle dataset become unsolvable.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Artifact Evidence Section -->
+        <div class="analysis-section" data-nav="Evidence">
+            <h2>Artifact Evidence</h2>
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <h3>📁 Tangible Deliverables</h3>
+                    <p><strong>Presentation:</strong> 12-slide web deck with an architecture diagram, six component slides, a training-loop slide, Playground findings, and a summary slide.</p>
+                    <p><strong>Supporting material:</strong> component reference table and organization method. Hosted on GitHub Pages as part of this portfolio.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>🧪 Coursework Alignment</h3>
+                    <p>Model Development (AIML-501), Workshop 2. Demonstrates the ability to define neural network components, illustrate their structure, and explain them concisely.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>👥 Intended Audience</h3>
+                    <p><strong>Technical Reviewers:</strong> Instructors and engineers checking accuracy and depth.</p>
+                    <p><strong>Non-specialists:</strong> Managers and QA colleagues who need an intuitive picture of how a network learns.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>✅ Required Elements</h3>
+                    <p><strong>Components:</strong> layers, neurons, weights, activation functions, loss functions, and optimization algorithms, each on its own slide.</p>
+                    <p><strong>Visuals:</strong> data-flow architecture diagram (slide 2), component explanations (slides 4-9), and a summary slide (slide 12).</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- References -->
+        <div class="analysis-section" id="references" data-nav="References">
+            <h2>References</h2>
+            <div class="project-item">
+                <h3>Primary Sources</h3>
+                <ul class="repo-list">
+                    <li>Goodfellow, I., Bengio, Y., &amp; Courville, A. (2016). <em>Deep Learning</em>. MIT Press. <a href="https://www.deeplearningbook.org/" target="_blank" rel="noopener">deeplearningbook.org</a></li>
+                    <li>LeCun, Y., Bengio, Y., &amp; Hinton, G. (2015). Deep learning. <em>Nature</em>, 521(7553), 436-444.</li>
+                    <li>Rumelhart, D. E., Hinton, G. E., &amp; Williams, R. J. (1986). Learning representations by back-propagating errors. <em>Nature</em>, 323(6088), 533-536.</li>
+                    <li>Nair, V., &amp; Hinton, G. E. (2010). Rectified linear units improve restricted Boltzmann machines. <em>Proceedings of the 27th International Conference on Machine Learning (ICML)</em>, 807-814.</li>
+                    <li>Kingma, D. P., &amp; Ba, J. (2014). Adam: A method for stochastic optimization. <a href="https://arxiv.org/abs/1412.6980" target="_blank" rel="noopener">arXiv:1412.6980</a></li>
+                    <li>Ruder, S. (2016). An overview of gradient descent optimization algorithms. <a href="https://arxiv.org/abs/1609.04747" target="_blank" rel="noopener">arXiv:1609.04747</a></li>
+                    <li>Smilkov, D., &amp; Carter, S. TensorFlow Neural Network Playground. <a href="https://playground.tensorflow.org/" target="_blank" rel="noopener">playground.tensorflow.org</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Professional Reflection Section -->
+        <div class="professional-reflection" data-nav="Reflection">
+            <h2>💭 Professional Reflection</h2>
+            <p>
+                Before this assignment, I understood neural networks mostly as a sequence of terms: layers, weights, backpropagation. Training models in the Neural Network Playground turned those terms into behavior I could see. Switching the activation to Linear and watching the circle dataset become unsolvable showed me, more clearly than any definition, that <span class="reflection-highlight">activation functions are what make depth useful.</span>
+            </p>
+            <p>
+                The main challenge was deciding how to present six components that only make sense together. Explaining them one at a time risked a disconnected list, but explaining them all at once was overwhelming. My strategy was to anchor everything to one architecture diagram, give each component a single color that carries through every slide, and close with a training-loop slide that shows all six working in one step. Sorting them into components that are <span class="reflection-highlight">learned (weights and biases) and components that are chosen (everything else)</span> was the insight that made the structure click.
+            </p>
+            <p>
+                The exercise also connected to earlier Model Development concepts. The Playground's noise experiment showed overfitting directly: training loss kept falling while test loss rose, and L2 regularization brought the two back together. The learning-rate experiments made the role of gradient descent concrete, and they explained why adaptive optimizers like Adam are the common default.
+            </p>
+            <p>
+                In my QA automation work, I can now reason about a model the same way I reason about a test framework: the loss function is the assertion, and the optimizer is the fix-and-retest cycle. That framing will help me evaluate AI-based testing tools critically and explain their behavior to teammates. The principle I take away is to <span class="reflection-highlight">start with the simplest network that fits the data's shape, and add complexity only when the experiments show it is needed.</span>
+            </p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>© 2026 Farukh Ahemad Gesukhan Pathan | All rights reserved</p>
+            <p>Deep Learning | Neural Network Components | Technical Communication</p>
+        </div>
+    </footer>
+
+    <script>
+        // Page through the slides one at a time, with an option to show them all or present full screen.
+        // Without JavaScript every slide stays visible, so the content never depends on this script.
+        (function () {
+            var deck = document.querySelector('.deck');
+            if (!deck) {
+                return;
+            }
+
+            var slides = deck.querySelectorAll('.slide');
+            var section = deck.closest('.analysis-section');
+            var counter = section.querySelector('.deck-counter');
+            var prevBtn = section.querySelector('[data-deck="prev"]');
+            var nextBtn = section.querySelector('[data-deck="next"]');
+            var allBtn = section.querySelector('[data-deck="all"]');
+            var presentBtn = section.querySelector('[data-deck="present"]');
+            var dotsBox = section.querySelector('.deck-dots');
+            var dots = [];
+            var current = 0;
+
+            for (var i = 0; i < slides.length; i++) {
+                var dot = document.createElement('button');
+                dot.type = 'button';
+                dot.setAttribute('aria-label', 'Slide ' + (i + 1));
+                dot.addEventListener('click', show.bind(null, i));
+                dotsBox.appendChild(dot);
+                dots.push(dot);
+            }
+
+            function show(index) {
+                current = Math.max(0, Math.min(slides.length - 1, index));
+                for (var j = 0; j < slides.length; j++) {
+                    slides[j].classList.toggle('is-active', j === current);
+                    dots[j].setAttribute('aria-current', j === current ? 'true' : 'false');
+                }
+                counter.textContent = (current + 1) + ' / ' + slides.length;
+                prevBtn.disabled = current === 0;
+                nextBtn.disabled = current === slides.length - 1;
+            }
+
+            function setPaged(paged) {
+                deck.classList.toggle('is-paged', paged);
+                allBtn.setAttribute('aria-pressed', paged ? 'false' : 'true');
+                allBtn.textContent = paged ? 'Show all slides' : 'Show one at a time';
+                prevBtn.hidden = nextBtn.hidden = counter.hidden = !paged;
+            }
+
+            prevBtn.addEventListener('click', function () { show(current - 1); });
+            nextBtn.addEventListener('click', function () { show(current + 1); });
+            allBtn.addEventListener('click', function () {
+                setPaged(!deck.classList.contains('is-paged'));
+            });
+
+            presentBtn.addEventListener('click', function () {
+                setPaged(true);
+                if (deck.requestFullscreen) {
+                    deck.requestFullscreen();
+                }
+                deck.focus();
+            });
+
+            // Arrow keys work while the deck has focus, or anywhere in full screen
+            document.addEventListener('keydown', function (event) {
+                var inDeck = document.fullscreenElement === deck || deck.contains(document.activeElement) || section.contains(document.activeElement);
+                if (!inDeck || !deck.classList.contains('is-paged')) {
+                    return;
+                }
+                if (event.key === 'ArrowRight' || event.key === 'PageDown') {
+                    show(current + 1);
+                    event.preventDefault();
+                } else if (event.key === 'ArrowLeft' || event.key === 'PageUp') {
+                    show(current - 1);
+                    event.preventDefault();
+                }
+            });
+
+            document.documentElement.classList.add('js-ready');
+            setPaged(true);
+            show(0);
+        })();
+    </script>
+    <script src="back-to-top.js" defer></script>
+    <script src="page-nav.js" defer></script>
+    <script src="lightbox.js" defer></script>
+</body>
+</html>
