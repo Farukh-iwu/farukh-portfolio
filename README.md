@@ -8,6 +8,7 @@ Personal portfolio showcasing academic projects, technical research, and profess
 This is my portfolio website featuring technical projects, articles, and research work across AI/ML, QA automation, and data engineering.
 
 ## Featured Artifacts
+- **[LLM Training Infrastructure & Costs](ai-infrastructure.html)** - Infographic of the six-stage LLM training pipeline and its data, compute, energy, time, and staff costs, with charts and a model comparison table for GPT-3, GPT-4, Llama, DeepSeek-V3, Claude, and BLOOM
 - **[Neural Network Components](neural-network-components.html)** - 12-slide visual presentation of layers, neurons, weights, activation functions, loss functions, and optimizers, with an architecture diagram, training loop, and Neural Network Playground experiments
 - **[ML Algorithm Types](algorithm-types.html)** - Interactive framework classifying 12 algorithms by learning type and domain (tabular, vision, NLP, generative AI), with a comparison matrix and selection guide
 - **[AI Timeline](ai-timeline.html)** - Evolution and ethics in AI
@@ -36,4 +37,4 @@ This is my portfolio website featuring technical projects, articles, and researc
 - Hosted on GitHub Pages
 
 ---
-*Last Updated: October 2026*
+*Last Updated: November 2026*

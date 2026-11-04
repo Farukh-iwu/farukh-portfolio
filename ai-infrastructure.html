@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM Training Infrastructure and Costs - Farukh Ahemad Gesukhan Pathan</title>
+    <meta name="description" content="An infographic of how large language models are trained, from data collection to deployment, and what each stage costs in data, compute, energy, time, and people, with figures for GPT-3, GPT-4, Llama, DeepSeek-V3, Claude, and BLOOM.">
+    <meta property="og:title" content="What It Takes to Train an LLM: Process, Resources, and Costs - Farukh Ahemad Gesukhan Pathan">
+    <meta property="og:description" content="The six stages of LLM training and the data, compute, energy, time, and staff behind them, with published figures for prominent models.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://farukh-iwu.github.io/farukh-portfolio/ai-infrastructure.html">
+    <meta name="twitter:card" content="summary">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --page-accent: #b45309;
+            /* Resource colors: validated categorical order (blue, orange, aqua, yellow, magenta) */
+            --r-data: #2a78d6;
+            --r-compute: #eb6834;
+            --r-energy: #1baf7a;
+            --r-time: #eda100;
+            --r-people: #e87ba4;
+            --ink: #2c3e50;
+            --ink-2: #4b5b6c;
+            --grid: #e6edf5;
+        }
+
+        .section-intro {
+            margin-top: 16px;
+            color: #555;
+        }
+
+        .source-note {
+            margin-top: 12px;
+            font-size: 0.88em;
+            color: #5b6b7c;
+        }
+
+        /* Resource legend reused by the pipeline and the resource cards */
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 18px;
+            margin: 16px 0 6px;
+            font-size: 0.92em;
+            color: #2f3d4a;
+        }
+
+        .legend span {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            flex-shrink: 0;
+        }
+
+        .dot.data { background: var(--r-data); }
+        .dot.compute { background: var(--r-compute); }
+        .dot.energy { background: var(--r-energy); }
+        .dot.time { background: var(--r-time); }
+        .dot.people { background: var(--r-people); }
+
+        /* Training pipeline: six stages joined by arrows */
+        .pipeline {
+            list-style: none;
+            padding: 0 !important;
+            margin: 22px 0 0;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .stage {
+            position: relative;
+            margin: 0 !important;
+            padding: 18px 18px 16px;
+            background: #ffffff;
+            border: 1px solid #dce8f6;
+            border-radius: 14px;
+            box-shadow: 0 6px 16px rgba(32, 48, 69, 0.08);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .stage-head {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .stage-num {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: var(--page-accent);
+            color: #fff;
+            font-weight: 800;
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+        }
+
+        .stage-icon {
+            width: 34px;
+            height: 34px;
+            color: var(--page-accent);
+            flex-shrink: 0;
+        }
+
+        .stage h3 {
+            margin: 0;
+            font-size: 1.08em;
+            color: var(--ink);
+            line-height: 1.25;
+        }
+
+        .stage p {
+            margin: 0;
+            color: var(--ink-2);
+            font-size: 0.94em;
+        }
+
+        .stage .example {
+            margin-top: auto;
+            padding: 10px 12px;
+            border-radius: 10px;
+            background: #fff8ee;
+            border: 1px solid #f6e3c6;
+            font-size: 0.9em;
+            color: #4a3b26;
+        }
+
+        .stage .uses {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .use-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 3px 10px;
+            border-radius: 999px;
+            border: 1px solid #dce8f6;
+            font-size: 0.8em;
+            font-weight: 600;
+            color: #2f3d4a;
+            background: #f8fafc;
+        }
+
+        .use-chip.heavy {
+            border-color: #2f3d4a;
+            background: #ffffff;
+        }
+
+        .use-chip .dot {
+            width: 9px;
+            height: 9px;
+        }
+
+        .stage-phase {
+            font-size: 0.75em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #6b7a8b;
+        }
+
+        /* Arrow between stages on wide screens */
+        .stage:not(:nth-child(3n))::after {
+            content: "";
+            position: absolute;
+            right: -15px;
+            top: 34px;
+            width: 12px;
+            height: 12px;
+            border-top: 3px solid var(--page-accent);
+            border-right: 3px solid var(--page-accent);
+            transform: rotate(45deg);
+        }
+
+        .pipeline-key {
+            margin-top: 14px;
+            font-size: 0.88em;
+            color: #5b6b7c;
+        }
+
+        /* Resource category cards */
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .resource-card {
+            padding: 20px;
+            border-radius: 14px;
+            background: #ffffff;
+            border: 1px solid #dce8f6;
+            border-top: 6px solid var(--rc);
+            box-shadow: 0 6px 16px rgba(32, 48, 69, 0.08);
+        }
+
+        .resource-card h3 {
+            margin: 0 0 4px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--ink);
+        }
+
+        .resource-card h3 svg {
+            width: 26px;
+            height: 26px;
+            color: var(--rc);
+            flex-shrink: 0;
+        }
+
+        .resource-card .big {
+            font-size: 1.7em;
+            font-weight: 800;
+            color: var(--ink);
+            line-height: 1.15;
+            margin: 10px 0 2px;
+        }
+
+        .resource-card .big-label {
+            font-size: 0.88em;
+            color: #5b6b7c;
+            margin: 0 0 10px;
+        }
+
+        .resource-card p {
+            color: var(--ink-2);
+            font-size: 0.94em;
+            margin: 8px 0;
+        }
+
+        .resource-card .why {
+            padding-top: 10px;
+            border-top: 1px dashed #dce8f6;
+        }
+
+        .rc-data { --rc: var(--r-data); }
+        .rc-compute { --rc: var(--r-compute); }
+        .rc-energy { --rc: var(--r-energy); }
+        .rc-time { --rc: var(--r-time); }
+        .rc-people { --rc: var(--r-people); }
+
+        /* Charts: plain HTML bars with hover/focus tooltips */
+        .chart-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .chart-card {
+            padding: 20px;
+            border-radius: 14px;
+            background: #fcfcfb;
+            border: 1px solid #dce8f6;
+            min-width: 0;
+        }
+
+        .chart-card.wide {
+            grid-column: 1 / -1;
+        }
+
+        .chart-card h3 {
+            margin: 0;
+            font-size: 1.05em;
+            color: var(--ink);
+        }
+
+        .chart-card .chart-sub {
+            margin: 4px 0 16px;
+            font-size: 0.88em;
+            color: #5b6b7c;
+        }
+
+        .hbar {
+            display: grid;
+            grid-template-columns: 130px minmax(0, 1fr);
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+            font-size: 0.88em;
+        }
+
+        .hbar .lbl {
+            color: var(--ink);
+            font-weight: 600;
+            line-height: 1.25;
+        }
+
+        .hbar .lbl small {
+            display: block;
+            font-weight: 500;
+            color: #6b7a8b;
+        }
+
+        .hbar .track {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-left: 1px solid #b9c6d4;
+            min-height: 22px;
+        }
+
+        .hbar .bar {
+            height: 16px;
+            min-width: 3px;
+            background: var(--bar, var(--r-data));
+            border-radius: 0 4px 4px 0;
+            cursor: default;
+        }
+
+        .hbar .val {
+            color: var(--ink);
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        /* 100% stacked bars for the cost breakdown */
+        .stack-row {
+            display: grid;
+            grid-template-columns: 130px minmax(0, 1fr);
+            align-items: center;
+            gap: 10px;
+            margin: 12px 0;
+            font-size: 0.88em;
+        }
+
+        .stack {
+            display: flex;
+            gap: 2px;
+            height: 30px;
+        }
+
+        .seg {
+            background: var(--seg);
+            color: #1b2733;
+            font-weight: 700;
+            font-size: 0.86em;
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+            white-space: nowrap;
+            cursor: default;
+        }
+
+        .seg:first-child { border-radius: 4px 0 0 4px; }
+        .seg:last-child { border-radius: 0 4px 4px 0; }
+
+        .seg.staff { --seg: var(--r-people); }
+        .seg.chips { --seg: var(--r-compute); }
+        .seg.server { --seg: #f4a985; }
+        .seg.network { --seg: #f9d2bf; }
+        .seg.energy { --seg: var(--r-energy); }
+
+        .dot.chips { background: var(--r-compute); }
+        .dot.server { background: #f4a985; }
+        .dot.network { background: #f9d2bf; }
+
+        .bar:focus-visible,
+        .seg:focus-visible {
+            outline: 2px solid #1b2733;
+            outline-offset: 2px;
+        }
+
+        .viz-tip {
+            position: fixed;
+            z-index: 50;
+            pointer-events: none;
+            max-width: 260px;
+            padding: 8px 11px;
+            border-radius: 8px;
+            background: #1b2733;
+            color: #ffffff;
+            font-size: 0.82em;
+            line-height: 1.4;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transition: opacity 0.12s ease;
+        }
+
+        .viz-tip.show {
+            opacity: 1;
+        }
+
+        details.data-view {
+            margin-top: 14px;
+            font-size: 0.88em;
+        }
+
+        details.data-view summary {
+            cursor: pointer;
+            color: var(--page-accent);
+            font-weight: 700;
+        }
+
+        details.data-view .data-table {
+            font-size: 0.95em;
+        }
+
+        /* Cost headline tiles: what each number measures */
+        .cost-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+            gap: 14px;
+            margin-top: 18px;
+        }
+
+        .cost-tile {
+            padding: 16px 18px;
+            border-radius: 12px;
+            background: #ffffff;
+            border: 1px solid #dce8f6;
+        }
+
+        .cost-tile .model {
+            font-weight: 800;
+            color: var(--ink);
+        }
+
+        .cost-tile .amount {
+            font-size: 1.55em;
+            font-weight: 800;
+            color: var(--page-accent);
+            margin: 4px 0;
+            line-height: 1.2;
+        }
+
+        .cost-tile .measures {
+            display: inline-block;
+            font-size: 0.75em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            padding: 2px 8px;
+            border-radius: 999px;
+            background: #fff3e0;
+            color: #7c4a03;
+            margin-bottom: 6px;
+        }
+
+        .cost-tile p {
+            margin: 0;
+            font-size: 0.9em;
+            color: var(--ink-2);
+        }
+
+        /* Stage x resource matrix: text label in every cell so meaning never rests on color */
+        .matrix th:not(:first-child),
+        .matrix td:not(:first-child) {
+            text-align: center;
+        }
+
+        .matrix td:first-child {
+            font-weight: 700;
+            color: var(--ink);
+            white-space: nowrap;
+        }
+
+        /* Keep phase rows tinted; the shared table striping would otherwise repaint every other one */
+        .matrix tbody tr.group-row td {
+            background: color-mix(in srgb, var(--page-accent) 12%, white);
+        }
+
+        .matrix th .dot {
+            margin-right: 6px;
+            vertical-align: -1px;
+        }
+
+        .lvl {
+            display: inline-block;
+            min-width: 84px;
+            padding: 3px 10px;
+            border-radius: 999px;
+            font-size: 0.82em;
+            font-weight: 700;
+        }
+
+        .lvl.primary {
+            background: color-mix(in srgb, var(--rc) 30%, white);
+            border: 2px solid var(--rc);
+            color: #1b2733;
+        }
+
+        .lvl.secondary {
+            background: color-mix(in srgb, var(--rc) 10%, white);
+            border: 1px dashed var(--rc);
+            color: #2f3d4a;
+        }
+
+        .lvl.none {
+            color: #a0abb7;
+        }
+
+        .model-table td:first-child {
+            font-weight: 700;
+            color: var(--ink);
+            white-space: nowrap;
+        }
+
+        .model-table .nd {
+            color: #8a96a3;
+            font-style: italic;
+        }
+
+        /* Print / PDF: keep colors, drop screen-only controls, avoid splitting cards across pages */
+        @page {
+            size: Letter;
+            margin: 0.5in;
+        }
+
+        @media print {
+            * {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .page-nav,
+            #back-to-top-btn,
+            .back-btn,
+            .viz-tip,
+            details.data-view summary {
+                display: none !important;
+            }
+
+            details.data-view {
+                display: none;
+            }
+
+            /* Lay out at desktop width so card grids keep their columns on the page */
+            html {
+                zoom: 0.72;
+            }
+
+            body.artifact-page {
+                background: #ffffff;
+            }
+
+            /* The shared stylesheet's phone rules match the narrow print width; restore desktop columns */
+            .analysis-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            }
+
+            .artifact-header h1 {
+                font-size: 2.2em;
+            }
+
+            .analysis-card,
+            .stage,
+            .resource-card,
+            .chart-card,
+            .cost-tile,
+            .stat-card {
+                box-shadow: none;
+            }
+
+            header {
+                display: none;
+            }
+
+            .print-only {
+                display: block !important;
+            }
+
+            .artifact-page .container {
+                max-width: none;
+                padding: 0;
+            }
+
+            .analysis-section,
+            .professional-reflection {
+                box-shadow: none;
+                margin: 14px 0;
+                padding: 22px;
+            }
+
+            .analysis-section h2,
+            .professional-reflection h2 {
+                break-after: avoid;
+            }
+
+            .analysis-card,
+            .stage,
+            .resource-card,
+            .chart-card,
+            .cost-tile,
+            .stat-card,
+            .data-table tr,
+            .reflection-highlight {
+                break-inside: avoid;
+            }
+
+            .analysis-card:hover {
+                transform: none;
+            }
+
+            .table-wrap {
+                overflow: visible;
+                box-shadow: none;
+            }
+
+            .model-table {
+                font-size: 0.82em;
+            }
+
+            a {
+                color: inherit;
+                text-decoration: none;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .pipeline {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .stage:not(:nth-child(3n))::after {
+                display: none;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .pipeline,
+            .chart-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hbar,
+            .stack-row {
+                grid-template-columns: 1fr;
+                gap: 4px;
+            }
+
+            .hbar .track {
+                border-left: none;
+            }
+        }
+    </style>
+</head>
+<body class="artifact-page">
+    <header>
+        <div class="container">
+            <a href="index.html" class="back-btn">← Back to Portfolio</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Artifact Header -->
+        <div class="artifact-header">
+            <span class="artifact-kicker">Portfolio Artifact · AI Infrastructure</span>
+            <h1>What It Takes to Train an LLM: Process, Resources, and Costs</h1>
+            <p>The six stages that turn raw text into a deployed large language model, and the data, compute, energy, time, and people each stage consumes, with published figures for GPT-3, GPT-4, Llama, DeepSeek-V3, Claude, and BLOOM</p>
+            <div class="tag-row" aria-label="Topics">
+                <span class="tag-chip">Training Pipeline</span>
+                <span class="tag-chip">GPU Compute</span>
+                <span class="tag-chip">Energy &amp; Carbon</span>
+                <span class="tag-chip">Cost Analysis</span>
+                <span class="tag-chip">Data Visualization</span>
+            </div>
+            <p class="print-only" style="display:none;margin-top:14px;font-size:0.9em;">Farukh Ahemad Gesukhan Pathan · AIML-501 Model Development · Interactive version: https://farukh-iwu.github.io/farukh-portfolio/ai-infrastructure.html</p>
+        </div>
+
+        <nav class="page-nav" aria-label="On this page"></nav>
+
+        <div class="analysis-section" data-nav="Artifact Info">
+            <h2>Artifact Information</h2>
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <h3>Artifact Title</h3>
+                    <p>What It Takes to Train an LLM: Process, Resources, and Costs</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Introduction</h3>
+                    <p>Headlines quote single numbers for what a model "cost," but those numbers measure different things. This infographic breaks training into its stages and its resources so that each published figure can be read in context.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Description</h3>
+                    <p>A one-page infographic with a six-stage pipeline diagram, five resource cards, three charts, a cost explainer, and a model comparison table built from technical reports, model cards, and peer-reviewed estimates.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Objective</h3>
+                    <p>Illustrate the key steps from data collection to deployment, explain the primary resource categories and their costs, and give specific, sourced examples for prominent generative AI models.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Process</h3>
+                    <p>Read the GPT-3, GPT-4, Llama 2, Llama 3, and DeepSeek-V3 reports, the Llama 3.1 model card, and cost and carbon studies; logged every figure with its page; then designed the pipeline, charts, and table around what was actually published.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Tools and Tech Used</h3>
+                    <p>Primary research papers and model cards for content; HTML, CSS, inline SVG icons, and vanilla JavaScript for the charts and tooltips; a colorblind-safety check on the chart palette; GitHub Pages for publishing.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Value Proposition of the Artifact</h3>
+                    <p>A reader can see where the money, power, and time go in an LLM project, and can tell an amortized cost estimate apart from a hardware purchase price or a single-run rental figure.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Unique Value</h3>
+                    <p>Every number names what it measures and who reported it, and the table marks what developers chose not to disclose. Gaps are shown as gaps, not filled with guesses.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Relevance</h3>
+                    <p>Useful for engineers deciding whether to pre-train, fine-tune, or use an API; for managers budgeting AI work; and for anyone comparing claims about cheap or expensive models.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>References</h3>
+                    <p>13 sources: technical reports from OpenAI, Meta, and DeepSeek; the Llama 3.1 model card; Epoch AI's cost study; carbon studies by Google and BigScience researchers; and course readings. Full list below.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- At a glance -->
+        <div class="analysis-section" data-nav="At a Glance">
+            <h2>📊 At a Glance</h2>
+            <p class="section-lead">Four numbers that set the scale of frontier LLM training.</p>
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Cost growth</div>
+                    <div class="stat-value">2.4× per year</div>
+                    <p>Growth in the amortized cost of the most compute-intensive training runs since 2016 (Cottier et al., 2024, p. 1).</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Data</div>
+                    <div class="stat-value">15.6T tokens</div>
+                    <p>Text used to pre-train Llama 3 405B, about 52 times the 300B tokens used for GPT-3 (Grattafiori et al., 2024, p. 1; Brown et al., 2020, p. 8).</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Compute</div>
+                    <div class="stat-value">39.3M GPU hours</div>
+                    <p>H100 time used to train the Llama 3.1 family of three models (Meta, 2024).</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Hardware</div>
+                    <div class="stat-value">$800M</div>
+                    <p>Estimated price of the hardware used to train GPT-4, against $40M of that hardware's value used up by the run (Cottier et al., 2024, p. 6).</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Training pipeline -->
+        <div class="analysis-section" data-nav="Training Pipeline">
+            <h2>🔁 The Training Pipeline: Six Stages</h2>
+            <p class="section-lead">Every model in this artifact follows the same broad path. The chips under each stage show which resources it draws on; an outlined chip marks the dominant one.</p>
+            <div class="legend" aria-label="Resource colors">
+                <span><i class="dot data"></i>Data</span>
+                <span><i class="dot compute"></i>Compute</span>
+                <span><i class="dot energy"></i>Energy</span>
+                <span><i class="dot time"></i>Time</span>
+                <span><i class="dot people"></i>People</span>
+            </div>
+
+            <ol class="pipeline">
+                <li class="stage">
+                    <div class="stage-head">
+                        <span class="stage-num">1</span>
+                        <svg class="stage-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg>
+                        <h3>Data Collection</h3>
+                    </div>
+                    <span class="stage-phase">Preparation</span>
+                    <p>Gather web pages, books, code, and reference text, plus licensed data where a developer pays for access.</p>
+                    <div class="uses">
+                        <span class="use-chip heavy"><i class="dot data"></i>Data</span>
+                        <span class="use-chip"><i class="dot people"></i>People</span>
+                    </div>
+                    <div class="example"><strong>GPT-3:</strong> filtered Common Crawl supplied 410B tokens and 60% of the training mix, with the rest from WebText2, two book corpora, and Wikipedia (Brown et al., 2020, p. 9). GPT-4 used public and licensed data (OpenAI, 2023, p. 1).</div>
+                </li>
+
+                <li class="stage">
+                    <div class="stage-head">
+                        <span class="stage-num">2</span>
+                        <svg class="stage-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h18l-7 8v6l-4 2v-8z"/></svg>
+                        <h3>Cleaning and Tokenization</h3>
+                    </div>
+                    <span class="stage-phase">Preparation</span>
+                    <p>Remove duplicates, personal data, and unsafe content, balance the mix of topics, then split text into tokens the model can read.</p>
+                    <div class="uses">
+                        <span class="use-chip heavy"><i class="dot data"></i>Data</span>
+                        <span class="use-chip"><i class="dot compute"></i>Compute</span>
+                        <span class="use-chip"><i class="dot people"></i>People</span>
+                    </div>
+                    <div class="example"><strong>Llama 3:</strong> de-duplicated at the URL, document, and line level and filtered out sites heavy in personal information (Grattafiori et al., 2024, pp. 4-5). The final mix was about 50% general knowledge, 25% math and reasoning, 17% code, and 8% multilingual (p. 6).</div>
+                </li>
+
+                <li class="stage">
+                    <div class="stage-head">
+                        <span class="stage-num">3</span>
+                        <svg class="stage-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></svg>
+                        <h3>Pre-training</h3>
+                    </div>
+                    <span class="stage-phase">Core training</span>
+                    <p>The model learns to predict the next token across trillions of examples. This is where most of the compute, energy, and calendar time goes.</p>
+                    <div class="uses">
+                        <span class="use-chip heavy"><i class="dot compute"></i>Compute</span>
+                        <span class="use-chip"><i class="dot energy"></i>Energy</span>
+                        <span class="use-chip"><i class="dot time"></i>Time</span>
+                    </div>
+                    <div class="example"><strong>Llama 3 405B:</strong> up to 16,000 H100 GPUs and 3.8 × 10<sup>25</sup> floating point operations (Grattafiori et al., 2024, pp. 1, 9). <strong>DeepSeek-V3:</strong> 2.66M of its 2.79M GPU hours went to pre-training (DeepSeek-AI, 2024, p. 5).</div>
+                </li>
+
+                <li class="stage">
+                    <div class="stage-head">
+                        <span class="stage-num">4</span>
+                        <svg class="stage-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 11l2 2 4-4"/></svg>
+                        <h3>Fine-tuning and Alignment</h3>
+                    </div>
+                    <span class="stage-phase">Post-training</span>
+                    <p>Supervised examples teach the model to follow instructions; human preference rankings then steer it toward helpful, safe answers.</p>
+                    <div class="uses">
+                        <span class="use-chip heavy"><i class="dot people"></i>People</span>
+                        <span class="use-chip"><i class="dot data"></i>Data</span>
+                        <span class="use-chip"><i class="dot compute"></i>Compute</span>
+                    </div>
+                    <div class="example"><strong>InstructGPT:</strong> three steps (supervised fine-tuning, a reward model, then reinforcement learning) with labels from about 40 contractors (Ouyang et al., 2022, pp. 3, 7). Llama 3 used fine-tuning, rejection sampling, and direct preference optimization (Grattafiori et al., 2024, p. 2).</div>
+                </li>
+
+                <li class="stage">
+                    <div class="stage-head">
+                        <span class="stage-num">5</span>
+                        <svg class="stage-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l8 3v6c0 5-3.4 9.3-8 11-4.6-1.7-8-6-8-11V5z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>
+                        <h3>Evaluation and Safety Testing</h3>
+                    </div>
+                    <span class="stage-phase">Post-training</span>
+                    <p>Benchmarks measure capability; red teams and domain experts probe for harmful or unreliable behavior before release.</p>
+                    <div class="uses">
+                        <span class="use-chip heavy"><i class="dot people"></i>People</span>
+                        <span class="use-chip"><i class="dot time"></i>Time</span>
+                    </div>
+                    <div class="example"><strong>GPT-4:</strong> more than 50 experts in fields such as cybersecurity and biorisk tested the model adversarially (OpenAI, 2023, p. 12). Meta released Llama Guard 3 alongside Llama 3 to filter inputs and outputs (Grattafiori et al., 2024, p. 1).</div>
+                </li>
+
+                <li class="stage">
+                    <div class="stage-head">
+                        <span class="stage-num">6</span>
+                        <svg class="stage-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 15c-1.5 1.5-2 5-2 5s3.5-.5 5-2"/><path d="M9 15l-3-3c1-4 5-9 12-9 0 7-5 11-9 12z"/><circle cx="14.5" cy="9.5" r="1.5"/></svg>
+                        <h3>Deployment and Inference</h3>
+                    </div>
+                    <span class="stage-phase">Operation</span>
+                    <p>The model is served through an API or released as open weights. Every user request now runs the model, so compute and energy costs continue after training ends.</p>
+                    <div class="uses">
+                        <span class="use-chip heavy"><i class="dot compute"></i>Compute</span>
+                        <span class="use-chip"><i class="dot energy"></i>Energy</span>
+                    </div>
+                    <div class="example"><strong>Ongoing cost:</strong> Patterson et al. (2021, p. 2) report that most companies spend more energy serving models than training them, citing an NVIDIA estimate that 80-90% of ML workload is inference.</div>
+                </li>
+            </ol>
+            <p class="pipeline-key">Stages 1-3 build a base model that can continue text; stages 4-5 turn it into an assistant. At its core, as Wolfram (2023, "It's Just Adding One Word at a Time" section) explains, the model tries to produce a "reasonable continuation" of the text so far.</p>
+        </div>
+
+        <!-- Stage x resource matrix -->
+        <div class="analysis-section" data-nav="Stage × Resource">
+            <h2>🔗 Which Stage Uses Which Resource</h2>
+            <p class="section-lead">The same information as the pipeline chips, set out as a grid. Read across a row to see what a stage needs; read down a column to see where a resource is spent.</p>
+            <div class="table-wrap">
+                <table class="data-table matrix">
+                    <thead>
+                        <tr>
+                            <th>Stage</th>
+                            <th><i class="dot data"></i>Data</th>
+                            <th><i class="dot compute"></i>Compute</th>
+                            <th><i class="dot energy"></i>Energy</th>
+                            <th><i class="dot time"></i>Time</th>
+                            <th><i class="dot people"></i>People</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="group-row"><td colspan="6">Preparation</td></tr>
+                        <tr>
+                            <td>1. Data Collection</td>
+                            <td class="rc-data"><span class="lvl primary">Primary</span></td>
+                            <td><span class="lvl none">-</span></td>
+                            <td><span class="lvl none">-</span></td>
+                            <td><span class="lvl none">-</span></td>
+                            <td class="rc-people"><span class="lvl secondary">Secondary</span></td>
+                        </tr>
+                        <tr>
+                            <td>2. Cleaning and Tokenization</td>
+                            <td class="rc-data"><span class="lvl primary">Primary</span></td>
+                            <td class="rc-compute"><span class="lvl secondary">Secondary</span></td>
+                            <td><span class="lvl none">-</span></td>
+                            <td><span class="lvl none">-</span></td>
+                            <td class="rc-people"><span class="lvl secondary">Secondary</span></td>
+                        </tr>
+                        <tr class="group-row"><td colspan="6">Core training</td></tr>
+                        <tr>
+                            <td>3. Pre-training</td>
+                            <td><span class="lvl none">-</span></td>
+                            <td class="rc-compute"><span class="lvl primary">Primary</span></td>
+                            <td class="rc-energy"><span class="lvl secondary">Secondary</span></td>
+                            <td class="rc-time"><span class="lvl secondary">Secondary</span></td>
+                            <td><span class="lvl none">-</span></td>
+                        </tr>
+                        <tr class="group-row"><td colspan="6">Post-training</td></tr>
+                        <tr>
+                            <td>4. Fine-tuning and Alignment</td>
+                            <td class="rc-data"><span class="lvl secondary">Secondary</span></td>
+                            <td class="rc-compute"><span class="lvl secondary">Secondary</span></td>
+                            <td><span class="lvl none">-</span></td>
+                            <td><span class="lvl none">-</span></td>
+                            <td class="rc-people"><span class="lvl primary">Primary</span></td>
+                        </tr>
+                        <tr>
+                            <td>5. Evaluation and Safety Testing</td>
+                            <td><span class="lvl none">-</span></td>
+                            <td><span class="lvl none">-</span></td>
+                            <td><span class="lvl none">-</span></td>
+                            <td class="rc-time"><span class="lvl secondary">Secondary</span></td>
+                            <td class="rc-people"><span class="lvl primary">Primary</span></td>
+                        </tr>
+                        <tr class="group-row"><td colspan="6">Operation</td></tr>
+                        <tr>
+                            <td>6. Deployment and Inference</td>
+                            <td><span class="lvl none">-</span></td>
+                            <td class="rc-compute"><span class="lvl primary">Primary</span></td>
+                            <td class="rc-energy"><span class="lvl secondary">Secondary</span></td>
+                            <td><span class="lvl none">-</span></td>
+                            <td><span class="lvl none">-</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="source-note"><strong>Pattern:</strong> data matters most at the start, compute and energy peak in pre-training and return at deployment, and people dominate post-training. A team that skips pre-training by fine-tuning an open model avoids the compute-heavy row but still pays for the people rows and the deployment row.</p>
+        </div>
+
+        <!-- Resource categories -->
+        <div class="analysis-section" data-nav="Resources">
+            <h2>🧩 Five Resource Categories</h2>
+            <p class="section-lead">The assignment names four resources: data, compute, energy, and time. The cost research adds a fifth that is easy to miss: the people who build the model.</p>
+            <div class="resource-grid">
+                <div class="resource-card rc-data">
+                    <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>Data</h3>
+                    <div class="big">300B → 15.6T</div>
+                    <p class="big-label">Training tokens, GPT-3 (2020) to Llama 3 405B (2024)</p>
+                    <p>Data costs come from licensing, as with the third-party data used for GPT-4 (OpenAI, 2023, p. 1), and from the engineering work of cleaning and filtering.</p>
+                    <p class="why"><strong>Effect on performance:</strong> Hoffmann et al. (2022, pp. 1-2) found that model size and training tokens should grow together. Their 70B Chinchilla, trained on 1.4T tokens, used the same compute as the 280B Gopher and outperformed it. Since then, token counts have grown faster than parameter counts.</p>
+                </div>
+
+                <div class="resource-card rc-compute">
+                    <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></svg>Compute</h3>
+                    <div class="big">65%</div>
+                    <p class="big-label">Share of GPT-4's development cost spent on hardware (Cottier et al., 2024, p. 9)</p>
+                    <p>Accelerator chips are the largest hardware cost. DeepSeek-V3 trained on a cluster of 2,048 H800 GPUs (DeepSeek-AI, 2024, p. 11); Llama 3 used up to 16,000 H100s.</p>
+                    <p class="why"><strong>Effect on cost:</strong> For GPT-4, chips were 32% of amortized development cost, other server parts 21%, and cluster networking 12% (Cottier et al., 2024, p. 9). Buying that hardware outright was estimated at $800M (p. 6).</p>
+                </div>
+
+                <div class="resource-card rc-energy">
+                    <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>Energy</h3>
+                    <div class="big">1,287 MWh</div>
+                    <p class="big-label">Estimated electricity to train GPT-3, producing 552 tCO2e (Patterson et al., 2021, p. 7)</p>
+                    <p>Energy was only 2-6% of total cost for frontier models (Cottier et al., 2024, p. 1), but power supply is becoming a limit: Gemini Ultra's training cluster was estimated at about 35 MW (p. 19).</p>
+                    <p class="why"><strong>Grid matters:</strong> BLOOM used 433 MWh on a French grid at 57 gCO2eq/kWh and emitted 24.7 t from training power (Luccioni et al., 2022, pp. 2, 4). Llama 3 training caused power swings of tens of megawatts across the data center (Grattafiori et al., 2024, p. 14).</p>
+                </div>
+
+                <div class="resource-card rc-time">
+                    <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Time</h3>
+                    <div class="big">14.8 → 118 days</div>
+                    <p class="big-label">GPT-3 on 10,000 V100s (Patterson et al., 2021, p. 6); BLOOM on A100s (Luccioni et al., 2022, p. 2)</p>
+                    <p>DeepSeek-V3's pre-training finished in under two months (DeepSeek-AI, 2024, p. 5). Long runs tie up hardware and push back release dates.</p>
+                    <p class="why"><strong>Time is also risk:</strong> in a 54-day stretch of Llama 3 pre-training there were 466 job interruptions, 419 of them unplanned and about 78% traced to hardware (Grattafiori et al., 2024, p. 13).</p>
+                </div>
+
+                <div class="resource-card rc-people">
+                    <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M15 14.5c3 0 6 2 6 5.5"/></svg>People</h3>
+                    <div class="big">29-49%</div>
+                    <p class="big-label">R&amp;D staff share of total development cost for GPT-3, OPT-175B, GPT-4, and Gemini Ultra</p>
+                    <p>Reported contributors grew from 25 on GPT-3 to 284 on GPT-4 (Cottier et al., 2024, pp. 7, 10). Alignment adds labelers and red-teamers on top.</p>
+                    <p class="why"><strong>Effect on performance:</strong> human feedback can matter more than size. Labelers preferred answers from the 1.3B InstructGPT model to those of the 175B GPT-3 (Ouyang et al., 2022, p. 1).</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="analysis-section" data-nav="Charts">
+            <h2>📈 The Numbers in Charts</h2>
+            <p class="section-lead">Hover or tab to a bar for its source. Each chart has a data table below it.</p>
+            <div class="chart-grid">
+                <div class="chart-card wide">
+                    <h3>Where the development money goes</h3>
+                    <p class="chart-sub">Share of total amortized development cost, median estimates. Source: Cottier et al. (2024), Figure 6b, p. 9. Rows may not sum to 100% because of rounding.</p>
+                    <div class="legend" aria-label="Cost components">
+                        <span><i class="dot people"></i>R&amp;D staff</span>
+                        <span><i class="dot chips"></i>AI chips</span>
+                        <span><i class="dot server"></i>Other servers</span>
+                        <span><i class="dot network"></i>Networking</span>
+                        <span><i class="dot energy"></i>Energy</span>
+                    </div>
+                    <div class="stack-chart" role="img" aria-label="Stacked bars of cost shares. GPT-3: staff 33, chips 31, servers 21, networking 12, energy 3 percent. GPT-4: staff 29, chips 32, servers 21, networking 12, energy 6. Gemini 1.0 Ultra: staff 49, chips 23, servers 15, networking 9, energy 5.">
+                        <div class="stack-row">
+                            <div class="lbl"><strong>GPT-3 175B</strong></div>
+                            <div class="stack">
+                                <span class="seg staff" style="flex:33" tabindex="0" data-tip="GPT-3: R&amp;D staff 33%">33%</span>
+                                <span class="seg chips" style="flex:31" tabindex="0" data-tip="GPT-3: AI chips 31%">31%</span>
+                                <span class="seg server" style="flex:21" tabindex="0" data-tip="GPT-3: other servers 21%">21%</span>
+                                <span class="seg network" style="flex:12" tabindex="0" data-tip="GPT-3: networking 12%">12%</span>
+                                <span class="seg energy" style="flex:3" tabindex="0" data-tip="GPT-3: energy 3%"></span>
+                            </div>
+                        </div>
+                        <div class="stack-row">
+                            <div class="lbl"><strong>GPT-4</strong></div>
+                            <div class="stack">
+                                <span class="seg staff" style="flex:29" tabindex="0" data-tip="GPT-4: R&amp;D staff 29%">29%</span>
+                                <span class="seg chips" style="flex:32" tabindex="0" data-tip="GPT-4: AI chips 32%">32%</span>
+                                <span class="seg server" style="flex:21" tabindex="0" data-tip="GPT-4: other servers 21%">21%</span>
+                                <span class="seg network" style="flex:12" tabindex="0" data-tip="GPT-4: networking 12%">12%</span>
+                                <span class="seg energy" style="flex:6" tabindex="0" data-tip="GPT-4: energy 6%">6%</span>
+                            </div>
+                        </div>
+                        <div class="stack-row">
+                            <div class="lbl"><strong>Gemini 1.0 Ultra</strong></div>
+                            <div class="stack">
+                                <span class="seg staff" style="flex:49" tabindex="0" data-tip="Gemini 1.0 Ultra: R&amp;D staff 49%">49%</span>
+                                <span class="seg chips" style="flex:23" tabindex="0" data-tip="Gemini 1.0 Ultra: AI chips 23%">23%</span>
+                                <span class="seg server" style="flex:15" tabindex="0" data-tip="Gemini 1.0 Ultra: other servers 15%">15%</span>
+                                <span class="seg network" style="flex:9" tabindex="0" data-tip="Gemini 1.0 Ultra: networking 9%">9%</span>
+                                <span class="seg energy" style="flex:5" tabindex="0" data-tip="Gemini 1.0 Ultra: energy 5%">5%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <details class="data-view">
+                        <summary>View data table</summary>
+                        <div class="table-wrap">
+                            <table class="data-table">
+                                <thead><tr><th>Model</th><th>R&amp;D staff</th><th>AI chips</th><th>Other servers</th><th>Networking</th><th>Energy</th></tr></thead>
+                                <tbody>
+                                    <tr><td>GPT-3 175B</td><td>33%</td><td>31%</td><td>21%</td><td>12%</td><td>3%</td></tr>
+                                    <tr><td>GPT-4</td><td>29%</td><td>32%</td><td>21%</td><td>12%</td><td>6%</td></tr>
+                                    <tr><td>Gemini 1.0 Ultra</td><td>49%</td><td>23%</td><td>15%</td><td>9%</td><td>5%</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="chart-card">
+                    <h3>Pre-training data keeps growing</h3>
+                    <p class="chart-sub">Training tokens, in trillions</p>
+                    <div role="img" aria-label="Training tokens: GPT-3 0.3 trillion, Chinchilla 1.4, Llama 2 2.0, DeepSeek-V3 14.8, Llama 3 405B 15.6.">
+                        <div class="hbar"><div class="lbl">GPT-3<small>2020</small></div><div class="track"><span class="bar" style="width:1.9%" tabindex="0" data-tip="GPT-3: 300B tokens (Brown et al., 2020, p. 8)"></span><span class="val">0.3T</span></div></div>
+                        <div class="hbar"><div class="lbl">Chinchilla<small>2022</small></div><div class="track"><span class="bar" style="width:9%" tabindex="0" data-tip="Chinchilla 70B: 1.4T tokens (Hoffmann et al., 2022, p. 2)"></span><span class="val">1.4T</span></div></div>
+                        <div class="hbar"><div class="lbl">Llama 2<small>2023</small></div><div class="track"><span class="bar" style="width:12.8%" tabindex="0" data-tip="Llama 2: 2T tokens (Touvron et al., 2023, p. 5)"></span><span class="val">2.0T</span></div></div>
+                        <div class="hbar"><div class="lbl">DeepSeek-V3<small>2024</small></div><div class="track"><span class="bar" style="width:76%" tabindex="0" data-tip="DeepSeek-V3: 14.8T tokens (DeepSeek-AI, 2024)"></span><span class="val">14.8T</span></div></div>
+                        <div class="hbar"><div class="lbl">Llama 3 405B<small>2024</small></div><div class="track"><span class="bar" style="width:80%" tabindex="0" data-tip="Llama 3 405B: 15.6T tokens (Grattafiori et al., 2024, p. 1)"></span><span class="val">15.6T</span></div></div>
+                    </div>
+                    <details class="data-view">
+                        <summary>View data table</summary>
+                        <div class="table-wrap">
+                            <table class="data-table">
+                                <thead><tr><th>Model</th><th>Year</th><th>Tokens</th><th>Source</th></tr></thead>
+                                <tbody>
+                                    <tr><td>GPT-3</td><td>2020</td><td>300B</td><td>Brown et al. (2020)</td></tr>
+                                    <tr><td>Chinchilla</td><td>2022</td><td>1.4T</td><td>Hoffmann et al. (2022)</td></tr>
+                                    <tr><td>Llama 2</td><td>2023</td><td>2T</td><td>Touvron et al. (2023)</td></tr>
+                                    <tr><td>DeepSeek-V3</td><td>2024</td><td>14.8T</td><td>DeepSeek-AI (2024)</td></tr>
+                                    <tr><td>Llama 3 405B</td><td>2024</td><td>15.6T</td><td>Grattafiori et al. (2024)</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="chart-card">
+                    <h3>Training emissions vary more than 300×</h3>
+                    <p class="chart-sub">Estimated tCO2e from training (location-based where stated). Methods differ between studies.</p>
+                    <div role="img" aria-label="Training emissions: BLOOM 24.7 tonnes, Llama 2 all sizes 539, GPT-3 552, Llama 3.1 405B 8,930.">
+                        <div class="hbar"><div class="lbl">BLOOM 176B<small>French grid</small></div><div class="track"><span class="bar" style="--bar:var(--r-energy);width:0.3%" tabindex="0" data-tip="BLOOM: 24.7 tCO2e from training power; 50.5 t including all processes (Luccioni et al., 2022, p. 1)"></span><span class="val">24.7 t</span></div></div>
+                        <div class="hbar"><div class="lbl">Llama 2<small>7B-70B combined</small></div><div class="track"><span class="bar" style="--bar:var(--r-energy);width:4.8%" tabindex="0" data-tip="Llama 2, all sizes: 539 tCO2eq, fully offset by Meta (Touvron et al., 2023, p. 7)"></span><span class="val">539 t</span></div></div>
+                        <div class="hbar"><div class="lbl">GPT-3 175B<small>2020</small></div><div class="track"><span class="bar" style="--bar:var(--r-energy);width:4.9%" tabindex="0" data-tip="GPT-3: 552 tCO2e from 1,287 MWh (Patterson et al., 2021, p. 7)"></span><span class="val">552 t</span></div></div>
+                        <div class="hbar"><div class="lbl">Llama 3.1 405B<small>2024</small></div><div class="track"><span class="bar" style="--bar:var(--r-energy);width:80%" tabindex="0" data-tip="Llama 3.1 405B: 8,930 t location-based; 0 t market-based (Meta, 2024)"></span><span class="val">8,930 t</span></div></div>
+                    </div>
+                    <details class="data-view">
+                        <summary>View data table</summary>
+                        <div class="table-wrap">
+                            <table class="data-table">
+                                <thead><tr><th>Model</th><th>tCO2e</th><th>Note</th></tr></thead>
+                                <tbody>
+                                    <tr><td>BLOOM 176B</td><td>24.7</td><td>Training power only; 50.5 t with all processes</td></tr>
+                                    <tr><td>Llama 2 (all sizes)</td><td>539</td><td>100% offset</td></tr>
+                                    <tr><td>GPT-3 175B</td><td>552</td><td>Estimate by Patterson et al.</td></tr>
+                                    <tr><td>Llama 3.1 405B</td><td>8,930</td><td>Location-based; 0 t market-based</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reading cost figures -->
+        <div class="analysis-section" data-nav="Reading Costs">
+            <h2>💵 Reading a "Training Cost" Correctly</h2>
+            <p class="section-lead">Published cost figures answer different questions. Comparing them directly gives the wrong picture, so each tile below names what its number measures.</p>
+            <div class="cost-grid">
+                <div class="cost-tile">
+                    <span class="measures">Amortized hardware + energy</span>
+                    <div class="model">GPT-4 (OpenAI)</div>
+                    <div class="amount">$40M</div>
+                    <p>Independent estimate of the share of hardware value and electricity used by the final run (Cottier et al., 2024, p. 1). OpenAI has not published a figure.</p>
+                </div>
+                <div class="cost-tile">
+                    <span class="measures">Amortized hardware + energy</span>
+                    <div class="model">Gemini Ultra (Google)</div>
+                    <div class="amount">$30M</div>
+                    <p>Same method and same study, so this one can be compared with GPT-4 (Cottier et al., 2024, p. 1).</p>
+                </div>
+                <div class="cost-tile">
+                    <span class="measures">Hardware purchase</span>
+                    <div class="model">GPT-4 cluster</div>
+                    <div class="amount">$800M</div>
+                    <p>Estimated cost to buy the hardware. The cluster outlives one run, so this is capital spending, not the cost of the model (Cottier et al., 2024, p. 6).</p>
+                </div>
+                <div class="cost-tile">
+                    <span class="measures">Final run, rental price</span>
+                    <div class="model">DeepSeek-V3</div>
+                    <div class="amount">$5.576M</div>
+                    <p>2.788M H800 GPU hours at an assumed $2 per hour. Excludes prior research and ablation experiments (DeepSeek-AI, 2024, p. 5).</p>
+                </div>
+                <div class="cost-tile">
+                    <span class="measures">Developer statement</span>
+                    <div class="model">Claude 3.5 Sonnet (Anthropic)</div>
+                    <div class="amount">"a few $10M's"</div>
+                    <p>Anthropic's CEO described it as a mid-sized model and declined to give an exact number (Amodei, 2025).</p>
+                </div>
+                <div class="cost-tile">
+                    <span class="measures">Trend</span>
+                    <div class="model">Largest runs</div>
+                    <div class="amount">&gt;$1B by 2027</div>
+                    <p>Projection if the 2.4× yearly growth continues (Cottier et al., 2024, p. 1).</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Model comparison table -->
+        <div class="analysis-section" data-nav="Model Comparison">
+            <h2>🗂️ Model Comparison</h2>
+            <p class="section-lead">What developers have published about each model. <span class="nd">Not disclosed</span> marks a figure the developer chose not to release; <span class="nd">Not reported</span> marks one absent from the sources reviewed here.</p>
+            <div class="table-wrap">
+                <table class="data-table model-table">
+                    <thead>
+                        <tr><th>Model</th><th>Parameters</th><th>Training data</th><th>Compute and time</th><th>Energy / emissions</th><th>Cost</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>GPT-3<br><small>OpenAI, 2020</small></td>
+                            <td>175B</td>
+                            <td>300B tokens</td>
+                            <td>10,000 V100 GPUs, 14.8 days, 3.14 × 10<sup>23</sup> FLOPs</td>
+                            <td>1,287 MWh; 552 tCO2e</td>
+                            <td>Staff 33% of cost (est.)</td>
+                        </tr>
+                        <tr>
+                            <td>GPT-4<br><small>OpenAI, 2023</small></td>
+                            <td class="nd">Not disclosed</td>
+                            <td>Public and licensed data; size not disclosed</td>
+                            <td class="nd">Not disclosed</td>
+                            <td class="nd">Not disclosed</td>
+                            <td>$40M amortized (est.)</td>
+                        </tr>
+                        <tr>
+                            <td>Llama 2<br><small>Meta, 2023</small></td>
+                            <td>7B, 13B, 70B</td>
+                            <td>2T tokens</td>
+                            <td>3.3M A100 GPU hours (all sizes)</td>
+                            <td>539 tCO2eq, offset</td>
+                            <td class="nd">Not disclosed</td>
+                        </tr>
+                        <tr>
+                            <td>Llama 3.1 405B<br><small>Meta, 2024</small></td>
+                            <td>405B</td>
+                            <td>15.6T tokens</td>
+                            <td>30.84M H100 GPU hours; up to 16K GPUs; 3.8 × 10<sup>25</sup> FLOPs</td>
+                            <td>8,930 tCO2eq location-based</td>
+                            <td class="nd">Not disclosed</td>
+                        </tr>
+                        <tr>
+                            <td>DeepSeek-V3<br><small>DeepSeek-AI, 2024</small></td>
+                            <td>671B total, 37B active per token</td>
+                            <td>14.8T tokens</td>
+                            <td>2.788M H800 GPU hours on 2,048 GPUs</td>
+                            <td class="nd">Not reported</td>
+                            <td>$5.576M final run (rental)</td>
+                        </tr>
+                        <tr>
+                            <td>Claude 3.5 Sonnet<br><small>Anthropic</small></td>
+                            <td class="nd">Not disclosed</td>
+                            <td class="nd">Not disclosed</td>
+                            <td class="nd">Not disclosed</td>
+                            <td class="nd">Not disclosed</td>
+                            <td>"A few $10M's" (CEO)</td>
+                        </tr>
+                        <tr>
+                            <td>BLOOM<br><small>BigScience, 2022</small></td>
+                            <td>176B</td>
+                            <td class="nd">Not reported</td>
+                            <td>1.08M A100 GPU hours, 118 days</td>
+                            <td>433 MWh; 24.7 t (training power)</td>
+                            <td class="nd">Not reported</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="source-note">Sources by row: Brown et al. (2020); Patterson et al. (2021); Cottier et al. (2024); OpenAI (2023); Touvron et al. (2023); Grattafiori et al. (2024); Meta (2024); DeepSeek-AI (2024); Amodei (2025); Luccioni et al. (2022).</p>
+        </div>
+
+        <!-- Takeaways -->
+        <div class="analysis-section" data-nav="Takeaways">
+            <h2>💡 Key Takeaways</h2>
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <h3>Pre-training is the compute bill; post-training is the people bill</h3>
+                    <p>DeepSeek-V3 spent about 96% of its GPU hours on pre-training and under 1% on post-training. Alignment and safety testing are cheap in GPU time but depend on labelers, experts, and staff, which is where the 29-49% staff share comes from.</p>
+                </div>
+                <div class="analysis-card">
+                    <h3>Ask what a cost figure measures</h3>
+                    <p>The $5.6M DeepSeek-V3 figure is a rental price for one final run. The $40M GPT-4 figure is an amortized estimate of the run. The $800M figure is hardware capital. None of the three includes the full cost of research and staff.</p>
+                </div>
+                <div class="analysis-card">
+                    <h3>Energy is a small cost but a large footprint</h3>
+                    <p>Energy was 2-6% of cost, yet emissions range from 24.7 t to 8,930 t. Run size and grid carbon intensity account for much of that range: BLOOM's low figure reflects a low-carbon French grid as well as a smaller run.</p>
+                </div>
+                <div class="analysis-card">
+                    <h3>Openness varies widely</h3>
+                    <p>Meta and DeepSeek published GPU hours and token counts. OpenAI's GPT-4 report states it contains no details on model size, hardware, compute, or dataset construction (OpenAI, 2023, p. 1). Most cost figures for closed models are outside estimates.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Classification process -->
+        <div class="analysis-section" data-nav="Classification">
+            <h2>🗃️ How the Content Is Classified</h2>
+            <p class="section-lead">The artifact sorts every fact along three axes. Each axis answers a different question a reader brings to an LLM project.</p>
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <h3>Axis 1: Stage (when?)</h3>
+                    <p>Six stages grouped into four phases: preparation, core training, post-training, and operation. Facts were sorted by the step of the model's life they describe. Evaluation is its own stage because the GPT-4 report treats expert adversarial testing as separate work, and deployment is included because inference keeps consuming compute after training ends.</p>
+                </div>
+                <div class="analysis-card">
+                    <h3>Axis 2: Resource (what is consumed?)</h3>
+                    <p>The assignment names data, compute, energy, and time. People became a fifth category after the cost study showed staff at 29-49% of development cost, a share as large as the chips. Each stage is marked with one primary resource and any secondary ones, based on where the sources report the largest spending.</p>
+                </div>
+                <div class="analysis-card">
+                    <h3>Axis 3: Cost type and disclosure (what does the number mean?)</h3>
+                    <p>Dollar figures are labeled as amortized cost, hardware purchase, final-run rental, developer statement, or trend. Missing values are split into "not disclosed" (the developer withheld it) and "not reported" (absent from the sources reviewed), because those are different kinds of gaps.</p>
+                </div>
+                <div class="analysis-card">
+                    <h3>Hard calls</h3>
+                    <p>Tokenization was grouped with cleaning, since both prepare data before training. Energy and compute stay separate even though one drives the other: energy has its own costs and a carbon footprint that depends on the grid, not on the chips.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Design rationale -->
+        <div class="analysis-section" data-nav="Design">
+            <h2>🎨 Design Rationale</h2>
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <h3>One color per resource</h3>
+                    <p>Data, compute, energy, time, and people each keep one color across the pipeline chips, resource cards, and charts. The five colors were checked for colorblind separation, and every bar also carries a text label, so color is never the only cue.</p>
+                </div>
+                <div class="analysis-card">
+                    <h3>Process first, numbers second</h3>
+                    <p>The pipeline comes before any figures so readers know where a number belongs before they see it. Each stage card ends with a real example from a named model.</p>
+                </div>
+                <div class="analysis-card">
+                    <h3>Charts chosen by the question</h3>
+                    <p>A 100% stacked bar answers "what share goes where"; horizontal bars compare a single quantity across models. Only figures from the same study share a stacked chart, and every chart has a table view.</p>
+                </div>
+                <div class="analysis-card">
+                    <h3>Honest gaps</h3>
+                    <p>Undisclosed values stay marked as undisclosed instead of being filled with rumored numbers, because a believable but unsourced figure would mislead the reader.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Requirements checklist -->
+        <div class="analysis-section" data-nav="Requirements">
+            <h2>✅ Assignment Requirements</h2>
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <h3>Training process</h3>
+                    <p>Six stages from data collection to deployment, each with its resources and a model example.</p>
+                </div>
+                <div class="analysis-card">
+                    <h3>Resources and costs</h3>
+                    <p>Data, compute, energy, and time, plus staff, each with a headline figure and its effect on cost and performance.</p>
+                </div>
+                <div class="analysis-card">
+                    <h3>Specific models</h3>
+                    <p>GPT-3, GPT-4, Llama 2, Llama 3/3.1, DeepSeek-V3, Claude 3.5 Sonnet, Gemini Ultra, and BLOOM.</p>
+                </div>
+                <div class="analysis-card">
+                    <h3>Visual elements</h3>
+                    <p>Icons, a pipeline diagram, a stage-by-resource matrix, three charts with tooltips and tables, cost tiles, and a comparison table.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- References -->
+        <div class="analysis-section" id="references" data-nav="References">
+            <h2>References</h2>
+            <div class="project-item">
+                <h3>Sources (APA 7)</h3>
+                <ul class="repo-list">
+                    <li>Amodei, D. (2025, January). <em>On DeepSeek and export controls</em>. <a href="https://www.darioamodei.com/post/on-deepseek-and-export-controls" target="_blank" rel="noopener">https://www.darioamodei.com/post/on-deepseek-and-export-controls</a></li>
+                    <li>Brown, T. B., Mann, B., Ryder, N., Subbiah, M., Kaplan, J., Dhariwal, P., Neelakantan, A., Shyam, P., Sastry, G., Askell, A., Agarwal, S., Herbert-Voss, A., Krueger, G., Henighan, T., Child, R., Ramesh, A., Ziegler, D. M., Wu, J., Winter, C., . . . Amodei, D. (2020). <em>Language models are few-shot learners</em> (arXiv:2005.14165). arXiv. <a href="https://doi.org/10.48550/arXiv.2005.14165" target="_blank" rel="noopener">https://doi.org/10.48550/arXiv.2005.14165</a></li>
+                    <li>Cottier, B., Rahman, R., Fattorini, L., Maslej, N., Besiroglu, T., &amp; Owen, D. (2024). <em>The rising costs of training frontier AI models</em> (arXiv:2405.21015). arXiv. <a href="https://doi.org/10.48550/arXiv.2405.21015" target="_blank" rel="noopener">https://doi.org/10.48550/arXiv.2405.21015</a></li>
+                    <li>DeepSeek-AI. (2024). <em>DeepSeek-V3 technical report</em> (arXiv:2412.19437). arXiv. <a href="https://doi.org/10.48550/arXiv.2412.19437" target="_blank" rel="noopener">https://doi.org/10.48550/arXiv.2412.19437</a></li>
+                    <li>Grattafiori, A., Dubey, A., Jauhri, A., Pandey, A., Kadian, A., Al-Dahle, A., Letman, A., Mathur, A., Schelten, A., Vaughan, A., Yang, A., Fan, A., Goyal, A., Hartshorn, A., Yang, A., Mitra, A., Sravankumar, A., Korenev, A., Hinsvark, A., . . . Ma, Z. (2024). <em>The Llama 3 herd of models</em> (arXiv:2407.21783). arXiv. <a href="https://doi.org/10.48550/arXiv.2407.21783" target="_blank" rel="noopener">https://doi.org/10.48550/arXiv.2407.21783</a></li>
+                    <li>Hoffmann, J., Borgeaud, S., Mensch, A., Buchatskaya, E., Cai, T., Rutherford, E., de Las Casas, D., Hendricks, L. A., Welbl, J., Clark, A., Hennigan, T., Noland, E., Millican, K., van den Driessche, G., Damoc, B., Guy, A., Osindero, S., Simonyan, K., Elsen, E., . . . Sifre, L. (2022). <em>Training compute-optimal large language models</em> (arXiv:2203.15556). arXiv. <a href="https://doi.org/10.48550/arXiv.2203.15556" target="_blank" rel="noopener">https://doi.org/10.48550/arXiv.2203.15556</a></li>
+                    <li>Luccioni, A. S., Viguier, S., &amp; Ligozat, A.-L. (2022). <em>Estimating the carbon footprint of BLOOM, a 176B parameter language model</em> (arXiv:2211.02001). arXiv. <a href="https://doi.org/10.48550/arXiv.2211.02001" target="_blank" rel="noopener">https://doi.org/10.48550/arXiv.2211.02001</a></li>
+                    <li>Meta. (2024). <em>Llama 3.1 model card</em> [Model card]. GitHub. <a href="https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/MODEL_CARD.md" target="_blank" rel="noopener">https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/MODEL_CARD.md</a></li>
+                    <li>OpenAI. (2023). <em>GPT-4 technical report</em> (arXiv:2303.08774). arXiv. <a href="https://doi.org/10.48550/arXiv.2303.08774" target="_blank" rel="noopener">https://doi.org/10.48550/arXiv.2303.08774</a></li>
+                    <li>Ouyang, L., Wu, J., Jiang, X., Almeida, D., Wainwright, C. L., Mishkin, P., Zhang, C., Agarwal, S., Slama, K., Ray, A., Schulman, J., Hilton, J., Kelton, F., Miller, L., Simens, M., Askell, A., Welinder, P., Christiano, P., Leike, J., &amp; Lowe, R. (2022). <em>Training language models to follow instructions with human feedback</em> (arXiv:2203.02155). arXiv. <a href="https://doi.org/10.48550/arXiv.2203.02155" target="_blank" rel="noopener">https://doi.org/10.48550/arXiv.2203.02155</a></li>
+                    <li>Patterson, D., Gonzalez, J., Le, Q., Liang, C., Munguia, L.-M., Rothchild, D., So, D., Texier, M., &amp; Dean, J. (2021). <em>Carbon emissions and large neural network training</em> (arXiv:2104.10350). arXiv. <a href="https://doi.org/10.48550/arXiv.2104.10350" target="_blank" rel="noopener">https://doi.org/10.48550/arXiv.2104.10350</a></li>
+                    <li>Touvron, H., Martin, L., Stone, K., Albert, P., Almahairi, A., Babaei, Y., Bashlykov, N., Batra, S., Bhargava, P., Bhosale, S., Bikel, D., Blecher, L., Canton Ferrer, C., Chen, M., Cucurull, G., Esiobu, D., Fernandes, J., Fu, J., Fu, W., . . . Scialom, T. (2023). <em>Llama 2: Open foundation and fine-tuned chat models</em> (arXiv:2307.09288). arXiv. <a href="https://doi.org/10.48550/arXiv.2307.09288" target="_blank" rel="noopener">https://doi.org/10.48550/arXiv.2307.09288</a></li>
+                    <li>Wolfram, S. (2023, February 14). <em>What is ChatGPT doing . . . and why does it work?</em> Stephen Wolfram Writings. <a href="https://writings.stephenwolfram.com/2023/02/what-is-chatgpt-doing-and-why-does-it-work/" target="_blank" rel="noopener">https://writings.stephenwolfram.com/2023/02/what-is-chatgpt-doing-and-why-does-it-work/</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Professional Reflection Section -->
+        <div class="professional-reflection" data-nav="Reflection">
+            <h2>💭 Professional Reflection</h2>
+            <p>
+                Reading the technical reports side by side showed that <span class="reflection-highlight">a "training cost" can mean a rental price, an amortized estimate, or a hardware purchase,</span> and that these can differ by twenty times for the same model, as GPT-4's $40M and $800M estimates do. The habit I took from this project is asking what a figure measures before comparing it with another.
+            </p>
+            <p>
+                The hardest design problem was missing data. The closed models I most wanted to compare publish the least, and filling the gaps with figures from news articles would have made the infographic look complete but less trustworthy. I chose to <span class="reflection-highlight">show the gaps as gaps</span> and to put estimates from a single study in the same chart only when they used the same method.
+            </p>
+            <p>
+                The research tied directly to this workshop's topics. Pre-training needs no human labels because the next token in the text is the target, while fine-tuning is supervised and RLHF adds a learned reward model. GPT-3's authors warned that web data can contain benchmark test sets and built tools to measure that contamination, which is the training-versus-testing data problem at a very large scale. They also sampled their best datasets two to three times, accepting "a small amount of overfitting in exchange for higher quality training data" (Brown et al., 2020, p. 8). Meta treated model size as a parameter to tune: it trained models from 40M to 16B parameters on small budgets, then used the fitted curve to choose a size for the full run (Grattafiori et al., 2024, pp. 7-8). InstructGPT's 1.3B model beating the 175B GPT-3 shows that <span class="reflection-highlight">the training approach can matter more than scale.</span>
+            </p>
+            <p>
+                In QA automation and data engineering, the practical lesson is about build versus buy. Very few teams will ever pre-train a model, but every team that adopts one inherits its inference costs and its data choices. Knowing which stage drives which cost helps me ask vendors better questions and argue for fine-tuning or retrieval over training from scratch when the budget calls for it.
+            </p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>© 2026 Farukh Ahemad Gesukhan Pathan | All rights reserved</p>
+            <p>AI Infrastructure | LLM Training | Cost Analysis</p>
+        </div>
+    </footer>
+
+    <div class="viz-tip" id="viz-tip" role="tooltip"></div>
+    <script>
+        // Shared tooltip for chart bars and segments: follows the pointer, or anchors to the element on keyboard focus
+        (function () {
+            var tip = document.getElementById('viz-tip');
+            var marks = document.querySelectorAll('[data-tip]');
+
+            function show(el, x, y) {
+                tip.textContent = el.getAttribute('data-tip');
+                tip.classList.add('show');
+                var w = tip.offsetWidth;
+                var h = tip.offsetHeight;
+                var left = Math.min(Math.max(8, x + 12), window.innerWidth - w - 8);
+                var top = y - h - 12 < 8 ? y + 16 : y - h - 12;
+                tip.style.left = left + 'px';
+                tip.style.top = top + 'px';
+            }
+
+            function hide() {
+                tip.classList.remove('show');
+            }
+
+            marks.forEach(function (el) {
+                el.addEventListener('mousemove', function (e) { show(el, e.clientX, e.clientY); });
+                el.addEventListener('mouseleave', hide);
+                el.addEventListener('focus', function () {
+                    var r = el.getBoundingClientRect();
+                    show(el, r.left + r.width / 2, r.top);
+                });
+                el.addEventListener('blur', hide);
+            });
+
+            window.addEventListener('scroll', hide, { passive: true });
+        })();
+    </script>
+    <script src="back-to-top.js" defer></script>
+    <script src="page-nav.js" defer></script>
+</body>
+</html>
