@@ -388,6 +388,18 @@
                 margin-top: 10px;
             }
         }
+        /* AI interaction screenshots: show the whole capture instead of the gallery's fixed-height crop */
+        .ai-shots .gallery-card img {
+            height: auto;
+            object-fit: contain;
+            background: #0b0b0b;
+        }
+
+        @media (max-width: 700px) {
+            .ai-shots {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body class="artifact-page">
@@ -1027,6 +1039,22 @@
         </div>
 
         <!-- References -->
+        <!-- AI Tool Interaction -->
+        <div class="analysis-section" data-nav="AI Interaction">
+            <h2>🤖 AI Tool Interaction</h2>
+            <p class="section-lead">The assignment suggests using a generative AI platform to clarify the topic. I used ChatGPT (OpenAI) with the suggested prompt and one follow-up on November 4, 2026. Click a screenshot to enlarge it.</p>
+            <div class="gallery-grid ai-shots">
+                <div class="gallery-card" data-full="images/chatgpt_algorithm_types_prompt1.png" data-caption="Prompt 1 (suggested): Explain clearly and simply the different AI/ML models popular in tabular data, computer vision, NLP, and generative AI.">
+                    <img src="images/chatgpt_algorithm_types_prompt1.png" alt="ChatGPT conversation showing the suggested prompt about AI/ML models in tabular data, computer vision, NLP, and generative AI, and the start of the response">
+                    <p><strong>Prompt 1 (suggested):</strong> Explain clearly and simply the different AI/ML models popular in tabular data, computer vision, NLP, and generative AI.</p>
+                </div>
+                <div class="gallery-card" data-full="images/chatgpt_algorithm_types_prompt2.png" data-caption="Prompt 2 (follow-up): Which of these models are supervised, unsupervised, or self-supervised, and how do I choose the right one for a new problem?">
+                    <img src="images/chatgpt_algorithm_types_prompt2.png" alt="ChatGPT conversation showing the follow-up prompt about supervised, unsupervised, and self-supervised models, and the start of the response">
+                    <p><strong>Prompt 2 (follow-up):</strong> Which of these models are supervised, unsupervised, or self-supervised, and how do I choose the right one for a new problem?</p>
+                </div>
+            </div>
+        </div>
+
         <div class="analysis-section" id="references" data-nav="References">
             <h2>References</h2>
             <div class="project-item">
@@ -1109,5 +1137,6 @@
     </script>
     <script src="back-to-top.js" defer></script>
     <script src="page-nav.js" defer></script>
+    <script src="lightbox.js" defer></script>
 </body>
 </html>
