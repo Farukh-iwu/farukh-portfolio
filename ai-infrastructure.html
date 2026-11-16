@@ -651,6 +651,17 @@
                 border-left: none;
             }
         }
+        /* AI interaction screenshot: full capture, not the gallery's fixed-height crop */
+        .ai-shots {
+            grid-template-columns: minmax(0, 1fr);
+            max-width: 900px;
+        }
+
+        .ai-shots .gallery-card img {
+            height: auto;
+            object-fit: contain;
+            background: #0b0b0b;
+        }
     </style>
 </head>
 <body class="artifact-page">
@@ -1312,7 +1323,19 @@
                 </div>
                 <div class="analysis-card">
                     <h3>Visual elements</h3>
-                    <p>Icons, a pipeline diagram, a stage-by-resource matrix, three charts with tooltips and tables, cost tiles, and a comparison table.</p>
+                    <p>Icons, a pipeline diagram, a stage-by-resource matrix, three charts with tooltips and tables, cost tiles, a comparison table, and a screenshot of the AI prompt.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Tool Interaction -->
+        <div class="analysis-section" data-nav="AI Interaction">
+            <h2>🤖 AI Tool Interaction</h2>
+            <p class="section-lead">The assignment suggests using a generative AI platform for additional insight. I used Claude (Anthropic) in Claude Code with the suggested prompt on November 3, 2026, and checked every figure in its answer against the cited sources before using it here. Click the screenshot to enlarge it.</p>
+            <div class="gallery-grid ai-shots">
+                <div class="gallery-card" data-full="images/claude_ai_infrastructure_prompt.png" data-caption="Suggested prompt: Explain the key steps involved in training generative AI large language models (such as GPT, Claude, Gemini, or LLaMA) and detail their associated resource costs.">
+                    <img src="images/claude_ai_infrastructure_prompt.png" alt="Claude Code conversation showing the suggested prompt about LLM training steps and resource costs, and Claude's answer covering six training stages and where the money goes">
+                    <p><strong>Suggested prompt:</strong> Explain the key steps involved in training generative AI large language models (such as GPT, Claude, Gemini, or LLaMA) and detail their associated resource costs.</p>
                 </div>
             </div>
         </div>
@@ -1402,5 +1425,6 @@
     </script>
     <script src="back-to-top.js" defer></script>
     <script src="page-nav.js" defer></script>
+    <script src="lightbox.js" defer></script>
 </body>
 </html>
