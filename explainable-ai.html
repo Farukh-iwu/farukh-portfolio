@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explainable AI and Trust - Farukh Ahemad Gesukhan Pathan</title>
+    <meta name="description" content="An infographic on explainable AI for large language models: what it is, why it matters, the obstacles to explaining GPT, Claude, Gemini, and Llama, how validation and performance metrics build trust, and what OpenAI, Anthropic, Google, and Meta are doing about it.">
+    <meta property="og:title" content="Opening the Black Box: Explainability, Validation, and Trust in LLMs - Farukh Ahemad Gesukhan Pathan">
+    <meta property="og:description" content="Why LLM decisions are hard to explain, how validation and metrics measure reliability, and the interpretability work of OpenAI, Anthropic, Google, and Meta.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://farukh-iwu.github.io/farukh-portfolio/explainable-ai.html">
+    <meta name="twitter:card" content="summary">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --page-accent: #0f766e;
+            /* Three trust pillars, used consistently across the page */
+            --p-explain: #2a78d6;
+            --p-validate: #eb6834;
+            --p-metric: #1baf7a;
+            --ink: #2c3e50;
+            --ink-2: #4b5b6c;
+            --soft: #f0fbf9;
+            --soft-line: #cdeee8;
+        }
+
+        .source-note {
+            margin-top: 12px;
+            font-size: 0.88em;
+            color: #5b6b7c;
+        }
+
+        /* Black box vs. explained box diagram */
+        .box-diagram {
+            margin: 18px 0 6px;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .box-panel {
+            background: #ffffff;
+            border: 1px solid #dce8f6;
+            border-radius: 14px;
+            padding: 16px;
+            box-shadow: 0 6px 16px rgba(32, 48, 69, 0.08);
+        }
+
+        .box-panel h3 {
+            margin: 0 0 8px;
+            font-size: 1.05em;
+            color: var(--ink);
+        }
+
+        .box-panel svg {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .box-panel p {
+            margin: 8px 0 0;
+            font-size: 0.92em;
+            color: var(--ink-2);
+        }
+
+        /* NIST principles row */
+        .principles {
+            list-style: none;
+            padding: 0 !important;
+            margin: 18px 0 0;
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .principles li {
+            margin: 0 !important;
+            padding: 14px 16px;
+            background: var(--soft);
+            border: 1px solid var(--soft-line);
+            border-radius: 12px;
+        }
+
+        .principles strong {
+            display: block;
+            color: var(--page-accent);
+            margin-bottom: 4px;
+        }
+
+        .principles span {
+            font-size: 0.92em;
+            color: var(--ink-2);
+        }
+
+        /* Sector cards: why transparency matters */
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 16px;
+            margin-top: 18px;
+        }
+
+        .icon-card {
+            background: #ffffff;
+            border: 1px solid #dce8f6;
+            border-radius: 14px;
+            padding: 16px 18px;
+            box-shadow: 0 6px 16px rgba(32, 48, 69, 0.08);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .icon-card .ic-head {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .icon-card svg {
+            width: 30px;
+            height: 30px;
+            color: var(--page-accent);
+            flex-shrink: 0;
+        }
+
+        .icon-card h3 {
+            margin: 0;
+            font-size: 1.04em;
+            color: var(--ink);
+            line-height: 1.25;
+        }
+
+        .icon-card p {
+            margin: 0;
+            font-size: 0.93em;
+            color: var(--ink-2);
+        }
+
+        .icon-card .evidence {
+            margin-top: auto;
+            padding: 9px 11px;
+            border-radius: 10px;
+            background: var(--soft);
+            border: 1px solid var(--soft-line);
+            font-size: 0.88em;
+            color: #24433f;
+        }
+
+        .icon-card.warn svg {
+            color: #c2410c;
+        }
+
+        .icon-card.warn .evidence {
+            background: #fff6ef;
+            border-color: #f7dcc6;
+            color: #4a3326;
+        }
+
+        /* Simple labelled horizontal bars */
+        .chart-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+            margin-top: 22px;
+        }
+
+        .chart-card {
+            background: #ffffff;
+            border: 1px solid #dce8f6;
+            border-radius: 14px;
+            padding: 16px 18px;
+            box-shadow: 0 6px 16px rgba(32, 48, 69, 0.08);
+        }
+
+        .chart-card h3 {
+            margin: 0 0 4px;
+            font-size: 1em;
+            color: var(--ink);
+        }
+
+        .chart-card .chart-sub {
+            margin: 0 0 12px;
+            font-size: 0.85em;
+            color: #5b6b7c;
+        }
+
+        .hbar {
+            margin: 10px 0;
+        }
+
+        .hbar .lbl {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            font-size: 0.88em;
+            color: #2f3d4a;
+            margin-bottom: 4px;
+        }
+
+        .hbar .lbl b {
+            color: var(--ink);
+        }
+
+        .hbar .track {
+            height: 14px;
+            background: #eef2f7;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .hbar .bar {
+            height: 100%;
+            border-radius: 4px;
+            background: var(--bar, var(--page-accent));
+        }
+
+        /* Explainability depth ladder */
+        .layers {
+            margin-top: 20px;
+            display: grid;
+            gap: 12px;
+        }
+
+        .layer {
+            display: grid;
+            grid-template-columns: 210px minmax(0, 1fr);
+            gap: 16px;
+            align-items: start;
+            padding: 16px 18px;
+            border-radius: 14px;
+            background: #ffffff;
+            border: 1px solid #dce8f6;
+            border-left: 6px solid var(--lc);
+            box-shadow: 0 6px 16px rgba(32, 48, 69, 0.06);
+        }
+
+        .layer.l1 { --lc: #99d5cc; }
+        .layer.l2 { --lc: #3fa597; }
+        .layer.l3 { --lc: #0f5f58; }
+
+        .layer .depth {
+            font-size: 0.78em;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--page-accent);
+        }
+
+        .layer h3 {
+            margin: 2px 0 4px;
+            font-size: 1.08em;
+            color: var(--ink);
+        }
+
+        .layer .q {
+            font-size: 0.9em;
+            color: var(--ink-2);
+            font-style: italic;
+        }
+
+        .layer p {
+            margin: 0 0 8px;
+            color: var(--ink-2);
+            font-size: 0.94em;
+        }
+
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .chip {
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: var(--soft);
+            border: 1px solid var(--soft-line);
+            font-size: 0.84em;
+            color: #1f4a45;
+            font-weight: 600;
+        }
+
+        /* Organization cards */
+        .org-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 18px;
+        }
+
+        .org-card {
+            background: #ffffff;
+            border: 1px solid #dce8f6;
+            border-top: 5px solid var(--page-accent);
+            border-radius: 14px;
+            padding: 18px 20px;
+            box-shadow: 0 6px 16px rgba(32, 48, 69, 0.08);
+        }
+
+        .org-card h3 {
+            margin: 0 0 2px;
+            color: var(--ink);
+        }
+
+        .org-card .org-models {
+            font-size: 0.85em;
+            color: #5b6b7c;
+            margin-bottom: 10px;
+        }
+
+        .org-card ul {
+            margin: 0;
+            padding-left: 18px;
+        }
+
+        .org-card li {
+            margin: 0 0 8px;
+            color: var(--ink-2);
+            font-size: 0.93em;
+        }
+
+        .org-card li strong {
+            color: var(--ink);
+        }
+
+        /* Trust equation */
+        .trust-eq {
+            margin-top: 18px;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+            gap: 10px;
+            align-items: stretch;
+        }
+
+        .pillar {
+            padding: 16px;
+            border-radius: 14px;
+            background: #ffffff;
+            border: 1px solid #dce8f6;
+            border-top: 5px solid var(--pc);
+            box-shadow: 0 6px 16px rgba(32, 48, 69, 0.08);
+        }
+
+        .pillar.explain { --pc: var(--p-explain); }
+        .pillar.validate { --pc: var(--p-validate); }
+        .pillar.metric { --pc: var(--p-metric); }
+
+        .pillar.trust {
+            --pc: var(--page-accent);
+            background: var(--soft);
+            border-color: var(--soft-line);
+        }
+
+        .pillar h3 {
+            margin: 0 0 4px;
+            font-size: 1.05em;
+            color: var(--ink);
+        }
+
+        .pillar .ask {
+            font-weight: 700;
+            color: var(--pc);
+            font-size: 0.9em;
+            margin-bottom: 6px;
+        }
+
+        .pillar p {
+            margin: 0;
+            font-size: 0.9em;
+            color: var(--ink-2);
+        }
+
+        .op {
+            align-self: center;
+            font-size: 1.6em;
+            font-weight: 800;
+            color: #8aa0b4;
+        }
+
+        /* Validation pipeline */
+        .vsteps {
+            list-style: none;
+            padding: 0 !important;
+            margin: 20px 0 0;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+            counter-reset: v;
+        }
+
+        .vstep {
+            margin: 0 !important;
+            padding: 16px 18px;
+            background: #ffffff;
+            border: 1px solid #dce8f6;
+            border-radius: 14px;
+            box-shadow: 0 6px 16px rgba(32, 48, 69, 0.08);
+            counter-increment: v;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .vstep h3 {
+            margin: 0;
+            font-size: 1.04em;
+            color: var(--ink);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .vstep h3::before {
+            content: counter(v);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--p-validate);
+            color: #fff;
+            font-weight: 800;
+            font-size: 0.9em;
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+        }
+
+        .vstep p {
+            margin: 0;
+            font-size: 0.93em;
+            color: var(--ink-2);
+        }
+
+        .vstep .trust-q {
+            margin-top: auto;
+            font-size: 0.86em;
+            color: #6b3a1e;
+            background: #fff6ef;
+            border: 1px solid #f7dcc6;
+            border-radius: 10px;
+            padding: 8px 10px;
+        }
+
+        .metric-table td:first-child {
+            font-weight: 700;
+            color: var(--ink);
+            white-space: nowrap;
+        }
+
+        .tech-table td:first-child {
+            font-weight: 700;
+            color: var(--ink);
+        }
+
+        .lvl {
+            display: inline-block;
+            padding: 2px 9px;
+            border-radius: 999px;
+            font-size: 0.8em;
+            font-weight: 700;
+            white-space: nowrap;
+            color: #fff;
+            background: var(--lc);
+        }
+
+        .lvl.l1 { --lc: #5aa89d; }
+        .lvl.l2 { --lc: #2d8478; }
+        .lvl.l3 { --lc: #0f5f58; }
+
+        .explain-doc {
+            background: var(--soft);
+            border: 1px solid var(--soft-line);
+            border-radius: 14px;
+            padding: 20px 24px;
+        }
+
+        .explain-doc p {
+            margin: 0 0 12px;
+            color: #23343f;
+            max-width: none;
+        }
+
+        .explain-doc p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* AI interaction screenshots: full capture, not the gallery's fixed-height crop */
+        .ai-shots {
+            grid-template-columns: minmax(0, 1fr);
+            max-width: 900px;
+        }
+
+        .ai-shots .gallery-card img {
+            height: auto;
+            object-fit: contain;
+            background: #0b0b0b;
+        }
+
+        /* Print / PDF: keep colors, drop screen-only controls, avoid splitting cards across pages */
+        @page {
+            size: Letter;
+            margin: 0.5in;
+        }
+
+        @media print {
+            * {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .page-nav,
+            #back-to-top-btn,
+            .back-btn,
+            header {
+                display: none !important;
+            }
+
+            html {
+                zoom: 0.72;
+            }
+
+            body.artifact-page {
+                background: #ffffff;
+            }
+
+            .analysis-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            }
+
+            .print-only {
+                display: block !important;
+            }
+
+            .artifact-page .container {
+                max-width: none;
+                padding: 0;
+            }
+
+            .analysis-section,
+            .professional-reflection {
+                box-shadow: none;
+                margin: 14px 0;
+                padding: 22px;
+            }
+
+            .analysis-section h2,
+            .professional-reflection h2 {
+                break-after: avoid;
+            }
+
+            .analysis-card,
+            .icon-card,
+            .chart-card,
+            .layer,
+            .org-card,
+            .pillar,
+            .vstep,
+            .stat-card,
+            .box-panel,
+            .data-table tr {
+                break-inside: avoid;
+                box-shadow: none;
+            }
+
+            .table-wrap {
+                overflow: visible;
+                box-shadow: none;
+            }
+
+            a {
+                color: inherit;
+                text-decoration: none;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .chart-grid,
+            .vsteps {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .principles {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .trust-eq {
+                grid-template-columns: 1fr;
+            }
+
+            .op {
+                justify-self: center;
+                line-height: 1;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .box-diagram,
+            .chart-grid,
+            .vsteps,
+            .org-grid,
+            .principles {
+                grid-template-columns: 1fr;
+            }
+
+            .layer {
+                grid-template-columns: 1fr;
+                gap: 6px;
+            }
+        }
+    </style>
+</head>
+<body class="artifact-page">
+    <header>
+        <div class="container">
+            <a href="index.html" class="back-btn">← Back to Portfolio</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Artifact Header -->
+        <div class="artifact-header">
+            <span class="artifact-kicker">Portfolio Artifact · Explainable AI</span>
+            <h1>Opening the Black Box: Explainability, Validation, and Trust in LLMs</h1>
+            <p>Why the decisions of GPT, Claude, Gemini, and Llama are hard to explain, how validation and performance metrics show whether a model can be relied on, and what OpenAI, Anthropic, Google, and Meta are doing to make their models more transparent</p>
+            <div class="tag-row" aria-label="Topics">
+                <span class="tag-chip">Explainable AI</span>
+                <span class="tag-chip">Interpretability</span>
+                <span class="tag-chip">Model Validation</span>
+                <span class="tag-chip">Performance Metrics</span>
+                <span class="tag-chip">AI Governance</span>
+            </div>
+            <p class="print-only" style="display:none;margin-top:14px;font-size:0.9em;">Farukh Ahemad Gesukhan Pathan · AIML-501 Model Development · Interactive version: https://farukh-iwu.github.io/farukh-portfolio/explainable-ai.html</p>
+        </div>
+
+        <nav class="page-nav" aria-label="On this page"></nav>
+
+        <div class="analysis-section" data-nav="Artifact Info">
+            <h2>Artifact Information</h2>
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <h3>Artifact Title</h3>
+                    <p>Opening the Black Box: Explainability, Validation, and Trust in LLMs</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Introduction</h3>
+                    <p>Large language models now draft medical notes, summarize contracts, and screen loan files, yet nobody, including their developers, can fully say why a model gave a particular answer. This infographic explains that gap and what is being done to close it.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Description</h3>
+                    <p>A one-page infographic with a black-box diagram, eight challenge cards, three evidence charts, an explainability depth ladder, a validation pipeline, a metrics table, profiles of four AI labs, and a technique comparison table.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Objective</h3>
+                    <p>Define explainable AI and its importance, show the main obstacles to explaining LLMs, demonstrate how validation and performance metrics build trust, and map the techniques industry leaders use today.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Process</h3>
+                    <p>Read interpretability research from OpenAI, Anthropic, Google DeepMind, and Meta, faithfulness and evaluation studies, and the NIST and EU frameworks; grouped every finding as a challenge, a technique, or a validation practice; then designed the visuals around those three groups.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Tools and Tech Used</h3>
+                    <p>Research papers, lab publications, and government frameworks for content; HTML, CSS, and inline SVG for the diagrams and charts; ChatGPT for the three suggested prompts; GitHub Pages for publishing.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Value Proposition of the Artifact</h3>
+                    <p>A non-technical reader leaves knowing what kind of "explanation" an AI tool can and cannot give, and which test results to ask for before trusting it with a decision.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Unique Value</h3>
+                    <p>Explanations are sorted by depth, from asking the model to inspecting its internal features, and each technique is shown with its known limits, so the page does not oversell what current tools can explain.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>Relevance</h3>
+                    <p>Useful for teams adopting LLMs in regulated work, for QA and data engineers who must sign off on model output, and for managers who need to judge a vendor's claims about safety and accuracy.</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>References</h3>
+                    <p>30 sources: interpretability research from the four labs, peer-reviewed studies on faithfulness and evaluation, NIST and EU frameworks, and a US court ruling and regulator circular. Full list below.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- At a glance -->
+        <div class="analysis-section" data-nav="At a Glance">
+            <h2>📊 At a Glance</h2>
+            <p class="section-lead">Four numbers that show why explaining an LLM is hard, and why measuring it matters.</p>
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Scale</div>
+                    <div class="stat-value">175B weights</div>
+                    <p>Parameters in GPT-3, and every one of them takes part in each answer. No single weight explains an output (Brown et al., 2020).</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Inside the model</div>
+                    <div class="stat-value">34M features</div>
+                    <p>Interpretable concepts Anthropic extracted from Claude 3 Sonnet, from cities to code bugs, using sparse autoencoders (Templeton et al., 2024).</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Faithfulness</div>
+                    <div class="stat-value">25%</div>
+                    <p>How often Claude 3.7 Sonnet admitted using a hint that changed its answer. The reasoning it wrote out usually left it out (Chen et al., 2025).</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Truthfulness</div>
+                    <div class="stat-value">58% vs 94%</div>
+                    <p>Truthful answers from the best model tested on TruthfulQA, against human participants (Lin et al., 2022).</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- What XAI is and why it matters -->
+        <div class="analysis-section" data-nav="What Is XAI">
+            <h2>🔍 Explainable AI and Why It Matters</h2>
+            <p class="section-lead"><strong>Explainable AI (XAI)</strong> is the set of methods that make an AI system's outputs and decisions understandable to the people who use, oversee, or are affected by them. For an LLM, that means being able to answer three questions: <em>what did the model rely on, how did it get from the question to the answer, and how far can that answer be trusted?</em></p>
+
+            <div class="box-diagram">
+                <div class="box-panel">
+                    <h3>Without explainability: a black box</h3>
+                    <svg viewBox="0 0 360 150" role="img" aria-labelledby="bb-t">
+                        <title id="bb-t">A prompt goes into a dark box of billions of weights and an answer comes out with no reason attached.</title>
+                        <defs>
+                            <marker id="ar1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#8aa0b4"/></marker>
+                        </defs>
+                        <rect x="6" y="56" width="70" height="38" rx="8" fill="#eef4fb" stroke="#b7cbe0"/>
+                        <text x="41" y="80" text-anchor="middle" font-size="13" fill="#2c3e50">Prompt</text>
+                        <line x1="80" y1="75" x2="118" y2="75" stroke="#8aa0b4" stroke-width="2" marker-end="url(#ar1)"/>
+                        <rect x="122" y="22" width="116" height="106" rx="12" fill="#1f2937"/>
+                        <text x="180" y="68" text-anchor="middle" font-size="26" fill="#9ca3af" font-weight="700">?</text>
+                        <text x="180" y="92" text-anchor="middle" font-size="11" fill="#d1d5db">billions of</text>
+                        <text x="180" y="106" text-anchor="middle" font-size="11" fill="#d1d5db">weights</text>
+                        <line x1="242" y1="75" x2="280" y2="75" stroke="#8aa0b4" stroke-width="2" marker-end="url(#ar1)"/>
+                        <rect x="284" y="56" width="70" height="38" rx="8" fill="#eef4fb" stroke="#b7cbe0"/>
+                        <text x="319" y="80" text-anchor="middle" font-size="13" fill="#2c3e50">Answer</text>
+                    </svg>
+                    <p>The user sees a fluent answer but cannot tell whether it rests on sound evidence, a bias in the training data, or a guess.</p>
+                </div>
+                <div class="box-panel">
+                    <h3>With explainability: a glass box</h3>
+                    <svg viewBox="0 0 360 150" role="img" aria-labelledby="gb-t">
+                        <title id="gb-t">The same prompt passes through a transparent box where named features connect, and the answer comes out with a reason and a confidence level.</title>
+                        <defs>
+                            <marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0f766e"/></marker>
+                        </defs>
+                        <rect x="6" y="56" width="70" height="38" rx="8" fill="#eef4fb" stroke="#b7cbe0"/>
+                        <text x="41" y="80" text-anchor="middle" font-size="13" fill="#2c3e50">Prompt</text>
+                        <line x1="80" y1="75" x2="118" y2="75" stroke="#0f766e" stroke-width="2" marker-end="url(#ar2)"/>
+                        <rect x="122" y="22" width="116" height="106" rx="12" fill="#f0fbf9" stroke="#0f766e" stroke-width="1.5" stroke-dasharray="5 4"/>
+                        <line x1="146" y1="50" x2="180" y2="75" stroke="#3fa597" stroke-width="2"/>
+                        <line x1="146" y1="100" x2="180" y2="75" stroke="#3fa597" stroke-width="2"/>
+                        <line x1="180" y1="75" x2="214" y2="75" stroke="#3fa597" stroke-width="2"/>
+                        <circle cx="146" cy="50" r="9" fill="#2a78d6"/>
+                        <circle cx="146" cy="100" r="9" fill="#2a78d6"/>
+                        <circle cx="180" cy="75" r="11" fill="#0f766e"/>
+                        <circle cx="214" cy="75" r="9" fill="#1baf7a"/>
+                        <text x="180" y="120" text-anchor="middle" font-size="10" fill="#1f4a45">named features</text>
+                        <line x1="242" y1="75" x2="280" y2="75" stroke="#0f766e" stroke-width="2" marker-end="url(#ar2)"/>
+                        <rect x="284" y="38" width="70" height="74" rx="8" fill="#eef4fb" stroke="#b7cbe0"/>
+                        <text x="319" y="62" text-anchor="middle" font-size="13" fill="#2c3e50">Answer</text>
+                        <text x="319" y="80" text-anchor="middle" font-size="10.5" fill="#0f766e">+ why</text>
+                        <text x="319" y="96" text-anchor="middle" font-size="10.5" fill="#0f766e">+ confidence</text>
+                    </svg>
+                    <p>The answer comes with the evidence it used, the internal concepts that drove it, and a measured error rate, so a person can check it.</p>
+                </div>
+            </div>
+
+            <h3>What a good explanation must do</h3>
+            <p class="section-lead">The US National Institute of Standards and Technology sets four principles for explainable AI (Phillips et al., 2021):</p>
+            <ul class="principles">
+                <li><strong>Explanation</strong><span>The system gives evidence or reasons for each output.</span></li>
+                <li><strong>Meaningful</strong><span>The explanation makes sense to its audience, whether a patient, a doctor, or an auditor.</span></li>
+                <li><strong>Explanation accuracy</strong><span>The explanation reflects the process the system actually used.</span></li>
+                <li><strong>Knowledge limits</strong><span>The system works only within its design conditions and signals when it is outside them.</span></li>
+            </ul>
+
+            <h3>Why transparency is critical</h3>
+            <div class="icon-grid">
+                <div class="icon-card">
+                    <div class="ic-head">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-4.4-9-9.2C1.6 8.3 3.8 5 7.2 5c2 0 3.4 1.1 4.8 2.8C13.4 6.1 14.8 5 16.8 5c3.4 0 5.6 3.3 4.2 6.8C19 16.6 12 21 12 21z"/><path d="M8 12h2l1-2 2 4 1-2h2"/></svg>
+                        <h3>Healthcare</h3>
+                    </div>
+                    <p>A clinician must be able to check why a model suggested a diagnosis before acting on it. An unexplained answer cannot be verified against the patient's record.</p>
+                </div>
+                <div class="icon-card">
+                    <div class="ic-head">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/><path d="M7 15h4"/></svg>
+                        <h3>Finance</h3>
+                    </div>
+                    <p>US lenders must give specific reasons when they deny credit. The Consumer Financial Protection Bureau has stated that using a complex algorithm does not excuse a lender from that duty (CFPB, 2022).</p>
+                </div>
+                <div class="icon-card">
+                    <div class="ic-head">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18"/><path d="M5 21h14"/><path d="M5 7h14"/><path d="M5 7l-3 7a3 3 0 0 0 6 0z"/><path d="M19 7l-3 7a3 3 0 0 0 6 0z"/></svg>
+                        <h3>Law</h3>
+                    </div>
+                    <p>In <em>Mata v. Avianca</em> (2023), lawyers were sanctioned for filing a brief that cited court cases ChatGPT had invented. The output looked authoritative and gave no sign it was fabricated.</p>
+                </div>
+                <div class="icon-card">
+                    <div class="ic-head">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 4.5a3 3 0 0 1 0 6"/><path d="M18 14c2 .7 3 2.7 3 6"/></svg>
+                        <h3>Hiring and public services</h3>
+                    </div>
+                    <p>The EU AI Act classes AI used in employment, education, credit scoring, and essential public services as high-risk, and requires such systems to be transparent enough for users to interpret their output (European Parliament &amp; Council, 2024).</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Challenges -->
+        <div class="analysis-section" data-nav="Challenges">
+            <h2>🧱 Challenges in Explaining LLMs</h2>
+            <p class="section-lead">Eight obstacles stand between an LLM's answer and a trustworthy explanation of it. The first four come from how the models are built; the last four come from data, behavior, business practice, and the law.</p>
+            <div class="icon-grid">
+                <div class="icon-card warn">
+                    <div class="ic-head">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 4v16M15 4v16M4 9h16M4 15h16"/></svg>
+                        <h3>Scale and opacity</h3>
+                    </div>
+                    <p>An answer emerges from non-linear interactions among billions of weights across dozens of layers. No single component explains it.</p>
+                    <div class="evidence">GPT-3 has 175B parameters (Brown et al., 2020); Llama 3 has 405B.</div>
+                </div>
+                <div class="icon-card warn">
+                    <div class="ic-head">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="12" r="5"/><circle cx="15" cy="12" r="5"/></svg>
+                        <h3>Superposition</h3>
+                    </div>
+                    <p>Models store more concepts than they have neurons, so one neuron responds to several unrelated ideas. Reading neurons one at a time gives confusing results.</p>
+                    <div class="evidence">Shown in small models by Elhage et al. (2022); the reason labs moved to sparse autoencoders.</div>
+                </div>
+                <div class="icon-card warn">
+                    <div class="ic-head">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/><path d="M9 10h.01M12 10h.01M15 10h.01"/></svg>
+                        <h3>Unfaithful explanations</h3>
+                    </div>
+                    <p>When asked to explain itself, a model writes a plausible account after the fact. That account may not match the computation that produced the answer.</p>
+                    <div class="evidence">Hidden biases in prompts cut accuracy by up to 36%, and the models' step-by-step explanations did not mention them (Turpin et al., 2023).</div>
+                </div>
+                <div class="icon-card warn">
+                    <div class="ic-head">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+                        <h3>Attention is not explanation</h3>
+                    </div>
+                    <p>Heatmaps of where a model "looks" are easy to draw but can mislead. Very different attention patterns can produce the same prediction.</p>
+                    <div class="evidence">Jain and Wallace (2019) found attention weights often disagree with other measures of which words mattered.</div>
+                </div>
+                <div class="icon-card warn">
+                    <div class="ic-head">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>
+                        <h3>Data quality and bias</h3>
+                    </div>
+                    <p>Web-scale training data carries stereotypes, errors, and over-represented viewpoints, and the model learns them. Too much data to audit by hand.</p>
+                    <div class="evidence">Bender et al. (2021) warned that size does not guarantee diversity: large web corpora over-represent dominant viewpoints.</div>
+                </div>
+                <div class="icon-card warn">
+                    <div class="ic-head">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17h.01"/></svg>
+                        <h3>Confident hallucinations</h3>
+                    </div>
+                    <p>LLMs state false facts in the same fluent tone as true ones, and tuning a model to be helpful can make its confidence less reliable.</p>
+                    <div class="evidence">OpenAI reported that post-training reduced GPT-4's calibration compared with the pre-trained model (OpenAI, 2023).</div>
+                </div>
+                <div class="icon-card warn">
+                    <div class="ic-head">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+                        <h3>Closed models</h3>
+                    </div>
+                    <p>The most widely used models do not publish their weights, architecture, or training data, so outside researchers cannot inspect them.</p>
+                    <div class="evidence">The GPT-4 technical report gives no details on architecture, model size, hardware, or dataset (OpenAI, 2023).</div>
+                </div>
+                <div class="icon-card warn">
+                    <div class="ic-head">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h8l4 4v14H7z"/><path d="M15 3v4h4"/><path d="M10 12h6M10 16h6"/></svg>
+                        <h3>Regulatory pressure</h3>
+                    </div>
+                    <p>Laws now demand explanations that today's tools cannot always provide, and different audiences need different levels of detail.</p>
+                    <div class="evidence">The EU AI Act's rules phase in from 2025; NIST lists "explainable and interpretable" as a core trait of trustworthy AI (NIST, 2023).</div>
+                </div>
+            </div>
+
+            <div class="chart-grid">
+                <div class="chart-card">
+                    <h3>Do models admit what changed their answer?</h3>
+                    <p class="chart-sub">Share of cases where a reasoning model mentioned a hint it had used</p>
+                    <div class="hbar">
+                        <div class="lbl"><span>Claude 3.7 Sonnet</span><b>25%</b></div>
+                        <div class="track"><div class="bar" style="width:25%;--bar:var(--p-explain)"></div></div>
+                    </div>
+                    <div class="hbar">
+                        <div class="lbl"><span>DeepSeek R1</span><b>39%</b></div>
+                        <div class="track"><div class="bar" style="width:39%;--bar:var(--p-explain)"></div></div>
+                    </div>
+                    <p class="source-note">Source: Chen et al. (2025). Higher is more faithful.</p>
+                </div>
+                <div class="chart-card">
+                    <h3>Truthful answers on TruthfulQA</h3>
+                    <p class="chart-sub">817 questions designed to draw out common misconceptions</p>
+                    <div class="hbar">
+                        <div class="lbl"><span>Human participants</span><b>94%</b></div>
+                        <div class="track"><div class="bar" style="width:94%;--bar:#8aa0b4"></div></div>
+                    </div>
+                    <div class="hbar">
+                        <div class="lbl"><span>Best model tested (GPT-3)</span><b>58%</b></div>
+                        <div class="track"><div class="bar" style="width:58%;--bar:var(--p-metric)"></div></div>
+                    </div>
+                    <p class="source-note">Source: Lin et al. (2022).</p>
+                </div>
+                <div class="chart-card">
+                    <h3>Evaluation coverage before and after HELM</h3>
+                    <p class="chart-sub">Share of core scenarios a typical model had been tested on</p>
+                    <div class="hbar">
+                        <div class="lbl"><span>Before HELM</span><b>17.9%</b></div>
+                        <div class="track"><div class="bar" style="width:17.9%;--bar:#8aa0b4"></div></div>
+                    </div>
+                    <div class="hbar">
+                        <div class="lbl"><span>After HELM</span><b>96.0%</b></div>
+                        <div class="track"><div class="bar" style="width:96%;--bar:var(--p-validate)"></div></div>
+                    </div>
+                    <p class="source-note">Source: Liang et al. (2022).</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Explainability depth ladder -->
+        <div class="analysis-section" data-nav="Techniques">
+            <h2>🪜 Three Depths of Explanation</h2>
+            <p class="section-lead">Explainability techniques differ in how far inside the model they look. The deeper the method, the closer it gets to the model's real computation, and the more expertise and computing power it needs.</p>
+            <div class="layers">
+                <div class="layer l1">
+                    <div>
+                        <div class="depth">Depth 1 · Outside</div>
+                        <h3>Ask the model</h3>
+                        <div class="q">What does the model say it did?</div>
+                    </div>
+                    <div>
+                        <p>Prompt the model to reason step by step, cite its sources, or explain its answer. Anyone can do this today in ChatGPT, Claude, or Gemini, and chain-of-thought prompting also improves accuracy on reasoning tasks (Wei et al., 2022). The catch: the explanation is more text from the same model and may not be faithful.</p>
+                        <div class="chips"><span class="chip">Chain-of-thought</span><span class="chip">Reasoning traces</span><span class="chip">Cited sources</span><span class="chip">Model and system cards</span></div>
+                    </div>
+                </div>
+                <div class="layer l2">
+                    <div>
+                        <div class="depth">Depth 2 · Boundary</div>
+                        <h3>Trace inputs to outputs</h3>
+                        <div class="q">Which words mattered most?</div>
+                    </div>
+                    <div>
+                        <p>Change or remove parts of the input and score how much each word moved the answer, or follow attention between tokens. These methods work on any model but describe correlations, not the mechanism.</p>
+                        <div class="chips"><span class="chip">LIME</span><span class="chip">SHAP</span><span class="chip">Integrated gradients</span><span class="chip">Attention maps</span></div>
+                    </div>
+                </div>
+                <div class="layer l3">
+                    <div>
+                        <div class="depth">Depth 3 · Inside</div>
+                        <h3>Read the model's internals</h3>
+                        <div class="q">What concepts and circuits produced the answer?</div>
+                    </div>
+                    <div>
+                        <p>Mechanistic interpretability decomposes activations into human-readable features and traces how they connect. It needs access to the weights, so only the developer or an open-weight model allows it.</p>
+                        <div class="chips"><span class="chip">Probing classifiers</span><span class="chip">Sparse autoencoders</span><span class="chip">Feature steering</span><span class="chip">Circuit tracing</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Technique comparison</h3>
+            <div class="table-wrap">
+                <table class="data-table tech-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Technique</th>
+                            <th scope="col">Depth</th>
+                            <th scope="col">What it reveals</th>
+                            <th scope="col">Main limitation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Chain-of-thought prompting</td>
+                            <td><span class="lvl l1">Outside</span></td>
+                            <td>The steps the model writes on the way to an answer (Wei et al., 2022)</td>
+                            <td>The written steps can omit what really drove the answer (Turpin et al., 2023)</td>
+                        </tr>
+                        <tr>
+                            <td>Model and system cards</td>
+                            <td><span class="lvl l1">Outside</span></td>
+                            <td>Intended use, evaluation results, and known limits (Mitchell et al., 2019)</td>
+                            <td>Depth of disclosure is up to the developer</td>
+                        </tr>
+                        <tr>
+                            <td>LIME and SHAP</td>
+                            <td><span class="lvl l2">Boundary</span></td>
+                            <td>How much each input feature pushed a prediction up or down (Ribeiro et al., 2016; Lundberg &amp; Lee, 2017)</td>
+                            <td>Approximations that can change between runs; costly for long prompts</td>
+                        </tr>
+                        <tr>
+                            <td>Integrated gradients</td>
+                            <td><span class="lvl l2">Boundary</span></td>
+                            <td>Token-level attribution with formal guarantees (Sundararajan et al., 2017)</td>
+                            <td>Needs gradients, so not available through a closed API</td>
+                        </tr>
+                        <tr>
+                            <td>Attention visualization</td>
+                            <td><span class="lvl l2">Boundary</span></td>
+                            <td>Which tokens each layer attends to</td>
+                            <td>Attention weights are not a reliable explanation (Jain &amp; Wallace, 2019)</td>
+                        </tr>
+                        <tr>
+                            <td>Probing classifiers</td>
+                            <td><span class="lvl l3">Inside</span></td>
+                            <td>Whether a layer encodes a property such as sentiment or grammar</td>
+                            <td>Encoded does not mean used by the model (Belinkov, 2022)</td>
+                        </tr>
+                        <tr>
+                            <td>Sparse autoencoders</td>
+                            <td><span class="lvl l3">Inside</span></td>
+                            <td>Millions of interpretable features that can be switched up or down (Templeton et al., 2024)</td>
+                            <td>Expensive to train and cover only part of what the model knows</td>
+                        </tr>
+                        <tr>
+                            <td>Circuit tracing</td>
+                            <td><span class="lvl l3">Inside</span></td>
+                            <td>Step-by-step paths from input to output (Lindsey et al., 2025)</td>
+                            <td>Labor-intensive; gives clear results for only some prompts</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Industry solutions -->
+        <div class="analysis-section" data-nav="Industry">
+            <h2>🏢 What Industry Leaders Are Doing</h2>
+            <p class="section-lead">The four labs behind GPT, Claude, Gemini, and Llama take different routes. Closed-model labs study their own internals and publish findings; Meta's open weights let outside researchers do the inspecting.</p>
+            <div class="org-grid">
+                <div class="org-card">
+                    <h3>OpenAI</h3>
+                    <div class="org-models">GPT-4, GPT-4o, o-series reasoning models</div>
+                    <ul>
+                        <li><strong>AI explaining AI.</strong> GPT-4 wrote and scored plain-language explanations for all 307,200 neurons in GPT-2 XL. Most explanations scored poorly, which showed how hard single neurons are to describe (Bills et al., 2023).</li>
+                        <li><strong>Sparse autoencoders at scale.</strong> Trained a 16-million-feature autoencoder on GPT-4's activations and released the method and tools (Gao et al., 2024).</li>
+                        <li><strong>Chain-of-thought monitoring.</strong> Used one model to read another's reasoning and flag misbehavior, and found that penalizing "bad thoughts" taught models to hide their intent (Baker et al., 2025).</li>
+                    </ul>
+                </div>
+                <div class="org-card">
+                    <h3>Anthropic</h3>
+                    <div class="org-models">Claude 3, 3.5, 3.7, and later</div>
+                    <ul>
+                        <li><strong>Scaling monosemanticity.</strong> Extracted up to 34 million features from Claude 3 Sonnet, including one for the Golden Gate Bridge; turning it up made the model talk about the bridge (Templeton et al., 2024).</li>
+                        <li><strong>Attribution graphs.</strong> Traced circuits in Claude 3.5 Haiku showing it plans a rhyming word before writing the line and chains facts in multi-step questions (Lindsey et al., 2025).</li>
+                        <li><strong>Faithfulness testing.</strong> Measured how often reasoning models disclose the hints they use, and published the low results (Chen et al., 2025).</li>
+                    </ul>
+                </div>
+                <div class="org-card">
+                    <h3>Google and Google DeepMind</h3>
+                    <div class="org-models">Gemini, Gemma</div>
+                    <ul>
+                        <li><strong>Gemma Scope.</strong> Released over 400 open sparse autoencoders covering every layer of Gemma 2, so any researcher can study features (Lieberum et al., 2024).</li>
+                        <li><strong>Attribution and tooling.</strong> Developed integrated gradients (Sundararajan et al., 2017) and the open Learning Interpretability Tool for exploring NLP model behavior (Tenney et al., 2020).</li>
+                        <li><strong>Model cards.</strong> Google researchers proposed the model card, now an industry standard for reporting a model's intended use and evaluation results (Mitchell et al., 2019).</li>
+                    </ul>
+                </div>
+                <div class="org-card">
+                    <h3>Meta</h3>
+                    <div class="org-models">Llama 2, Llama 3</div>
+                    <ul>
+                        <li><strong>Open weights.</strong> Publishing Llama's weights lets universities and companies run depth-3 methods that closed models do not allow.</li>
+                        <li><strong>LLM Transparency Tool.</strong> Open-source tool that shows which parts of the model contributed to each predicted token (Tufanov et al., 2024).</li>
+                        <li><strong>Llama Guard.</strong> A classifier that checks prompts and responses against a published safety taxonomy, making the safety rules visible (Inan et al., 2023).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Validation and metrics -->
+        <div class="analysis-section" data-nav="Validation">
+            <h2>🧪 Validation and Performance Metrics</h2>
+            <p class="section-lead">Explainability tells you <em>why</em> a model answered as it did. Validation and metrics tell you <em>how often it is right, and where it fails</em>. Trust needs both.</p>
+
+            <div class="trust-eq" aria-label="Explainability plus validation plus metrics equals trust">
+                <div class="pillar explain">
+                    <h3>Explainability</h3>
+                    <div class="ask">Why this answer?</div>
+                    <p>Shows the evidence and internal concepts behind an output.</p>
+                </div>
+                <div class="op" aria-hidden="true">+</div>
+                <div class="pillar validate">
+                    <h3>Validation</h3>
+                    <div class="ask">Does it hold on new data?</div>
+                    <p>Tests the model on data and situations it was not trained on.</p>
+                </div>
+                <div class="op" aria-hidden="true">+</div>
+                <div class="pillar metric">
+                    <h3>Metrics</h3>
+                    <div class="ask">How well, measured how?</div>
+                    <p>Puts numbers on accuracy, calibration, fairness, and safety.</p>
+                </div>
+                <div class="op" aria-hidden="true">=</div>
+                <div class="pillar trust">
+                    <h3>Trust</h3>
+                    <div class="ask">Can I rely on it here?</div>
+                    <p>Evidence-based confidence for a specific use, not blind faith.</p>
+                </div>
+            </div>
+
+            <h3>The validation pipeline</h3>
+            <ol class="vsteps">
+                <li class="vstep">
+                    <h3>Hold-out testing</h3>
+                    <p>Split data into training, validation, and test sets so the model is scored on examples it never saw.</p>
+                    <div class="trust-q"><strong>Trust question:</strong> Did it learn, or memorize?</div>
+                </li>
+                <li class="vstep">
+                    <h3>Benchmark evaluation</h3>
+                    <p>Score the model on shared tests such as MMLU's 57 subjects (Hendrycks et al., 2021) or HELM's multi-metric suite (Liang et al., 2022).</p>
+                    <div class="trust-q"><strong>Trust question:</strong> How does it compare with other models?</div>
+                </li>
+                <li class="vstep">
+                    <h3>Contamination checks</h3>
+                    <p>Confirm benchmark questions were not in the training data, as GPT-3's authors did for web-crawled text (Brown et al., 2020).</p>
+                    <div class="trust-q"><strong>Trust question:</strong> Is the score honest?</div>
+                </li>
+                <li class="vstep">
+                    <h3>Red teaming and human review</h3>
+                    <p>Experts try to make the model fail on purpose; human raters judge helpfulness and harm.</p>
+                    <div class="trust-q"><strong>Trust question:</strong> How does it break?</div>
+                </li>
+                <li class="vstep">
+                    <h3>Calibration and robustness</h3>
+                    <p>Check that stated confidence matches real accuracy and that small changes to the prompt do not flip the answer.</p>
+                    <div class="trust-q"><strong>Trust question:</strong> Does it know when it doesn't know?</div>
+                </li>
+                <li class="vstep">
+                    <h3>Monitoring in production</h3>
+                    <p>Track errors, drift, and user reports after launch, as the NIST AI Risk Management Framework recommends (NIST, 2023).</p>
+                    <div class="trust-q"><strong>Trust question:</strong> Is it still working?</div>
+                </li>
+            </ol>
+
+            <h3>Key performance metrics</h3>
+            <div class="table-wrap">
+                <table class="data-table metric-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Metric</th>
+                            <th scope="col">What it measures</th>
+                            <th scope="col">How it builds trust</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Accuracy, F1</td>
+                            <td>Share of correct answers; F1 balances precision and recall when errors cost differently</td>
+                            <td>Sets a baseline. GPT-4 scored 86.4% on MMLU (OpenAI, 2023)</td>
+                        </tr>
+                        <tr>
+                            <td>Calibration</td>
+                            <td>Whether a model that says it is 80% sure is right about 80% of the time</td>
+                            <td>Tells users when to double-check an answer</td>
+                        </tr>
+                        <tr>
+                            <td>Truthfulness and hallucination rate</td>
+                            <td>How often the model states falsehoods or invents sources</td>
+                            <td>Measures the failure behind <em>Mata v. Avianca</em></td>
+                        </tr>
+                        <tr>
+                            <td>Robustness</td>
+                            <td>Performance under typos, rephrasing, or adversarial prompts</td>
+                            <td>Shows whether results survive real-world input</td>
+                        </tr>
+                        <tr>
+                            <td>Fairness and bias</td>
+                            <td>Differences in quality or tone across demographic groups</td>
+                            <td>Required for high-risk uses such as hiring and credit</td>
+                        </tr>
+                        <tr>
+                            <td>Toxicity and safety</td>
+                            <td>Rate of harmful content and of correct refusals</td>
+                            <td>Protects users and the organization deploying the model</td>
+                        </tr>
+                        <tr>
+                            <td>Explanation faithfulness</td>
+                            <td>How well an explanation matches what actually drove the answer</td>
+                            <td>Checks the explanation itself, as in Chen et al. (2025)</td>
+                        </tr>
+                        <tr>
+                            <td>Efficiency</td>
+                            <td>Latency, cost, and energy per request</td>
+                            <td>Confirms the model is practical at the scale it will run</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="source-note">HELM reports seven of these together (accuracy, calibration, robustness, fairness, bias, toxicity, and efficiency) because a model can lead on one and trail on another (Liang et al., 2022).</p>
+        </div>
+
+        <!-- Takeaways -->
+        <div class="analysis-section" data-nav="Takeaways">
+            <h2>💡 Key Takeaways</h2>
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <h3>A model's explanation is not proof</h3>
+                    <p>Asking an LLM "why" is useful and free, but the answer is more generated text. Treat it as a lead to check, not as evidence of how the model decided.</p>
+                </div>
+                <div class="analysis-card">
+                    <h3>Real progress is happening inside the model</h3>
+                    <p>Sparse autoencoders and circuit tracing have moved from toy models to production models such as Claude 3 Sonnet and GPT-4 in about two years, though they explain only part of the model's behavior so far.</p>
+                </div>
+                <div class="analysis-card">
+                    <h3>Measure several things, not one</h3>
+                    <p>A single accuracy score hides poor calibration, bias, and hallucinations. Ask for a set of metrics that matches the risks of the specific use.</p>
+                </div>
+                <div class="analysis-card">
+                    <h3>Validation is ongoing</h3>
+                    <p>Models drift, users find new failure modes, and laws change. Trust is earned through monitoring after launch, not granted once at release.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Explanatory document -->
+        <div class="analysis-section" data-nav="Explanation">
+            <h2>📝 Explanatory Summary</h2>
+            <div class="explain-doc">
+                <p>This infographic shows that explainable AI is about letting people check an AI system's decisions rather than simply accept them. LLMs such as GPT, Claude, Gemini, and Llama are hard to explain because their answers come from billions of interacting weights, because their neurons mix many concepts, and because the explanations they write about themselves are often unfaithful: Claude 3.7 Sonnet disclosed a hint that changed its answer only 25% of the time. Closed models, biased training data, confident hallucinations, and new laws such as the EU AI Act add to the challenge. Industry is responding at three depths: prompting models to reason aloud, attributing answers to inputs, and, most promisingly, reading internal features, as in Anthropic's 34 million features from Claude 3 Sonnet, OpenAI's sparse autoencoders on GPT-4, Google's open Gemma Scope, and Meta's open-weight Llama and LLM Transparency Tool. Explainability alone does not create trust. Validation, from hold-out tests and contamination checks to red teaming and production monitoring, shows whether a model works on data it has not seen, and metrics such as accuracy, calibration, truthfulness, fairness, and faithfulness put a number on how far it can be relied on. Together, explanation answers "why," validation answers "does it hold up," and metrics answer "how well," which is what an organization needs before it lets a model influence a medical, financial, or legal decision.</p>
+                <p>The design is built for a non-technical reader. A black-box versus glass-box diagram opens the page so the core idea is clear before any terms appear. Challenges are shown as icon cards with one piece of evidence each, so every claim is backed by a source rather than a slogan. Techniques are arranged as a three-step ladder because "how deep can we look?" is the question that separates useful tools from misleading ones, and the comparison table pairs every technique with its main limitation so the page does not oversell what current tools can do. Three colors stay fixed for explainability (blue), validation (orange), and metrics (green), and every chart carries its numbers as text so color is never the only cue. The information matters now because LLMs are entering regulated fields faster than explanation methods are maturing, and the people adopting them need to know which questions to ask.</p>
+            </div>
+        </div>
+
+        <!-- Design rationale -->
+        <div class="analysis-section" data-nav="Design">
+            <h2>🎨 Design Rationale</h2>
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <h3>Picture before vocabulary</h3>
+                    <p>The black-box and glass-box diagram explains the whole topic in one look, so terms such as "feature attribution" have a place to land when they appear later.</p>
+                </div>
+                <div class="analysis-card">
+                    <h3>Depth as the organizing idea</h3>
+                    <p>Sorting techniques by how far inside the model they look lets a reader compare a ChatGPT prompt and an Anthropic research paper on the same scale.</p>
+                </div>
+                <div class="analysis-card">
+                    <h3>Every claim has evidence</h3>
+                    <p>Each challenge card ends with a sourced finding, and every chart names its study. Limitations sit next to techniques, not in a footnote.</p>
+                </div>
+                <div class="analysis-card">
+                    <h3>Consistent, accessible color</h3>
+                    <p>Blue, orange, and green mark the three trust pillars throughout; a teal accent marks explainability depth. Values are printed as text and the layout collapses to one column on phones.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Requirements checklist -->
+        <div class="analysis-section" data-nav="Requirements">
+            <h2>✅ Assignment Requirements</h2>
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <h3>Explainable AI and its importance</h3>
+                    <p>Definition, black-box diagram, NIST's four principles, and four sector cards on why transparency matters.</p>
+                </div>
+                <div class="analysis-card">
+                    <h3>Challenges in explainability</h3>
+                    <p>Eight obstacles including model complexity, opaque decisions, unfaithful explanations, data bias, and regulation, with three evidence charts.</p>
+                </div>
+                <div class="analysis-card">
+                    <h3>Validation and performance metrics</h3>
+                    <p>A trust equation, a six-step validation pipeline, and a table of eight metrics with how each builds trust.</p>
+                </div>
+                <div class="analysis-card">
+                    <h3>Current solutions and techniques</h3>
+                    <p>A three-depth technique ladder, a technique comparison table, and the work of OpenAI, Anthropic, Google, and Meta.</p>
+                </div>
+                <div class="analysis-card">
+                    <h3>Explanatory document</h3>
+                    <p>A two-paragraph summary of the key points and the design rationale, above.</p>
+                </div>
+                <div class="analysis-card">
+                    <h3>Generative AI prompts</h3>
+                    <p>All three of the assignment's suggested prompts, with screenshots of the ChatGPT responses, below.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Tool Interaction -->
+        <div class="analysis-section" data-nav="AI Interaction">
+            <h2>🤖 AI Tool Interaction</h2>
+            <p class="section-lead">The assignment suggests using a generative AI platform for additional insight. I used ChatGPT (OpenAI) with all three suggested prompts on November 15, 2026, and checked its answers against the cited sources before using any point here. Each screenshot shows the start of the response. Click a screenshot to enlarge it.</p>
+            <div class="gallery-grid ai-shots">
+                <div class="gallery-card" data-full="images/chatgpt_xai_prompt1.png" data-caption="Suggested prompt 1: What are the major challenges in explaining decisions made by generative AI models?">
+                    <img src="images/chatgpt_xai_prompt1.png" alt="ChatGPT conversation answering the prompt about the major challenges in explaining decisions made by generative AI models, opening with the black-box problem">
+                    <p><strong>Suggested prompt 1:</strong> What are the major challenges in explaining decisions made by generative AI models?</p>
+                </div>
+                <div class="gallery-card" data-full="images/chatgpt_xai_prompt2.png" data-caption="Suggested prompt 2: How are current techniques improving the explainability of large language models?">
+                    <img src="images/chatgpt_xai_prompt2.png" alt="ChatGPT conversation answering the prompt about how current techniques are improving LLM explainability, defining interpretability, explainability, transparency, and faithfulness">
+                    <p><strong>Suggested prompt 2:</strong> How are current techniques improving the explainability of large language models?</p>
+                </div>
+                <div class="gallery-card" data-full="images/chatgpt_xai_prompt3.png" data-caption="Suggested prompt 3: How do validation processes and performance metrics enhance the trustworthiness of AI systems?">
+                    <img src="images/chatgpt_xai_prompt3.png" alt="ChatGPT conversation answering the prompt about how validation processes and performance metrics enhance the trustworthiness of AI systems, starting with what model validation is">
+                    <p><strong>Suggested prompt 3:</strong> How do validation processes and performance metrics enhance the trustworthiness of AI systems?</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- References -->
+        <div class="analysis-section" id="references" data-nav="References">
+            <h2>References</h2>
+            <div class="project-item">
+                <h3>Sources (APA 7)</h3>
+                <ul class="repo-list">
+                    <li>Baker, B., Huizinga, J., Gao, L., Dou, Z., Guan, M. Y., Madry, A., Zaremba, W., Pachocki, J., &amp; Farhi, D. (2025). <em>Monitoring reasoning models for misbehavior and the risks of promoting obfuscation</em> (arXiv:2503.11926). arXiv. <a href="https://doi.org/10.48550/arXiv.2503.11926" target="_blank" rel="noopener">https://doi.org/10.48550/arXiv.2503.11926</a></li>
+                    <li>Belinkov, Y. (2022). Probing classifiers: Promises, shortcomings, and advances. <em>Computational Linguistics, 48</em>(1), 207–219. <a href="https://doi.org/10.1162/coli_a_00422" target="_blank" rel="noopener">https://doi.org/10.1162/coli_a_00422</a></li>
+                    <li>Bender, E. M., Gebru, T., McMillan-Major, A., &amp; Shmitchell, S. (2021). On the dangers of stochastic parrots: Can language models be too big? In <em>Proceedings of the 2021 ACM Conference on Fairness, Accountability, and Transparency</em> (pp. 610–623). ACM. <a href="https://doi.org/10.1145/3442188.3445922" target="_blank" rel="noopener">https://doi.org/10.1145/3442188.3445922</a></li>
+                    <li>Bills, S., Cammarata, N., Mossing, D., Tillman, H., Gao, L., Goh, G., Sutskever, I., Leike, J., Wu, J., &amp; Saunders, W. (2023). <em>Language models can explain neurons in language models</em>. OpenAI. <a href="https://openaipublic.blob.core.windows.net/neuron-explainer/paper/index.html" target="_blank" rel="noopener">https://openaipublic.blob.core.windows.net/neuron-explainer/paper/index.html</a></li>
+                    <li>Brown, T. B., Mann, B., Ryder, N., Subbiah, M., Kaplan, J., Dhariwal, P., Neelakantan, A., Shyam, P., Sastry, G., Askell, A., Agarwal, S., Herbert-Voss, A., Krueger, G., Henighan, T., Child, R., Ramesh, A., Ziegler, D. M., Wu, J., Winter, C., . . . Amodei, D. (2020). <em>Language models are few-shot learners</em> (arXiv:2005.14165). arXiv. <a href="https://doi.org/10.48550/arXiv.2005.14165" target="_blank" rel="noopener">https://doi.org/10.48550/arXiv.2005.14165</a></li>
+                    <li>Chen, Y., Benton, J., Radhakrishnan, A., Uesato, J., Denison, C., Schulman, J., Somani, A., Hase, P., Wagner, M., Roger, F., Mikulik, V., Bowman, S. R., Leike, J., Kaplan, J., &amp; Perez, E. (2025). <em>Reasoning models don't always say what they think</em> (arXiv:2505.05410). arXiv. <a href="https://doi.org/10.48550/arXiv.2505.05410" target="_blank" rel="noopener">https://doi.org/10.48550/arXiv.2505.05410</a></li>
+                    <li>Consumer Financial Protection Bureau. (2022). <em>Consumer Financial Protection Circular 2022-03: Adverse action notification requirements in connection with credit decisions based on complex algorithms</em>. <a href="https://www.consumerfinance.gov/compliance/circulars/circular-2022-03-adverse-action-notification-requirements-in-connection-with-credit-decisions-based-on-complex-algorithms/" target="_blank" rel="noopener">https://www.consumerfinance.gov/compliance/circulars/circular-2022-03-adverse-action-notification-requirements-in-connection-with-credit-decisions-based-on-complex-algorithms/</a></li>
+                    <li>Elhage, N., Hume, T., Olsson, C., Schiefer, N., Henighan, T., Kravec, S., Hatfield-Dodds, Z., Lasenby, R., Drain, D., Chen, C., Grosse, R., McCandlish, S., Kaplan, J., Amodei, D., Wattenberg, M., &amp; Olah, C. (2022). <em>Toy models of superposition</em>. Transformer Circuits Thread. <a href="https://transformer-circuits.pub/2022/toy_model/index.html" target="_blank" rel="noopener">https://transformer-circuits.pub/2022/toy_model/index.html</a></li>
+                    <li>European Parliament &amp; Council of the European Union. (2024). <em>Regulation (EU) 2024/1689 laying down harmonised rules on artificial intelligence (Artificial Intelligence Act)</em>. Official Journal of the European Union. <a href="http://data.europa.eu/eli/reg/2024/1689/oj" target="_blank" rel="noopener">http://data.europa.eu/eli/reg/2024/1689/oj</a></li>
+                    <li>Gao, L., Dupré la Tour, T., Tillman, H., Goh, G., Troll, R., Radford, A., Sutskever, I., Leike, J., &amp; Wu, J. (2024). <em>Scaling and evaluating sparse autoencoders</em> (arXiv:2406.04093). arXiv. <a href="https://doi.org/10.48550/arXiv.2406.04093" target="_blank" rel="noopener">https://doi.org/10.48550/arXiv.2406.04093</a></li>
+                    <li>Hendrycks, D., Burns, C., Basart, S., Zou, A., Mazeika, M., Song, D., &amp; Steinhardt, J. (2021). <em>Measuring massive multitask language understanding</em> (arXiv:2009.03300). arXiv. <a href="https://doi.org/10.48550/arXiv.2009.03300" target="_blank" rel="noopener">https://doi.org/10.48550/arXiv.2009.03300</a></li>
+                    <li>Inan, H., Upasani, K., Chi, J., Rungta, R., Iyer, K., Mao, Y., Tontchev, M., Hu, Q., Fuller, B., Testuggine, D., &amp; Khabsa, M. (2023). <em>Llama Guard: LLM-based input-output safeguard for human-AI conversations</em> (arXiv:2312.06674). arXiv. <a href="https://doi.org/10.48550/arXiv.2312.06674" target="_blank" rel="noopener">https://doi.org/10.48550/arXiv.2312.06674</a></li>
+                    <li>Jain, S., &amp; Wallace, B. C. (2019). <em>Attention is not explanation</em> (arXiv:1902.10186). arXiv. <a href="https://doi.org/10.48550/arXiv.1902.10186" target="_blank" rel="noopener">https://doi.org/10.48550/arXiv.1902.10186</a></li>
+                    <li>Liang, P., Bommasani, R., Lee, T., Tsipras, D., Soylu, D., Yasunaga, M., Zhang, Y., Narayanan, D., Wu, Y., Kumar, A., Newman, B., Yuan, B., Yan, B., Zhang, C., Cosgrove, C., Manning, C. D., Ré, C., Acosta-Navas, D., Hudson, D. A., . . . Koreeda, Y. (2022). <em>Holistic evaluation of language models</em> (arXiv:2211.09110). arXiv. <a href="https://doi.org/10.48550/arXiv.2211.09110" target="_blank" rel="noopener">https://doi.org/10.48550/arXiv.2211.09110</a></li>
+                    <li>Lieberum, T., Rajamanoharan, S., Conmy, A., Smith, L., Sonnerat, N., Varma, V., Kramár, J., Dragan, A., Shah, R., &amp; Nanda, N. (2024). <em>Gemma Scope: Open sparse autoencoders everywhere all at once on Gemma 2</em> (arXiv:2408.05147). arXiv. <a href="https://doi.org/10.48550/arXiv.2408.05147" target="_blank" rel="noopener">https://doi.org/10.48550/arXiv.2408.05147</a></li>
+                    <li>Lin, S., Hilton, J., &amp; Evans, O. (2022). <em>TruthfulQA: Measuring how models mimic human falsehoods</em> (arXiv:2109.07958). arXiv. <a href="https://doi.org/10.48550/arXiv.2109.07958" target="_blank" rel="noopener">https://doi.org/10.48550/arXiv.2109.07958</a></li>
+                    <li>Lindsey, J., Gurnee, W., Ameisen, E., Chen, B., Pearce, A., Turner, N. L., Citro, C., . . . Batson, J. (2025). <em>On the biology of a large language model</em>. Transformer Circuits Thread. <a href="https://transformer-circuits.pub/2025/attribution-graphs/biology.html" target="_blank" rel="noopener">https://transformer-circuits.pub/2025/attribution-graphs/biology.html</a></li>
+                    <li>Lundberg, S. M., &amp; Lee, S.-I. (2017). <em>A unified approach to interpreting model predictions</em> (arXiv:1705.07874). arXiv. <a href="https://doi.org/10.48550/arXiv.1705.07874" target="_blank" rel="noopener">https://doi.org/10.48550/arXiv.1705.07874</a></li>
+                    <li><em>Mata v. Avianca, Inc.</em>, 678 F. Supp. 3d 443 (S.D.N.Y. 2023).</li>
+                    <li>Mitchell, M., Wu, S., Zaldivar, A., Barnes, P., Vasserman, L., Hutchinson, B., Spitzer, E., Raji, I. D., &amp; Gebru, T. (2019). Model cards for model reporting. In <em>Proceedings of the Conference on Fairness, Accountability, and Transparency</em> (pp. 220–229). ACM. <a href="https://doi.org/10.1145/3287560.3287596" target="_blank" rel="noopener">https://doi.org/10.1145/3287560.3287596</a></li>
+                    <li>National Institute of Standards and Technology. (2023). <em>Artificial intelligence risk management framework (AI RMF 1.0)</em> (NIST AI 100-1). <a href="https://doi.org/10.6028/NIST.AI.100-1" target="_blank" rel="noopener">https://doi.org/10.6028/NIST.AI.100-1</a></li>
+                    <li>OpenAI. (2023). <em>GPT-4 technical report</em> (arXiv:2303.08774). arXiv. <a href="https://doi.org/10.48550/arXiv.2303.08774" target="_blank" rel="noopener">https://doi.org/10.48550/arXiv.2303.08774</a></li>
+                    <li>Phillips, P. J., Hahn, C. A., Fontana, P. C., Yates, A. N., Greene, K., Broniatowski, D. A., &amp; Przybocki, M. A. (2021). <em>Four principles of explainable artificial intelligence</em> (NISTIR 8312). National Institute of Standards and Technology. <a href="https://doi.org/10.6028/NIST.IR.8312" target="_blank" rel="noopener">https://doi.org/10.6028/NIST.IR.8312</a></li>
+                    <li>Ribeiro, M. T., Singh, S., &amp; Guestrin, C. (2016). "Why should I trust you?": Explaining the predictions of any classifier. In <em>Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining</em> (pp. 1135–1144). ACM. <a href="https://doi.org/10.1145/2939672.2939778" target="_blank" rel="noopener">https://doi.org/10.1145/2939672.2939778</a></li>
+                    <li>Sundararajan, M., Taly, A., &amp; Yan, Q. (2017). <em>Axiomatic attribution for deep networks</em> (arXiv:1703.01365). arXiv. <a href="https://doi.org/10.48550/arXiv.1703.01365" target="_blank" rel="noopener">https://doi.org/10.48550/arXiv.1703.01365</a></li>
+                    <li>Templeton, A., Conerly, T., Marcus, J., Lindsey, J., Bricken, T., Chen, B., Pearce, A., Citro, C., Ameisen, E., Jones, A., . . . Henighan, T. (2024). <em>Scaling monosemanticity: Extracting interpretable features from Claude 3 Sonnet</em>. Transformer Circuits Thread. <a href="https://transformer-circuits.pub/2024/scaling-monosemanticity/index.html" target="_blank" rel="noopener">https://transformer-circuits.pub/2024/scaling-monosemanticity/index.html</a></li>
+                    <li>Tenney, I., Wexler, J., Bastings, J., Bolukbasi, T., Coenen, A., Gehrmann, S., Jiang, E., Pushkarna, M., Radebaugh, C., Reif, E., &amp; Yuan, A. (2020). <em>The language interpretability tool: Extensible, interactive visualizations and analysis for NLP models</em> (arXiv:2008.05122). arXiv. <a href="https://doi.org/10.48550/arXiv.2008.05122" target="_blank" rel="noopener">https://doi.org/10.48550/arXiv.2008.05122</a></li>
+                    <li>Tufanov, I., Hambardzumyan, K., Ferrando, J., &amp; Voita, E. (2024). <em>LM transparency tool: Interactive tool for analyzing transformer language models</em> (arXiv:2404.07004). arXiv. <a href="https://doi.org/10.48550/arXiv.2404.07004" target="_blank" rel="noopener">https://doi.org/10.48550/arXiv.2404.07004</a></li>
+                    <li>Turpin, M., Michael, J., Perez, E., &amp; Bowman, S. R. (2023). <em>Language models don't always say what they think: Unfaithful explanations in chain-of-thought prompting</em> (arXiv:2305.04388). arXiv. <a href="https://doi.org/10.48550/arXiv.2305.04388" target="_blank" rel="noopener">https://doi.org/10.48550/arXiv.2305.04388</a></li>
+                    <li>Wei, J., Wang, X., Schuurmans, D., Bosma, M., Ichter, B., Xia, F., Chi, E., Le, Q., &amp; Zhou, D. (2022). <em>Chain-of-thought prompting elicits reasoning in large language models</em> (arXiv:2201.11903). arXiv. <a href="https://doi.org/10.48550/arXiv.2201.11903" target="_blank" rel="noopener">https://doi.org/10.48550/arXiv.2201.11903</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Professional Reflection Section -->
+        <div class="professional-reflection" data-nav="Reflection">
+            <h2>💭 Professional Reflection</h2>
+            <p>
+                The finding that changed my thinking most was that <span class="reflection-highlight">a model's explanation of itself is a separate output, not a window into its reasoning.</span> Before this research I treated a step-by-step answer as evidence that the model had reasoned well. The faithfulness studies showed that the written steps can leave out the very thing that changed the answer, so I now read model explanations the way I read a log message: useful, but only after I know how it was produced.
+            </p>
+            <p>
+                The research connected closely to this workshop's work on validation. Holding out a test set, watching for overfitting, and choosing precision, recall, or F1 to match the cost of each error all scale up directly to LLMs. GPT-3's contamination checks are the same train-versus-test discipline applied to text scraped from the web. What changes at LLM scale is that <span class="reflection-highlight">one accuracy number is never enough:</span> HELM's case for measuring calibration, robustness, fairness, and toxicity together matches the multi-metric evaluation we practiced on smaller models.
+            </p>
+            <p>
+                In QA automation, a test is only as good as its oracle, the rule that says what the right output is. LLMs make that oracle hard to write, which is why validation pipelines, red teams, and production monitoring matter as much as the model itself. The practical lesson for my work is to <span class="reflection-highlight">ask a vendor for evaluation results across several metrics and for the limits of their explanations,</span> and to build monitoring into any LLM feature from the first release.
+            </p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>© 2026 Farukh Ahemad Gesukhan Pathan | All rights reserved</p>
+            <p>Explainable AI | Model Validation | Performance Metrics</p>
+        </div>
+    </footer>
+
+    <script src="back-to-top.js" defer></script>
+    <script src="page-nav.js" defer></script>
+    <script src="lightbox.js" defer></script>
+</body>
+</html>
