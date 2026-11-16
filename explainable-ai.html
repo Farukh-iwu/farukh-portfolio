@@ -469,6 +469,74 @@
         .lvl.l2 { --lc: #2d8478; }
         .lvl.l3 { --lc: #0f5f58; }
 
+        /* Challenge x technique matrix */
+        .matrix th:not(:first-child),
+        .matrix td:not(:first-child) {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .matrix td:first-child {
+            font-weight: 700;
+            color: var(--ink);
+            white-space: nowrap;
+        }
+
+        .matrix th {
+            font-size: 0.86em;
+            line-height: 1.3;
+        }
+
+        .fit {
+            display: inline-block;
+            min-width: 64px;
+            padding: 3px 9px;
+            border-radius: 999px;
+            font-size: 0.8em;
+            font-weight: 700;
+        }
+
+        .fit.direct {
+            background: #0f766e;
+            color: #ffffff;
+        }
+
+        .fit.partial {
+            background: #d5f0ea;
+            color: #155e56;
+            border: 1px solid #a9ddd2;
+        }
+
+        .fit.none {
+            color: #94a3b8;
+            font-weight: 600;
+        }
+
+        .matrix tr.gap-row td:first-child::after {
+            content: " ⚠";
+            color: #c2410c;
+        }
+
+        .matrix-key {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 18px;
+            margin: 6px 0 0;
+            font-size: 0.9em;
+            color: var(--ink-2);
+            align-items: center;
+        }
+
+        .analysis-grid.grid-2 {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        @media (max-width: 600px) {
+            .analysis-grid.grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+
         .explain-doc {
             background: var(--soft);
             border: 1px solid var(--soft-line);
@@ -651,7 +719,7 @@
 
                 <div class="analysis-card">
                     <h3>Description</h3>
-                    <p>A one-page infographic with a black-box diagram, eight challenge cards, three evidence charts, an explainability depth ladder, a validation pipeline, a metrics table, profiles of four AI labs, and a technique comparison table.</p>
+                    <p>A one-page infographic with a black-box diagram, eight challenge cards, three evidence charts, an explainability depth ladder, a technique comparison table, a challenge-by-approach coverage map, profiles of four AI labs, a validation pipeline, and a metrics table.</p>
                 </div>
 
                 <div class="analysis-card">
@@ -686,7 +754,7 @@
 
                 <div class="analysis-card">
                     <h3>References</h3>
-                    <p>30 sources: interpretability research from the four labs, peer-reviewed studies on faithfulness and evaluation, NIST and EU frameworks, and a US court ruling and regulator circular. Full list below.</p>
+                    <p>31 sources: interpretability research from the four labs, peer-reviewed studies on faithfulness and evaluation, NIST and EU frameworks, and a US court ruling and regulator circular. Full list below.</p>
                 </div>
             </div>
         </div>
@@ -827,7 +895,7 @@
                         <h3>Scale and opacity</h3>
                     </div>
                     <p>An answer emerges from non-linear interactions among billions of weights across dozens of layers. No single component explains it.</p>
-                    <div class="evidence">GPT-3 has 175B parameters (Brown et al., 2020); Llama 3 has 405B.</div>
+                    <div class="evidence">GPT-3 has 175B parameters (Brown et al., 2020); the largest Llama 3 model has 405B (Grattafiori et al., 2024).</div>
                 </div>
                 <div class="icon-card warn">
                     <div class="ic-head">
@@ -1035,6 +1103,126 @@
             </div>
         </div>
 
+        <!-- Challenge x technique matrix -->
+        <div class="analysis-section" data-nav="Coverage Map">
+            <h2>🔗 Which Approach Addresses Which Challenge</h2>
+            <p class="section-lead">Each row is a challenge from above; each column is a family of approaches. The map shows that no single method covers every challenge, and that validation and documentation cover gaps that explanation methods cannot reach.</p>
+            <div class="matrix-key" aria-label="Key">
+                <span><span class="fit direct">Direct</span> designed to address it</span>
+                <span><span class="fit partial">Partial</span> helps, with limits</span>
+                <span><span class="fit none">—</span> does not address it</span>
+            </div>
+            <div class="table-wrap">
+                <table class="data-table matrix">
+                    <thead>
+                        <tr>
+                            <th scope="col">Challenge</th>
+                            <th scope="col">Chain-of-thought<br>(depth 1)</th>
+                            <th scope="col">Input attribution<br>(depth 2)</th>
+                            <th scope="col">Features and circuits<br>(depth 3)</th>
+                            <th scope="col">Faithfulness tests</th>
+                            <th scope="col">Benchmarks and metrics</th>
+                            <th scope="col">Cards and open weights</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="group-row"><td colspan="7">Built into the model</td></tr>
+                        <tr>
+                            <td>Scale and opacity</td>
+                            <td><span class="fit partial">Partial</span></td>
+                            <td><span class="fit partial">Partial</span></td>
+                            <td><span class="fit direct">Direct</span></td>
+                            <td><span class="fit none">—</span></td>
+                            <td><span class="fit none">—</span></td>
+                            <td><span class="fit partial">Partial</span></td>
+                        </tr>
+                        <tr>
+                            <td>Superposition</td>
+                            <td><span class="fit none">—</span></td>
+                            <td><span class="fit none">—</span></td>
+                            <td><span class="fit direct">Direct</span></td>
+                            <td><span class="fit none">—</span></td>
+                            <td><span class="fit none">—</span></td>
+                            <td><span class="fit none">—</span></td>
+                        </tr>
+                        <tr>
+                            <td>Unfaithful explanations</td>
+                            <td><span class="fit none">—</span></td>
+                            <td><span class="fit partial">Partial</span></td>
+                            <td><span class="fit direct">Direct</span></td>
+                            <td><span class="fit direct">Direct</span></td>
+                            <td><span class="fit partial">Partial</span></td>
+                            <td><span class="fit none">—</span></td>
+                        </tr>
+                        <tr>
+                            <td>Attention is not explanation</td>
+                            <td><span class="fit none">—</span></td>
+                            <td><span class="fit direct">Direct</span></td>
+                            <td><span class="fit direct">Direct</span></td>
+                            <td><span class="fit none">—</span></td>
+                            <td><span class="fit none">—</span></td>
+                            <td><span class="fit none">—</span></td>
+                        </tr>
+                        <tr class="group-row"><td colspan="7">From data, behavior, business, and law</td></tr>
+                        <tr>
+                            <td>Data quality and bias</td>
+                            <td><span class="fit none">—</span></td>
+                            <td><span class="fit partial">Partial</span></td>
+                            <td><span class="fit partial">Partial</span></td>
+                            <td><span class="fit none">—</span></td>
+                            <td><span class="fit direct">Direct</span></td>
+                            <td><span class="fit partial">Partial</span></td>
+                        </tr>
+                        <tr>
+                            <td>Confident hallucinations</td>
+                            <td><span class="fit partial">Partial</span></td>
+                            <td><span class="fit none">—</span></td>
+                            <td><span class="fit partial">Partial</span></td>
+                            <td><span class="fit none">—</span></td>
+                            <td><span class="fit direct">Direct</span></td>
+                            <td><span class="fit none">—</span></td>
+                        </tr>
+                        <tr class="gap-row">
+                            <td>Closed models</td>
+                            <td><span class="fit partial">Partial</span></td>
+                            <td><span class="fit partial">Partial</span></td>
+                            <td><span class="fit none">—</span></td>
+                            <td><span class="fit none">—</span></td>
+                            <td><span class="fit partial">Partial</span></td>
+                            <td><span class="fit direct">Direct</span></td>
+                        </tr>
+                        <tr>
+                            <td>Regulatory pressure</td>
+                            <td><span class="fit partial">Partial</span></td>
+                            <td><span class="fit partial">Partial</span></td>
+                            <td><span class="fit none">—</span></td>
+                            <td><span class="fit none">—</span></td>
+                            <td><span class="fit direct">Direct</span></td>
+                            <td><span class="fit direct">Direct</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="analysis-grid grid-2">
+                <div class="analysis-card">
+                    <h3>Depth 3 carries the built-in challenges</h3>
+                    <p>Only feature and circuit methods directly address superposition. Asking the model (depth 1) cannot fix a problem that sits in how its neurons store concepts.</p>
+                </div>
+                <div class="analysis-card">
+                    <h3>Validation covers what explanation misses</h3>
+                    <p>Bias and hallucinations are caught mainly by benchmarks and metrics such as fairness scores, TruthfulQA, and calibration, not by explaining single answers.</p>
+                </div>
+                <div class="analysis-card">
+                    <h3>Self-explanations need an outside check</h3>
+                    <p>Chain-of-thought cannot detect its own unfaithfulness. That takes a faithfulness test or an internal method that compares the stated reasoning with what the model computed.</p>
+                </div>
+                <div class="analysis-card">
+                    <h3>The open gap ⚠</h3>
+                    <p>For closed models, the strongest methods (depth 3 and gradient-based attribution) are available only to the developer. Outside users must rely on published cards, benchmarks, and behavior.</p>
+                </div>
+            </div>
+        </div>
+
         <!-- Industry solutions -->
         <div class="analysis-section" data-nav="Industry">
             <h2>🏢 What Industry Leaders Are Doing</h2>
@@ -1224,12 +1412,44 @@
             </div>
         </div>
 
+        <!-- Classification process -->
+        <div class="analysis-section" data-nav="Classification">
+            <h2>🗃️ How the Content Is Classified</h2>
+            <p class="section-lead">Every finding from the research was sorted along three axes. Each axis answers a different question a reader brings when deciding whether to trust an LLM.</p>
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <h3>Axis 1: Role (what does this finding do?)</h3>
+                    <p>Each source finding was first labeled as a <strong>challenge</strong> (something that makes explanation hard), a <strong>technique</strong> (something that produces an explanation), or a <strong>validation practice</strong> (something that measures reliability). These three roles became the main sections of the page, and the trust equation shows how they combine.</p>
+                </div>
+                <div class="analysis-card">
+                    <h3>Axis 2: Depth (how far inside the model?)</h3>
+                    <p>Techniques were sorted by what access they need: the model's text output only (depth 1), its inputs and gradients (depth 2), or its internal activations (depth 3). Depth was chosen over grouping by company or by date because it predicts both how faithful a method can be and who is able to use it, which matters most to a non-technical reader.</p>
+                </div>
+                <div class="analysis-card">
+                    <h3>Axis 3: Source of the challenge (where does it come from?)</h3>
+                    <p>The eight challenges were split into four built into the model (scale, superposition, unfaithful explanations, misleading attention) and four from outside it (data, hallucination behavior, closed business models, regulation). Built-in challenges need interpretability research; outside challenges respond to validation, disclosure, and policy, as the coverage map shows.</p>
+                </div>
+                <div class="analysis-card">
+                    <h3>Hard calls</h3>
+                    <p>Chain-of-thought appears twice: as a depth-1 technique and, through its unfaithfulness, as a challenge. I kept both because hiding either side would mislead. Model cards are placed at depth 1 because they describe the model from outside. Hallucination is listed as a behavior challenge rather than a data one, since it persists even with clean data.</p>
+                </div>
+                <div class="analysis-card">
+                    <h3>Rating the coverage map</h3>
+                    <p>A cell is <em>Direct</em> only when a cited source designed or tested the approach against that challenge, <em>Partial</em> when it helps indirectly or with a stated limit, and blank otherwise. Ratings follow the limitations the sources report, not my own judgment of potential.</p>
+                </div>
+                <div class="analysis-card">
+                    <h3>What was left out</h3>
+                    <p>Explainability methods built for images, such as saliency maps for vision models, and classic interpretable models such as decision trees, were excluded because the assignment centers on LLMs.</p>
+                </div>
+            </div>
+        </div>
+
         <!-- Explanatory document -->
         <div class="analysis-section" data-nav="Explanation">
             <h2>📝 Explanatory Summary</h2>
             <div class="explain-doc">
-                <p>This infographic shows that explainable AI is about letting people check an AI system's decisions rather than simply accept them. LLMs such as GPT, Claude, Gemini, and Llama are hard to explain because their answers come from billions of interacting weights, because their neurons mix many concepts, and because the explanations they write about themselves are often unfaithful: Claude 3.7 Sonnet disclosed a hint that changed its answer only 25% of the time. Closed models, biased training data, confident hallucinations, and new laws such as the EU AI Act add to the challenge. Industry is responding at three depths: prompting models to reason aloud, attributing answers to inputs, and, most promisingly, reading internal features, as in Anthropic's 34 million features from Claude 3 Sonnet, OpenAI's sparse autoencoders on GPT-4, Google's open Gemma Scope, and Meta's open-weight Llama and LLM Transparency Tool. Explainability alone does not create trust. Validation, from hold-out tests and contamination checks to red teaming and production monitoring, shows whether a model works on data it has not seen, and metrics such as accuracy, calibration, truthfulness, fairness, and faithfulness put a number on how far it can be relied on. Together, explanation answers "why," validation answers "does it hold up," and metrics answer "how well," which is what an organization needs before it lets a model influence a medical, financial, or legal decision.</p>
-                <p>The design is built for a non-technical reader. A black-box versus glass-box diagram opens the page so the core idea is clear before any terms appear. Challenges are shown as icon cards with one piece of evidence each, so every claim is backed by a source rather than a slogan. Techniques are arranged as a three-step ladder because "how deep can we look?" is the question that separates useful tools from misleading ones, and the comparison table pairs every technique with its main limitation so the page does not oversell what current tools can do. Three colors stay fixed for explainability (blue), validation (orange), and metrics (green), and every chart carries its numbers as text so color is never the only cue. The information matters now because LLMs are entering regulated fields faster than explanation methods are maturing, and the people adopting them need to know which questions to ask.</p>
+                <p>Explainable AI lets people check an AI system's decisions instead of simply accepting them. LLMs such as GPT, Claude, Gemini, and Llama resist explanation because their answers come from billions of interacting weights, their neurons mix many concepts, and their self-explanations are often unfaithful: Claude 3.7 Sonnet disclosed a hint that changed its answer only 25% of the time. Industry is responding at three depths, from prompting models to reason aloud to reading their internal features, as in Anthropic's 34 million features from Claude 3 Sonnet and Google's open Gemma Scope. Explanation alone does not create trust, however. Validation shows whether a model holds up on data it has not seen, and metrics such as accuracy, calibration, truthfulness, and fairness show how far it can be relied on. Explanation answers "why," validation answers "does it hold up," and metrics answer "how well"; an organization needs all three before a model influences a medical, financial, or legal decision.</p>
+                <p>The design is built for a non-technical reader. A black-box versus glass-box diagram opens the page so the core idea is clear before any terms appear, and each challenge card carries one sourced piece of evidence. Techniques form a three-step ladder because "how deep can we look?" separates useful tools from misleading ones, and a coverage map then shows which approach addresses which challenge, revealing that validation fills gaps explanation cannot. Blue, orange, and green stay fixed for explainability, validation, and metrics, and every chart prints its numbers so color is never the only cue. This matters now because LLMs are entering regulated fields faster than explanation methods are maturing.</p>
             </div>
         </div>
 
@@ -1278,7 +1498,7 @@
                 </div>
                 <div class="analysis-card">
                     <h3>Explanatory document</h3>
-                    <p>A two-paragraph summary of the key points and the design rationale, above.</p>
+                    <p>A two-paragraph summary of the key points and the design rationale, plus a section explaining how the content was classified, above.</p>
                 </div>
                 <div class="analysis-card">
                     <h3>Generative AI prompts</h3>
@@ -1323,13 +1543,14 @@
                     <li>Elhage, N., Hume, T., Olsson, C., Schiefer, N., Henighan, T., Kravec, S., Hatfield-Dodds, Z., Lasenby, R., Drain, D., Chen, C., Grosse, R., McCandlish, S., Kaplan, J., Amodei, D., Wattenberg, M., &amp; Olah, C. (2022). <em>Toy models of superposition</em>. Transformer Circuits Thread. <a href="https://transformer-circuits.pub/2022/toy_model/index.html" target="_blank" rel="noopener">https://transformer-circuits.pub/2022/toy_model/index.html</a></li>
                     <li>European Parliament &amp; Council of the European Union. (2024). <em>Regulation (EU) 2024/1689 laying down harmonised rules on artificial intelligence (Artificial Intelligence Act)</em>. Official Journal of the European Union. <a href="http://data.europa.eu/eli/reg/2024/1689/oj" target="_blank" rel="noopener">http://data.europa.eu/eli/reg/2024/1689/oj</a></li>
                     <li>Gao, L., Dupré la Tour, T., Tillman, H., Goh, G., Troll, R., Radford, A., Sutskever, I., Leike, J., &amp; Wu, J. (2024). <em>Scaling and evaluating sparse autoencoders</em> (arXiv:2406.04093). arXiv. <a href="https://doi.org/10.48550/arXiv.2406.04093" target="_blank" rel="noopener">https://doi.org/10.48550/arXiv.2406.04093</a></li>
+                    <li>Grattafiori, A., Dubey, A., Jauhri, A., Pandey, A., Kadian, A., Al-Dahle, A., Letman, A., Mathur, A., Schelten, A., Vaughan, A., Yang, A., Fan, A., Goyal, A., Hartshorn, A., Yang, A., Mitra, A., Sravankumar, A., Korenev, A., Hinsvark, A., . . . Ma, Z. (2024). <em>The Llama 3 herd of models</em> (arXiv:2407.21783). arXiv. <a href="https://doi.org/10.48550/arXiv.2407.21783" target="_blank" rel="noopener">https://doi.org/10.48550/arXiv.2407.21783</a></li>
                     <li>Hendrycks, D., Burns, C., Basart, S., Zou, A., Mazeika, M., Song, D., &amp; Steinhardt, J. (2021). <em>Measuring massive multitask language understanding</em> (arXiv:2009.03300). arXiv. <a href="https://doi.org/10.48550/arXiv.2009.03300" target="_blank" rel="noopener">https://doi.org/10.48550/arXiv.2009.03300</a></li>
                     <li>Inan, H., Upasani, K., Chi, J., Rungta, R., Iyer, K., Mao, Y., Tontchev, M., Hu, Q., Fuller, B., Testuggine, D., &amp; Khabsa, M. (2023). <em>Llama Guard: LLM-based input-output safeguard for human-AI conversations</em> (arXiv:2312.06674). arXiv. <a href="https://doi.org/10.48550/arXiv.2312.06674" target="_blank" rel="noopener">https://doi.org/10.48550/arXiv.2312.06674</a></li>
                     <li>Jain, S., &amp; Wallace, B. C. (2019). <em>Attention is not explanation</em> (arXiv:1902.10186). arXiv. <a href="https://doi.org/10.48550/arXiv.1902.10186" target="_blank" rel="noopener">https://doi.org/10.48550/arXiv.1902.10186</a></li>
                     <li>Liang, P., Bommasani, R., Lee, T., Tsipras, D., Soylu, D., Yasunaga, M., Zhang, Y., Narayanan, D., Wu, Y., Kumar, A., Newman, B., Yuan, B., Yan, B., Zhang, C., Cosgrove, C., Manning, C. D., Ré, C., Acosta-Navas, D., Hudson, D. A., . . . Koreeda, Y. (2022). <em>Holistic evaluation of language models</em> (arXiv:2211.09110). arXiv. <a href="https://doi.org/10.48550/arXiv.2211.09110" target="_blank" rel="noopener">https://doi.org/10.48550/arXiv.2211.09110</a></li>
                     <li>Lieberum, T., Rajamanoharan, S., Conmy, A., Smith, L., Sonnerat, N., Varma, V., Kramár, J., Dragan, A., Shah, R., &amp; Nanda, N. (2024). <em>Gemma Scope: Open sparse autoencoders everywhere all at once on Gemma 2</em> (arXiv:2408.05147). arXiv. <a href="https://doi.org/10.48550/arXiv.2408.05147" target="_blank" rel="noopener">https://doi.org/10.48550/arXiv.2408.05147</a></li>
                     <li>Lin, S., Hilton, J., &amp; Evans, O. (2022). <em>TruthfulQA: Measuring how models mimic human falsehoods</em> (arXiv:2109.07958). arXiv. <a href="https://doi.org/10.48550/arXiv.2109.07958" target="_blank" rel="noopener">https://doi.org/10.48550/arXiv.2109.07958</a></li>
-                    <li>Lindsey, J., Gurnee, W., Ameisen, E., Chen, B., Pearce, A., Turner, N. L., Citro, C., . . . Batson, J. (2025). <em>On the biology of a large language model</em>. Transformer Circuits Thread. <a href="https://transformer-circuits.pub/2025/attribution-graphs/biology.html" target="_blank" rel="noopener">https://transformer-circuits.pub/2025/attribution-graphs/biology.html</a></li>
+                    <li>Lindsey, J., Gurnee, W., Ameisen, E., Chen, B., Pearce, A., Turner, N. L., Citro, C., Abrahams, D., Carter, S., Hosmer, B., Marcus, J., Sklar, M., Templeton, A., Bricken, T., McDougall, C., Cunningham, H., Henighan, T., Jermyn, A., Jones, A., . . . Batson, J. (2025). <em>On the biology of a large language model</em>. Transformer Circuits Thread. <a href="https://transformer-circuits.pub/2025/attribution-graphs/biology.html" target="_blank" rel="noopener">https://transformer-circuits.pub/2025/attribution-graphs/biology.html</a></li>
                     <li>Lundberg, S. M., &amp; Lee, S.-I. (2017). <em>A unified approach to interpreting model predictions</em> (arXiv:1705.07874). arXiv. <a href="https://doi.org/10.48550/arXiv.1705.07874" target="_blank" rel="noopener">https://doi.org/10.48550/arXiv.1705.07874</a></li>
                     <li><em>Mata v. Avianca, Inc.</em>, 678 F. Supp. 3d 443 (S.D.N.Y. 2023).</li>
                     <li>Mitchell, M., Wu, S., Zaldivar, A., Barnes, P., Vasserman, L., Hutchinson, B., Spitzer, E., Raji, I. D., &amp; Gebru, T. (2019). Model cards for model reporting. In <em>Proceedings of the Conference on Fairness, Accountability, and Transparency</em> (pp. 220–229). ACM. <a href="https://doi.org/10.1145/3287560.3287596" target="_blank" rel="noopener">https://doi.org/10.1145/3287560.3287596</a></li>
@@ -1338,7 +1559,7 @@
                     <li>Phillips, P. J., Hahn, C. A., Fontana, P. C., Yates, A. N., Greene, K., Broniatowski, D. A., &amp; Przybocki, M. A. (2021). <em>Four principles of explainable artificial intelligence</em> (NISTIR 8312). National Institute of Standards and Technology. <a href="https://doi.org/10.6028/NIST.IR.8312" target="_blank" rel="noopener">https://doi.org/10.6028/NIST.IR.8312</a></li>
                     <li>Ribeiro, M. T., Singh, S., &amp; Guestrin, C. (2016). "Why should I trust you?": Explaining the predictions of any classifier. In <em>Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining</em> (pp. 1135–1144). ACM. <a href="https://doi.org/10.1145/2939672.2939778" target="_blank" rel="noopener">https://doi.org/10.1145/2939672.2939778</a></li>
                     <li>Sundararajan, M., Taly, A., &amp; Yan, Q. (2017). <em>Axiomatic attribution for deep networks</em> (arXiv:1703.01365). arXiv. <a href="https://doi.org/10.48550/arXiv.1703.01365" target="_blank" rel="noopener">https://doi.org/10.48550/arXiv.1703.01365</a></li>
-                    <li>Templeton, A., Conerly, T., Marcus, J., Lindsey, J., Bricken, T., Chen, B., Pearce, A., Citro, C., Ameisen, E., Jones, A., . . . Henighan, T. (2024). <em>Scaling monosemanticity: Extracting interpretable features from Claude 3 Sonnet</em>. Transformer Circuits Thread. <a href="https://transformer-circuits.pub/2024/scaling-monosemanticity/index.html" target="_blank" rel="noopener">https://transformer-circuits.pub/2024/scaling-monosemanticity/index.html</a></li>
+                    <li>Templeton, A., Conerly, T., Marcus, J., Lindsey, J., Bricken, T., Chen, B., Pearce, A., Citro, C., Ameisen, E., Jones, A., Cunningham, H., Turner, N. L., McDougall, C., MacDiarmid, M., Tamkin, A., Durmus, E., Hume, T., Mosconi, F., Freeman, C. D., . . . Henighan, T. (2024). <em>Scaling monosemanticity: Extracting interpretable features from Claude 3 Sonnet</em>. Transformer Circuits Thread. <a href="https://transformer-circuits.pub/2024/scaling-monosemanticity/index.html" target="_blank" rel="noopener">https://transformer-circuits.pub/2024/scaling-monosemanticity/index.html</a></li>
                     <li>Tenney, I., Wexler, J., Bastings, J., Bolukbasi, T., Coenen, A., Gehrmann, S., Jiang, E., Pushkarna, M., Radebaugh, C., Reif, E., &amp; Yuan, A. (2020). <em>The language interpretability tool: Extensible, interactive visualizations and analysis for NLP models</em> (arXiv:2008.05122). arXiv. <a href="https://doi.org/10.48550/arXiv.2008.05122" target="_blank" rel="noopener">https://doi.org/10.48550/arXiv.2008.05122</a></li>
                     <li>Tufanov, I., Hambardzumyan, K., Ferrando, J., &amp; Voita, E. (2024). <em>LM transparency tool: Interactive tool for analyzing transformer language models</em> (arXiv:2404.07004). arXiv. <a href="https://doi.org/10.48550/arXiv.2404.07004" target="_blank" rel="noopener">https://doi.org/10.48550/arXiv.2404.07004</a></li>
                     <li>Turpin, M., Michael, J., Perez, E., &amp; Bowman, S. R. (2023). <em>Language models don't always say what they think: Unfaithful explanations in chain-of-thought prompting</em> (arXiv:2305.04388). arXiv. <a href="https://doi.org/10.48550/arXiv.2305.04388" target="_blank" rel="noopener">https://doi.org/10.48550/arXiv.2305.04388</a></li>
@@ -1355,6 +1576,9 @@
             </p>
             <p>
                 The research connected closely to this workshop's work on validation. Holding out a test set, watching for overfitting, and choosing precision, recall, or F1 to match the cost of each error all scale up directly to LLMs. GPT-3's contamination checks are the same train-versus-test discipline applied to text scraped from the web. What changes at LLM scale is that <span class="reflection-highlight">one accuracy number is never enough:</span> HELM's case for measuring calibration, robustness, fairness, and toxicity together matches the multi-metric evaluation we practiced on smaller models.
+            </p>
+            <p>
+                The main challenge was separating real progress from hype. Interpretability announcements are written to impress, and it is easy to repeat them in a way that makes sparse autoencoders sound like a solved problem. My strategy was to <span class="reflection-highlight">pair every technique with the limitation its own authors report,</span> to rate the coverage map only from what sources tested, and to check key figures and author lists against the original papers rather than summaries. Using ChatGPT for the three suggested prompts helped me see the topic from a non-specialist angle, and I used its answers as a checklist of points to verify against the papers, not as evidence.
             </p>
             <p>
                 In QA automation, a test is only as good as its oracle, the rule that says what the right output is. LLMs make that oracle hard to write, which is why validation pipelines, red teams, and production monitoring matter as much as the model itself. The practical lesson for my work is to <span class="reflection-highlight">ask a vendor for evaluation results across several metrics and for the limits of their explanations,</span> and to build monitoring into any LLM feature from the first release.
